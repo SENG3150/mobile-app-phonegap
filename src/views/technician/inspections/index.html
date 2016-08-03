@@ -1,0 +1,11 @@
+<div class="text-center" ng-if="loading == true">
+    <i class="fa fa-spinner fa-spin fa-3x"></i>
+</div>
+
+<ul class="table-view" ng-if="loading == false">
+    <li class="table-view-cell" ng-repeat="inspection in inspections">
+        <a ui-sref="technician-inspections-view({ inspection: {{ inspection.id }}})" class="navigate-right">
+            Inspection {{ inspection.id }}
+        </a>
+    </li>
+</ul>

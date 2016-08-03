@@ -1,0 +1,14 @@
+/.idea
+/hooks
+/platforms/*
+/plugins/*
+/bower_components
+/node_modules
+/www/*
+!/www/.htaccess
+!/www/cordova-dummy.js
+!/www/icon.png
+/src/js/ngConstants.js
+/fonts/*
+Thumbs.db
+npm-debug.log
