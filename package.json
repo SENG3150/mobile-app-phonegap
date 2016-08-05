@@ -17,6 +17,7 @@
     "gulp-ng-constant": "^1.1.0",
     "gulp-phonegap-build": "^0.1.4",
     "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
     "gulp-uglify": "~1.5.3"
   }
 }

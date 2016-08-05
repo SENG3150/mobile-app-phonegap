@@ -11,7 +11,7 @@ var phonegapBuild = require('gulp-phonegap-build');
 var fs = require('fs');
 var filesize = require('filesize');
 var cheerio = require('cheerio');
-var events = require('events');
+var replace = require('gulp-replace');
 
 var configConfig = {
 	source: [
@@ -292,7 +292,8 @@ gulp.task('update-versions', function () {
 		time: Date.now(),
 		ios: {
 			size: filesize(fs.statSync(config.download.ios)['size']),
-			path: config.apps.url + 'ios.ipa'
+			path: config.apps.url + 'ios.ipa',
+			manifest: config.apps.url + config.apps.manifest
 		},
 		android: {
 			size: filesize(fs.statSync(config.download.android)['size']),
@@ -300,7 +301,15 @@ gulp.task('update-versions', function () {
 		}
 	};
 
-	fs.writeFile(config.apps.versions, JSON.stringify(versions));
+	fs.writeFile(config.apps.path + '/' + config.apps.versions, JSON.stringify(versions));
+
+	return gulp.src(['templates/manifest.plist'])
+		.pipe(replace('${URL}', config.apps.url + 'ios.ipa'))
+		.pipe(replace('${BUNDLE_IDENTIFIER}', $('widget')[0].attribs.id))
+		.pipe(replace('${APPLICATION_VERSION}', $('widget')[0].attribs.version))
+		.pipe(replace('${DISPLAY_NAME}', $('name')[0].children[0].data))
+		.pipe(rename(config.apps.manifest))
+		.pipe(gulp.dest(config.apps.path));
 });
 
 gulp.task('watcher', function () {
