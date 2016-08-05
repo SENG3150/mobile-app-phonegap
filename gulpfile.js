@@ -247,7 +247,7 @@ gulp.task('env-production', function () {
 		.pipe(gulp.dest(config.destination));
 });
 
-gulp.task('phonegap-build', function () {
+gulp.task('phonegap-build', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-production', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme'], function () {
 	var config = JSON.parse(fs.readFileSync('./phonegap-config.json'));
 
 	return gulp.src('www/**/*')
