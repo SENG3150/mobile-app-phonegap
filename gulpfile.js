@@ -254,7 +254,7 @@ gulp.task('phonegap-build', ['config', 'index', 'images', 'template-cache', 'con
 		.pipe(phonegapBuild(config));
 });
 
-gulp.task('watch-apps', function() {
+gulp.task('watch-apps', function () {
 	var config = JSON.parse(fs.readFileSync('./phonegap-config.json'));
 
 	var src = [
@@ -264,6 +264,17 @@ gulp.task('watch-apps', function() {
 
 	var watcher = gulp.watch(src, ['update-versions']);
 	var timeout = setTimeout(watcher.end, 180 * 1000);
+
+	var changes = 0;
+
+	watcher.on('change', function () {
+		changes++;
+
+		if (changes == 2) {
+			clearTimeout(timeout);
+			watcher.end();
+		}
+	});
 });
 
 gulp.task('update-versions', function () {
