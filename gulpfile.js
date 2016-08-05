@@ -8,6 +8,10 @@ var ngConstant = require('gulp-ng-constant');
 var less = require('gulp-less');
 var rename = require('gulp-rename');
 var phonegapBuild = require('gulp-phonegap-build');
+var fs = require('fs');
+var filesize = require('filesize');
+var cheerio = require('cheerio');
+var events = require('events');
 
 var configConfig = {
 	source: [
@@ -108,8 +112,7 @@ gulp.task('concat-core', function () {
 });
 
 var concatPluginsConfig = {
-	source: [
-	],
+	source: [],
 	destination: 'www/js/',
 	output: 'plugins.js'
 };
@@ -244,7 +247,52 @@ gulp.task('env-production', function () {
 		.pipe(gulp.dest(config.destination));
 });
 
-gulp.task('watcher', function() {
+gulp.task('phonegap-build', function () {
+	var config = JSON.parse(fs.readFileSync('./phonegap-config.json'));
+
+	return gulp.src('www/**/*')
+		.pipe(phonegapBuild(config));
+});
+
+gulp.task('watch-apps', function() {
+	var config = JSON.parse(fs.readFileSync('./phonegap-config.json'));
+
+	var src = [
+		config.download.ios,
+		config.download.android
+	];
+
+	var watcher = gulp.watch(src, ['update-versions']);
+	var timeout = setTimeout(watcher.end, 180 * 1000);
+});
+
+gulp.task('update-versions', function () {
+	var config = JSON.parse(fs.readFileSync('./phonegap-config.json'));
+
+	var $ = cheerio.load(
+		fs.readFileSync('./config.xml'),
+		{
+			xmlMode: true
+		}
+	);
+
+	var versions = {
+		version: $('widget')[0].attribs.version,
+		time: Date.now(),
+		ios: {
+			size: filesize(fs.statSync(config.download.ios)['size']),
+			path: config.apps.url + 'ios.ipa'
+		},
+		android: {
+			size: filesize(fs.statSync(config.download.android)['size']),
+			path: config.apps.url + 'android.apk'
+		}
+	};
+
+	fs.writeFile(config.apps.versions, JSON.stringify(versions));
+});
+
+gulp.task('watcher', function () {
 	gulp.watch(configConfig.source, ['config']);
 	gulp.watch(indexConfig.source, ['index']);
 	gulp.watch(imagesConfig.source, ['images']);
@@ -255,21 +303,6 @@ gulp.task('watcher', function() {
 	gulp.watch(themeConfig.watch, ['build-theme']);
 });
 
-gulp.task('phonegap-build', function () {
-	gulp.src('www/**/*')
-		.pipe(phonegapBuild({
-			appId: '2197424',
-			user: {
-				token: 'vTAv1MY6pZLojd1xzbrd'
-			},
-			keys: {
-				ios: {
-					password: 'seng3150'
-				}
-			}
-		}));
-});
-
 function onError(err) {
 	console.log(err);
 	this.emit('end');
@@ -277,4 +310,4 @@ function onError(err) {
 
 gulp.task('default', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-production', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme', 'watcher']);
 gulp.task('development', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-development', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme', 'watcher']);
-gulp.task('deployment', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-production', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme']);
+gulp.task('deployment', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-production', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme', 'phonegap-build', 'watch-apps']);

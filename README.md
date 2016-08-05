@@ -17,7 +17,7 @@ You will be prompted for credentials for Bitbucket, which we have used to keep t
 
 		<VirtualHost *:80>
 	        ServerAdmin admin@localhost
-	        DocumentRoot "C:\mobile-app-phonegap"
+	        DocumentRoot "C:\mobile-app-phonegap\www"
 	        ServerName phonegap.local
 	        ErrorLog "C:\phonegap-error.log"
 	        CustomLog "C:\phonegap-common.log" common     
