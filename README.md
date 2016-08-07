@@ -72,7 +72,7 @@ You will be prompted for credentials for Bitbucket, which we have used to keep t
         ```
         <VirtualHost *:80>
             ServerAdmin admin@localhost
-            DocumentRoot "<full path to mobile-app-phonegap folder>"
+            DocumentRoot "<full path to mobile-app-phonegap\www folder>"
             ServerName phonegap.local
             ErrorLog "<full path to one folder above the mobile-app-phonegap folder>\phonegap-error.log"
             CustomLog "<full path to one folder above the mobile-app-phonegap folder>\phonegap-common.log" common
@@ -80,7 +80,7 @@ You will be prompted for credentials for Bitbucket, which we have used to keep t
             RewriteOptions inherit
             SetOutputFilter DEFLATE
             
-            <Directory "<full path to mobile-app-phonegap folder>">
+            <Directory "<full path to mobile-app-phonegap\www folder>">
                 Options Indexes FollowSymLinks
                 AllowOverride All
                 Order Deny,Allow
