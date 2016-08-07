@@ -1,4 +1,6 @@
 {
+  "name": "seng3160/mobile-app-phonegap",
+  "version": "1.0.0",
   "private": true,
   "ignore": [
     "**/.*",
