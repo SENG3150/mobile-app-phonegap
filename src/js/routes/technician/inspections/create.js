@@ -1,0 +1,27 @@
+angular
+	.module('joy-global')
+	.config(['$stateProvider', function ($stateProvider) {
+		$stateProvider
+			.state('technician-inspections-create-index', {
+				parent: 'technician',
+				url: '/inspections/create',
+				templateUrl: 'views/technician/inspections/create/index.html',
+				controller: 'TechnicianInspectionsCreateControllerIndex',
+				resolve: {
+					loggedIn: ['AuthService', function (AuthService) {
+						return AuthService.checkPermissions(true);
+					}]
+				}
+			})
+			.state('technician-inspections-create-majorAssembly', {
+				parent: 'technician',
+				url: '/inspections/create/:majorAssembly',
+				templateUrl: 'views/technician/inspections/create/majorAssembly.html',
+				controller: 'TechnicianInspectionsCreateControllerMajorAssembly',
+				resolve: {
+					loggedIn: ['AuthService', function (AuthService) {
+						return AuthService.checkPermissions(true);
+					}]
+				}
+			});
+	}]);

@@ -12,16 +12,5 @@ angular
 						return AuthService.checkPermissions(true);
 					}]
 				}
-			})
-			.state('technician-inspections-view', {
-				parent: 'technician',
-				url: '/inspections/:inspection',
-				templateUrl: 'views/technician/inspections/view.html',
-				controller: 'TechnicianInspectionsControllerView',
-				resolve: {
-					loggedIn: ['AuthService', function (AuthService) {
-						return AuthService.checkPermissions(true);
-					}]
-				}
 			});
 	}]);

@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsControllerView', ['$scope', 'Inspections', 'moment', '$stateParams', function ($scope, Inspections, moment, $stateParams) {
+	.controller('TechnicianInspectionsViewControllerIndex', ['$scope', 'Inspections', 'moment', '$stateParams', function ($scope, Inspections, moment, $stateParams) {
 		$scope.inspectionId = $stateParams.inspection;
 		$scope.loading = true;
 
