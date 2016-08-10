@@ -1,4 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsViewControllerMajorAssembly', ['$scope', function ($scope) {
+	.controller('TechnicianInspectionsViewControllerMajorAssembly', ['$scope', '$stateParams', function ($scope, $stateParams) {
+		$scope.inspectionId = $stateParams.inspection;
+		$scope.majorAssemblyId = $stateParams.majorAssembly;
 	}]);
