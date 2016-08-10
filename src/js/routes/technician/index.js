@@ -10,6 +10,9 @@ angular
 				resolve: {
 					loggedIn: ['AuthService', function (AuthService) {
 						return AuthService.checkPermissions(true);
+					}],
+					layoutService: ['LayoutService', function(LayoutService) {
+						return LayoutService.reset();
 					}]
 				}
 			});

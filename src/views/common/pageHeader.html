@@ -1,0 +1,13 @@
+<div ng-if="leftButton.display == true">
+    <button class="btn btn-link pull-left" ng-click="leftButtonClicked()">
+        <span ng-class="leftButton.icon" ng-if="leftButton.icon != ''"></span>
+        {{ leftButton.text }}
+    </button>
+</div>
+<div ng-if="rightButton.display == true">
+    <button class="btn btn-link pull-right" ng-click="rightButtonClicked()">
+        <span ng-if="rightButton.text != ''">{{ rightButton.text }}</span>
+        <span ng-class="rightButton.icon" ng-if="rightButton.icon != ''"></span>
+    </button>
+</div>
+<h1 class="title">{{ title }}</h1>

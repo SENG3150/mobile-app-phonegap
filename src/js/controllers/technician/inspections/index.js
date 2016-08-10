@@ -1,7 +1,11 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsControllerIndex', ['$scope', 'Inspections', 'moment', function ($scope, Inspections, moment) {
+	.controller('TechnicianInspectionsControllerIndex', ['$scope', 'Inspections', 'moment', 'LayoutService', function ($scope, Inspections, moment, LayoutService) {
 		$scope.loading = true;
+
+		LayoutService.setTitle(['Inspections']);
+		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-index'));
+		LayoutService.getPageHeader().setHeroButton('fa fa-plus', 'Create', LayoutService.redirect('technician-inspections-create-index'));
 
 		Inspections
 			.getList({
