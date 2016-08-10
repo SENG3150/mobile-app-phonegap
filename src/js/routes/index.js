@@ -33,14 +33,4 @@ angular
 					}]
 				}
 			});
-	}])
-	.run(['$rootScope', '$state', '$auth', '$window', function ($rootScope, $state, $auth, $window) {
-		$rootScope.$on('$stateChangeError',
-			function (event) {
-				event.preventDefault();
-
-				$state.go('auth.login', {r: $window.location.href});
-			});
-
-		$rootScope.$state = $state;
 	}]);
