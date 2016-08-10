@@ -5,7 +5,7 @@ angular
 
 		LayoutService.setTitle(['Inspections']);
 		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-index'));
-		LayoutService.getPageHeader().setHeroButton('fa fa-plus', 'Create', LayoutService.redirect('technician-inspections-create-index'));
+		LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-plus', 'Create', LayoutService.redirect('technician-inspections-create-index'));
 
 		Inspections
 			.getList({
