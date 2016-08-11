@@ -5,7 +5,6 @@ angular
 
         LayoutService.setTitle(['Machines']);
         LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-index'));
-        //LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-plus', 'Create', LayoutService.redirect('technician-inspections-create-index'));
 
         Machines
             .getList({
@@ -13,7 +12,7 @@ angular
             })
             .then(function (data) {
                 $scope.loading = false;
-                $scope.inspections = data;
+                $scope.machines = data;
             });
 
         $scope.moment = moment;
