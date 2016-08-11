@@ -1,17 +1,16 @@
-<script src="../../../../js/controllers/technician/machines/index.js"></script>
 <div class="text-center" ng-if="loading == true">
     <i class="fa fa-spinner fa-spin fa-3x"></i>
 </div>
 
-<pre ng-if="loading == false">
-    Scheduled Date: {{ moment(inspection.timeScheduled).format("DD/MM/YYYY hh:mm") }}
-    Machine Name: {{ inspection.machine.model.name}}
+<div ng-if="loading == false">
+    Scheduled Date: {{ moment(inspection.timeScheduled).format("DD/MM/YYYY hh:mm") }} <br>
+    Machine Name: {{ inspection.machine.model.name}} <br>
     Major Assemblies:
-    <ul class="table-view" ng-if="loading == false">
+    <ul class="table-view">
         <li class="table-view-cell" ng-repeat="majorAssembly in inspection.majorAssemblies">
             <a ui-sref="technician-inspections-view-majorAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{majorAssembly.id}} })" class="navigate-right">
                 {{ majorAssembly.majorAssembly.name }}
             </a>
         </li>
     </ul>
-</pre>
+</div>
