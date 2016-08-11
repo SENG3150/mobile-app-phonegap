@@ -1,11 +1,12 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsViewControllerMajorAssembly', ['$scope', '$stateParams', 'Inspections', 'LayoutService', 'moment',  function ($scope, $stateParams, Inspections, LayoutService, moment) {
+	.controller('TechnicianInspectionsViewControllerMajorAssembly', ['$scope', '$stateParams', function ($scope, $stateParams) {
 		$scope.loading = true;
-        $scope.inspectionId = $stateParams.inspection;
 
         LayoutService.setTitle(['Major Assemblies']);
+        LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
 
+		$scope.inspectionId = $stateParams.inspection;
 		$scope.majorAssemblyId = $stateParams.majorAssembly;
 
 		$scope.loading = false
