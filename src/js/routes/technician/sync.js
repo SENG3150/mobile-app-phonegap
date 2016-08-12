@@ -2,13 +2,13 @@ angular
 	.module('joy-global')
 	.config(['$stateProvider', function ($stateProvider) {
 		$stateProvider
-			.state('technician-settings-index', {
+			.state('technician-sync-index', {
 				parent: 'technician',
-				url: '/settings',
+				url: '/sync',
 				views: {
-					'settings': {
-						templateUrl: 'views/technician/settings/index.html',
-						controller: 'TechnicianSettingsControllerIndex'
+					'sync': {
+						templateUrl: 'views/technician/sync/index.html',
+						controller: 'TechnicianSyncControllerIndex'
 					}
 				},
 				resolve: {

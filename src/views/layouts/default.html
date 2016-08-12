@@ -1,7 +1,7 @@
 <header class="bar bar-nav" page-header></header>
 
 <div class="content p-w-m">
-    <div class="m-b m-t">
-        <div ui-view></div>
-    </div>
+    <div ng-repeat="view in $views" ui-view="{{ view }}" ng-show="$activeView == view"></div>
 </div>
+
+<nav class="bar bar-tab" page-footer></nav>

@@ -15,7 +15,7 @@ angular
 					loggedIn: ['AuthService', function (AuthService) {
 						return AuthService.checkPermissions(true);
 					}],
-					layoutService: ['LayoutService', function(LayoutService) {
+					layoutService: ['LayoutService', function (LayoutService) {
 						return LayoutService.reset();
 					}]
 				}
@@ -28,7 +28,7 @@ angular
 					loggedIn: ['AuthService', function (AuthService) {
 						return AuthService.checkPermissions(true);
 					}],
-					layoutService: ['LayoutService', function(LayoutService) {
+					layoutService: ['LayoutService', function (LayoutService) {
 						return LayoutService.reset();
 					}]
 				}

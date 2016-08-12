@@ -5,13 +5,17 @@ angular
 			.state('technician-inspections-index', {
 				parent: 'technician',
 				url: '/inspections',
-				templateUrl: 'views/technician/inspections/index.html',
-				controller: 'TechnicianInspectionsControllerIndex',
+				views: {
+					'home': {
+						templateUrl: 'views/technician/inspections/index.html',
+						controller: 'TechnicianInspectionsControllerIndex'
+					}
+				},
 				resolve: {
 					loggedIn: ['AuthService', function (AuthService) {
 						return AuthService.checkPermissions(true);
 					}],
-					layoutService: ['LayoutService', function(LayoutService) {
+					layoutService: ['LayoutService', function (LayoutService) {
 						return LayoutService.reset();
 					}]
 				}

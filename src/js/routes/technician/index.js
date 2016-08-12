@@ -5,8 +5,12 @@ angular
 			.state('technician-index', {
 				parent: 'technician',
 				url: '/',
-				templateUrl: 'views/technician/index/index.html',
-				controller: 'TechnicianIndexControllerIndex',
+				views: {
+					'home': {
+						templateUrl: 'views/technician/index/index.html',
+						controller: 'TechnicianIndexControllerIndex'
+					}
+				},
 				resolve: {
 					loggedIn: ['AuthService', function (AuthService) {
 						return AuthService.checkPermissions(true);

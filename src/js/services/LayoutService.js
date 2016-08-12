@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.service('LayoutService', ['PageHeaderService', '$rootScope', '$state', function (PageHeaderService, $rootScope, $state) {
+	.service('LayoutService', ['PageHeaderService', 'PageFooterService', '$rootScope', '$state', function (PageHeaderService, PageFooterService, $rootScope, $state) {
 		this.title = null;
 
 		this.setTitle = function (title, pageHeader) {
@@ -29,6 +29,12 @@ angular
 			return this.pageHeader;
 		};
 
+		this.pageFooter = PageFooterService;
+
+		this.getPageFooter = function () {
+			return this.pageFooter;
+		};
+
 		this.fireUpdatedEvent = function () {
 			$rootScope.$broadcast('layoutService.updated');
 
@@ -43,6 +49,7 @@ angular
 
 		this.reset = function () {
 			this.title = null;
+
 			this.getPageHeader().reset();
 
 			this.fireUpdatedEvent();

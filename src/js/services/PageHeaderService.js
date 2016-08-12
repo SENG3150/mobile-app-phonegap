@@ -140,6 +140,12 @@ angular
 				listener();
 			});
 
+			this.listeners = {
+				onUpdated: [],
+				onLeftClicked: [],
+				onRightClicked: []
+			};
+
 			this.fireUpdatedEvent();
 
 			return this;
