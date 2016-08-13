@@ -13,6 +13,7 @@
     Aluminium: <input class="form-input" type="text" name="aluminium-input" placeholder="{{ oilTest.aluminium }}"><br>
     Water: <input class="form-input" type="text" name="water-input" placeholder="{{ oilTest.water }}"><br>
     Viscosity: <input class="form-input" type="text" name="viscosity-input" placeholder="{{ oilTest.viscosity }}"><br>
+    Comment: <input class="form-input" type="text" name="comment-input" placeholder="Comment"><br>
 
     <button class="form-button-0" ng-click="showComments = !showComments">Comments</button>
     <div ng-if="showComments == true">
@@ -32,7 +33,7 @@
     <button ng-click="changeOilStatus(2)" class="form-button-0" ng-if="oilStatus != 2">Issue</button>
     <button class="form-button-3" ng-if="oilStatus == 3">Replace</button>
     <button ng-click="changeOilStatus(3)" class="form-button-0" ng-if="oilStatus != 3">Replace</button>
-
+    <div ng-if="oilStatus != 1">Action to be taken:</div> <input class="form-input" type="text" name="action-input" ng-if="oilStatus != 1" placeholder="Action to be taken"><br>
 
 </div>
 
