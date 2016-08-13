@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$interval', '$q', function ($scope, LayoutService, $interval, $q) {
+	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$interval', '$q', 'NotificationService', function ($scope, LayoutService, $interval, $q, NotificationService) {
 		LayoutService.setTitle('Sync Your Data');
 
 		$scope.uploads = [
@@ -141,7 +141,7 @@ angular
 				});
 
 				$q.all(downloadPromises).then(function() {
-					// Completed
+					NotificationService.alert('Your data has been synced successfully.', 'Done');
 				});
 			});
 		};

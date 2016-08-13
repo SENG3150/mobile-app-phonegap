@@ -1,17 +1,11 @@
 angular
 	.module('joy-global')
-	.config(['$urlRouterProvider', '$locationProvider', '$authProvider', 'ENV', 'RestangularProvider', 'PGDeviceReadyProvider', function ($urlRouterProvider, $locationProvider, $authProvider, ENV, RestangularProvider, PGDeviceReadyProvider) {
+	.config(['$urlRouterProvider', '$locationProvider', '$authProvider', 'ENV', 'RestangularProvider', function ($urlRouterProvider, $locationProvider, $authProvider, ENV, RestangularProvider) {
 		RestangularProvider.setBaseUrl(ENV.apiEndpoint);
 
 		$authProvider.loginUrl = ENV.apiEndpoint + 'auth/authenticate';
 
 		$urlRouterProvider.otherwise('/');
-
-		PGDeviceReadyProvider.onReady(function () {
-			if(window.device && window.device.platform == 'iOS') {
-				window.StatusBar.overlaysWebView(false);
-			}
-		});
 	}])
 	.run(['$rootScope', '$state', '$auth', '$window', 'PGDeviceReady', 'LayoutService', 'ViewsService', '$timeout', function ($rootScope, $state, $auth, $window, PGDeviceReady, LayoutService, ViewsService, $timeout) {
 		$rootScope.$on('$stateChangeError',
@@ -52,4 +46,22 @@ angular
 		LayoutService.getPageFooter().addTab('settings', 'fa fa-fw fa-cog', 'Settings', function() {
 			ViewsService.switchView('settings');
 		});
+
+		PGDeviceReady.onReady(function () {
+			if(window.device && window.device.platform == 'iOS') {
+				window.StatusBar.overlaysWebView(false);
+			}
+		});
+
+		if (window.cordova) {
+			document.addEventListener(
+				'deviceready',
+				function() {
+					PGDeviceReady.setReady();
+				},
+				false
+			);
+		} else {
+			PGDeviceReady.setReady();
+		}
 	}]);
