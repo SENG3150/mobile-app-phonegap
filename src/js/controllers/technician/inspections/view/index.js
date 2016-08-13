@@ -3,6 +3,7 @@ angular
 	.controller('TechnicianInspectionsViewControllerIndex', ['$scope', 'Inspections', 'moment', '$stateParams', 'LayoutService', 'NotificationService', function ($scope, Inspections, moment, $stateParams, LayoutService, NotificationService) {
 		$scope.inspectionId = $stateParams.inspection;
 		$scope.loading = true;
+		$scope.showMajorAssemblies = true;
 
 		LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
 		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
