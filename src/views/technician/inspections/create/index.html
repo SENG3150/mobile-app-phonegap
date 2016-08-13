@@ -1,0 +1,20 @@
+
+<div class="text-center" ng-if="loading == true">
+    <i class="fa fa-spinner fa-spin fa-3x"></i>
+</div>
+
+<div ng-if="loading == false">
+    Select a Machine to begin Inspection:
+    <div class="dropdown">
+        <select name = "machineSelect" id = "machineSelect" ng-model = "selectedMachine"
+            ng-options="machine as machine.id for machine in machines">
+            <option value = "">--Select--</option>
+            <option ng-repeat="machine in machines" value= {{machine.id}}>
+                Machine: {{machine.id}}
+            </option>
+        </select>
+    </div>
+
+    {{selectedMachine}}
+
+</div>
