@@ -19,5 +19,23 @@ angular
 						return LayoutService.reset();
 					}]
 				}
+			})
+			.state('technician-settings-credits', {
+				parent: 'technician',
+				url: '/settings/credits',
+				views: {
+					'settings': {
+						templateUrl: 'views/technician/settings/credits.html',
+						controller: 'TechnicianSettingsControllerCredits'
+					}
+				},
+				resolve: {
+					loggedIn: ['AuthService', function (AuthService) {
+						return AuthService.checkPermissions(true);
+					}],
+					layoutService: ['LayoutService', function (LayoutService) {
+						return LayoutService.reset();
+					}]
+				}
 			});
 	}]);
