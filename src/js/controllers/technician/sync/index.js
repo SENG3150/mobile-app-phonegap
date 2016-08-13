@@ -81,8 +81,6 @@ angular
 				.then(function(data) {
 					InspectionsStorage.reset();
 					InspectionsStorage.setList(data);
-
-					console.log(InspectionsStorage.getStorage());
 				});
 
 			$scope.reset();
