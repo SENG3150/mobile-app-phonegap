@@ -1,8 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsCreateControllerIndex', ['$scope', 'Machines', 'moment', 'LayoutService', '$stateParams', 'NotificationService', function ($scope, Machines, moment, LayoutService, $stateParams, NotificationService) {
-		$scope.machineId = $stateParams.machine;
-		$scope.loading = true;
+	.controller('TechnicianInspectionsCreateControllerIndex', ['$scope', 'Machines', 'moment', 'LayoutService', 'NotificationService', function ($scope, Machines, moment, LayoutService, NotificationService) {
 
 		LayoutService.setTitle(['Create Inspection', 'Machines']);
 		LayoutService.getPageHeader().setBackButton(function () {
@@ -13,15 +11,13 @@ angular
 		});
 
 		Machines
-			.one($scope.machineId)
-			.get({
-				include: 'model,model.majorAssemblies,model.majorAssemblies.subAssemblies'
+			.getList({
+				include: 'model'
 			})
 			.then(function (data) {
 				$scope.loading = false;
-				$scope.machine = data;
+				$scope.machines = data;
 			});
-
 
 		$scope.moment = moment;
 	}]);
