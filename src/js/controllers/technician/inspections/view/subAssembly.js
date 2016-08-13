@@ -22,8 +22,9 @@ angular
                         // Find Sub-Assembly
                         angular.forEach(majorAssembly.subAssemblies, function(subAssembly) {
                             if(subAssembly.id == $scope.subAssemblyId) {
-                                // You've got a match
                                 $scope.subAssembly = subAssembly;
+                                $scope.oilTest = subAssembly.oilTest;
+                                console.log($scope.oilTest)
                                 $scope.subAssemblyName = subAssembly.subAssembly.name;
                                 LayoutService.setTitle([ $scope.subAssemblyName ]);
                             }

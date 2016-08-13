@@ -2,3 +2,20 @@
     <i class="fa fa-spinner fa-spin fa-3x"></i>
 </div>
 
+<div ng-if="oilTest != null">
+    Lead: <input class="form-input" type="text" name="lead-input" placeholder="{{ oilTest.lead }}"><br>
+    Copper: <input class="form-input" type="text" name="copper-input" placeholder="{{ oilTest.copper }}"><br>
+    Tin: <input class="form-input" type="text" name="tin-input" placeholder="{{ oilTest.tin }}"><br>
+    Iron: <input class="form-input" type="text" name="iron-input" placeholder="{{ oilTest.iron }}"><br>
+    Pq90: <input class="form-input" type="text" name="pq90-input" placeholder="{{ oilTest.pq90 }}"><br>
+    Silicon: <input class="form-input" type="text" name="silicon-input" placeholder="{{ oilTest.silicon }}"><br>
+    Sodium: <input class="form-input" type="text" name="sodium-input" placeholder="{{ oilTest.sodium }}"><br>
+    Aluminium: <input class="form-input" type="text" name="aluminium-input" placeholder="{{ oilTest.aluminium }}"><br>
+    Water: <input class="form-input" type="text" name="water-input" placeholder="{{ oilTest.water }}"><br>
+    Viscosity: <input class="form-input" type="text" name="viscosity-input" placeholder="{{ oilTest.viscosity }}"><br>
+
+    Comments: Not sure how I want to display comments yet. <br>
+    Photos: Not sure how I want to display photos yet either <br>
+    Sub-Assembly Status: {{ oilTest.actionItem.status }}
+    
+</div>
