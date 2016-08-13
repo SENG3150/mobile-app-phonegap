@@ -19,12 +19,9 @@ angular
 			})
 			.then(function (data) {
 				$scope.loading = false;
-
 				$scope.machine = data;
-				console.log(data);
 			});
 
 
 		$scope.moment = moment;
-
 	}]);
