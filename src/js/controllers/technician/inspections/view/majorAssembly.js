@@ -6,7 +6,7 @@ angular
         $scope.majorAssemblyId = $stateParams.majorAssembly;
         $scope.moment = moment;
 
-        LayoutService.setTitle(['Major Assemblies']);
+
         LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-view-index', { inspection: $scope.inspectionId }));
 
         //Select the specific inspection
@@ -16,18 +16,13 @@ angular
                 include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly'
             })
             .then(function (data) {
-                $scope.inspection = data;
+                angular.forEach(data.majorAssemblies, function(majorAssembly) {
+                    if(majorAssembly.id == $scope.majorAssemblyId) {
+                        $scope.majorAssembly = majorAssembly;
+                        $scope.majorAssemblyName = majorAssembly.majorAssembly.name;
+                        LayoutService.setTitle([ $scope.majorAssemblyName ]);
+                    }
+                });
+                $scope.loading = false
             });
-
-        //Select the specific major Assembly
-        angular.forEach($scope.inspection.majorAssemblies, function(majorAssembly) {
-            console.log(majorAssembly.id);
-            if(majorAssembly.id == $scope.majorAssemblyId) {
-                // You've got a match
-                console.log(majorAssembly);
-                console.log("DOG");
-                $scope.majorAssembly = majorAssembly;
-            }
-        });
-		$scope.loading = false
 	}]);
