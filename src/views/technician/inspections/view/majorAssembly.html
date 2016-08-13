@@ -2,3 +2,13 @@
     <i class="fa fa-spinner fa-spin fa-3x"></i>
 </div>
 
+<div ng-if="loading == false">
+    Sub-Assemblies:
+    <ul class="table-view">
+        <li class="table-view-cell" ng-repeat="subAssembly in majorAssembly.subAssemblies">
+            <a ui-sref="technician-inspections-view-subAssembly({ inspection: {{ inspectionId }}, subAssembly: {{subAssembly.id}} })" class="navigate-right">
+                Sub-Assembly: {{ subAssembly.subAssemblies.name }}
+            </a>
+        </li>
+    </ul>
+</div>
