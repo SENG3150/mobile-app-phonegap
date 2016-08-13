@@ -22,14 +22,16 @@
     </div>
     <br>
     Photos: Not sure how I want to display photos yet either <br>
-    Sub-Assembly Status:
+    Sub-Assembly Status:<br>
     <button class="form-button-1" ng-if="oilStatus == 1">OK</button>
     <button ng-click="changeOilStatus(1)" class="form-button-0" ng-if="oilStatus != 1">OK</button>
     <button class="form-button-2" ng-if="oilStatus == 2">Issue</button>
     <button ng-click="changeOilStatus(2)" class="form-button-0" ng-if="oilStatus != 2">Issue</button>
     <button class="form-button-3" ng-if="oilStatus == 3">Replace</button>
     <button ng-click="changeOilStatus(3)" class="form-button-0" ng-if="oilStatus != 3">Replace</button>
-    <div ng-if="oilStatus != 1">Action to be taken:</div><br><input class="form-input" type="text" name="action-input" ng-if="oilStatus != 1" placeholder="Action to be taken"><br>
+    <div ng-if="oilStatus != 1">
+        Action to be taken:<input class="form-input" type="text" name="action-input" placeholder="Action to be taken">
+    </div>
 
 </div>
 
