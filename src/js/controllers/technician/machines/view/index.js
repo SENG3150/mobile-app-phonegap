@@ -6,7 +6,7 @@ angular
 
         LayoutService.setTitle(['Machine ' + $scope.machineId, 'Machines']);
         LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-machines-index'));
-        LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-plus', 'Create', LayoutService.redirect('technician-inspections-create-index'));
+        LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-plus', 'Create', (LayoutService.redirect('technician-inspections-create-index', { machine: $scope.machineId })));
 
         $scope.moment = moment;
 
@@ -21,4 +21,4 @@ angular
                 $scope.machine = data;
                 $scope.majorAssemblies = $scope.machine.model.majorAssemblies;
             });
-    }]);
+}]);
