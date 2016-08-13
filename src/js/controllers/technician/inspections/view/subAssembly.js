@@ -24,7 +24,8 @@ angular
                             if(subAssembly.id == $scope.subAssemblyId) {
                                 $scope.subAssembly = subAssembly;
                                 $scope.oilTest = subAssembly.oilTest;
-                                console.log($scope.oilTest)
+                                $scope.machineGeneralTest = subAssembly.machineGeneralTest;
+                                $scope.wearTest = subAssembly.wearTest;
                                 $scope.subAssemblyName = subAssembly.subAssembly.name;
                                 LayoutService.setTitle([ $scope.subAssemblyName ]);
                             }

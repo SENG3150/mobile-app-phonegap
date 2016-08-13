@@ -17,5 +17,19 @@
     Comments: Not sure how I want to display comments yet. <br>
     Photos: Not sure how I want to display photos yet either <br>
     Sub-Assembly Status: {{ oilTest.actionItem.status }}
-    
+
+</div>
+
+<div ng-if="machineGeneralTest != null">
+    Test Type: {{ machineGeneralTest.testType }}
+</div>
+
+<div ng-if="wearTest != null">
+    Description: {{ wearTest.description }}
+
+    <ul class="table-view">
+        <li class="table-view-cell" ng-repeat="uniqueDetails in wearTest.uniqueDetails">
+            Unique Detail: {{ uniqueDetails }}
+        </li>
+    </ul>
 </div>
