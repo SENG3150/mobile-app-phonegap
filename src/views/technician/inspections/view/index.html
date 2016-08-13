@@ -1,16 +1,11 @@
-<div class="text-center" ng-if="loading == true">
-    <i class="fa fa-spinner fa-spin fa-3x"></i>
-</div>
-
-<div ng-if="loading == false">
-    Scheduled Date: {{ moment(inspection.timeScheduled).format("DD/MM/YYYY hh:mm") }} <br>
-    Machine Name: {{ inspection.machine.model.name}} <br>
-    <button class="form-button-0" ng-click="showMajorAssemblies = !showMajorAssemblies">Major Assemblies</button>
-    <ul class="table-view" ng-if="showMajorAssemblies == true">
-        <li class="table-view-cell" ng-repeat="majorAssembly in inspection.majorAssemblies">
-            <a ui-sref="technician-inspections-view-majorAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{majorAssembly.id}} })" class="navigate-right">
-                {{ majorAssembly.majorAssembly.name }}
-            </a>
-        </li>
-    </ul>
-</div>
+Scheduled Date: {{ moment(inspection.timeScheduled).format("DD/MM/YYYY hh:mm") }} <br>
+Machine Name: {{ inspection.machine.model.name}} <br>
+<button class="form-button-0" ng-click="showMajorAssemblies = !showMajorAssemblies">Major Assemblies</button>
+<ul class="table-view" ng-if="showMajorAssemblies == true">
+    <li class="table-view-cell" ng-repeat="majorAssembly in inspection.majorAssemblies">
+        <a ui-sref="technician-inspections-view-majorAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{majorAssembly.id}} })"
+           class="navigate-right">
+            {{ majorAssembly.majorAssembly.name }}
+        </a>
+    </li>
+</ul>

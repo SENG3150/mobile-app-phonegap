@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$interval', '$q', 'NotificationService', function ($scope, LayoutService, $interval, $q, NotificationService) {
+	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$interval', '$q', 'NotificationService', 'Inspections', 'InspectionsStorage', function ($scope, LayoutService, $interval, $q, NotificationService, Inspections, InspectionsStorage) {
 		LayoutService.setTitle('Sync Your Data');
 
 		$scope.uploads = [
@@ -74,6 +74,17 @@ angular
 		};
 
 		$scope.restart = function () {
+			Inspections
+				.getList({
+					include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly'
+				})
+				.then(function(data) {
+					InspectionsStorage.reset();
+					InspectionsStorage.setList(data);
+
+					console.log(InspectionsStorage.getStorage());
+				});
+
 			$scope.reset();
 
 			var uploadPromises = [];
