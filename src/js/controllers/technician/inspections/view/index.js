@@ -21,6 +21,5 @@ angular
 				$scope.loading = false;
 
 				$scope.inspection = data;
-                $scope.majorAssemblies = $scope.inspection.majorAssemblies;
 			});
 	}]);
