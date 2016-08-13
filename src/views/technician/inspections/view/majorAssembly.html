@@ -3,10 +3,9 @@
 </div>
 
 <div ng-if="loading == false">
-    Sub-Assemblies:
     <ul class="table-view">
         <li class="table-view-cell" ng-repeat="subAssembly in majorAssembly.subAssemblies">
-            <a ui-sref="technician-inspections-view-subAssembly({ inspection: {{ inspectionId }}, subAssembly: {{subAssembly.id}} })" class="navigate-right">
+            <a ui-sref="technician-inspections-view-subAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{majorAssembly.id}}, subAssembly: {{subAssembly.id}} })" class="navigate-right">
                 {{ subAssembly.subAssembly.name }}
             </a>
         </li>

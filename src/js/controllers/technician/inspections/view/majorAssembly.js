@@ -8,7 +8,7 @@ angular
 
 
         LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-view-index', { inspection: $scope.inspectionId }));
-        
+
         //Select the specific inspection
         Inspections
             .one($scope.inspectionId)
