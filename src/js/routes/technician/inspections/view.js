@@ -6,7 +6,7 @@ angular
 				parent: 'technician',
 				url: '/inspections/:inspection',
 				views: {
-					'home': {
+					'inspections': {
 						templateUrl: 'views/technician/inspections/view/index.html',
 						controller: 'TechnicianInspectionsViewControllerIndex'
 					}
@@ -24,7 +24,7 @@ angular
 				parent: 'technician',
 				url: '/inspections/:inspection/:majorAssembly',
 				views: {
-					'home': {
+					'inspections': {
 						templateUrl: 'views/technician/inspections/view/majorAssembly.html',
 						controller: 'TechnicianInspectionsViewControllerMajorAssembly'
 					}
@@ -42,7 +42,7 @@ angular
 				parent: 'technician',
 				url: '/inspections/:inspection/:majorAssembly/:subAssembly',
 				views: {
-					'home': {
+					'inspections': {
 						templateUrl: 'views/technician/inspections/view/subAssembly.html',
 						controller: 'TechnicianInspectionsViewControllerSubAssembly'
 					}

@@ -6,7 +6,11 @@ angular
 				url: '/',
 				controller: ['$state', 'AuthService', function ($state, AuthService) {
 					if (AuthService.getUser() != null && AuthService.getUser().type != null) {
-						$state.go(AuthService.getUser().type + '-index');
+						if(AuthService.getUser().type == 'technician') {
+							$state.go('technician-inspections-index');
+						} else {
+							$state.go(AuthService.getUser().type + '-index');
+						}
 					} else {
 						$state.go('auth.login');
 					}

@@ -19,7 +19,8 @@ angular
 
 		LayoutService.getPageFooter().reset();
 
-		ViewsService.addView('home', 'technician-index');
+		ViewsService.addView('inspections', 'technician-inspections-index');
+		ViewsService.addView('machines', 'technician-machines-index');
 		ViewsService.addView('sync', 'technician-sync-index');
 		ViewsService.addView('settings', 'technician-settings-index');
 
@@ -30,13 +31,19 @@ angular
 				ViewsService.setCurrentView('settings');
 			} else if(currentStateName.indexOf('sync') != -1) {
 				ViewsService.setCurrentView('sync');
+			} else if(currentStateName.indexOf('machines') != -1) {
+				ViewsService.setCurrentView('machines');
 			} else {
-				ViewsService.setCurrentView('home');
+				ViewsService.setCurrentView('inspections');
 			}
 		}, 50);
 
-		LayoutService.getPageFooter().addTab('home', 'fa fa-fw fa-home', 'Home', function() {
-			ViewsService.switchView('home');
+		LayoutService.getPageFooter().addTab('inspections', 'fa fa-fw fa-wrench', 'Inspections', function() {
+			ViewsService.switchView('inspections');
+		});
+
+		LayoutService.getPageFooter().addTab('machines', 'fa fa-fw fa-car', 'Machines', function() {
+			ViewsService.switchView('machines');
 		});
 
 		LayoutService.getPageFooter().addTab('sync', 'fa fa-fw fa-download', 'Sync', function() {

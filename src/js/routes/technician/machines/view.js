@@ -6,7 +6,7 @@ angular
 				parent: 'technician',
 				url: '/machines/:machine',
 				views: {
-					'home': {
+					'machines': {
 						templateUrl: 'views/technician/machines/view/index.html',
 						controller: 'TechnicianMachinesViewControllerIndex'
 					}

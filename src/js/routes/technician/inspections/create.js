@@ -6,7 +6,7 @@ angular
 				parent: 'technician',
 				url: '/inspections/create',
 				views: {
-					'home': {
+					'inspections': {
 						templateUrl: 'views/technician/inspections/create/index.html',
 						controller: 'TechnicianInspectionsCreateControllerIndex'
 					}
@@ -24,7 +24,7 @@ angular
 				parent: 'technician',
 				url: '/inspections/create/:majorAssembly',
 				views: {
-					'home': {
+					'inspections': {
 						templateUrl: 'views/technician/inspections/create/majorAssembly.html',
 						controller: 'TechnicianInspectionsCreateControllerMajorAssembly'
 					}

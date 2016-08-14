@@ -1,14 +1,6 @@
 angular
 	.module('joy-global')
 	.controller('AuthControllerLogin', ['$scope', 'AuthService', '$state', '$stateParams', '$window', function ($scope, AuthService, $state, $stateParams, $window) {
-		var toastr = {
-			clear: function() {},
-			info: function() {},
-			warning: function() {},
-			error: function() {},
-			success: function() {}
-		};
-
 		$scope.username = '';
 		$scope.password = '';
 		$scope.type = 'technician';
@@ -20,7 +12,6 @@ angular
 
 		$scope.login = function () {
 			if ($scope.validate() == true) {
-				toastr.info('Attempting to login.');
 				var credentials = {
 					username: $scope.username,
 					password: $scope.password,
@@ -31,9 +22,7 @@ angular
 					.authenticate(credentials)
 					.then(
 						function (user) {
-							toastr.clear();
-							toastr.success('Welcome to Joy Global.');
-
+							// Called when user is logged in successfully
 							if ($stateParams.r) {
 								$window.location.href = $stateParams.r;
 							} else {
@@ -41,12 +30,10 @@ angular
 							}
 						},
 						function () {
-							toastr.clear();
-							toastr.error('Your credentials were incorrect.', 'Error');
+							// Called when there is an error
 						},
 						function () {
-							toastr.clear();
-							toastr.info('Loading your account information now...', 'You were logged in successfully.');
+							// Called when there is some progress with their login
 						}
 					);
 			}
@@ -56,15 +43,13 @@ angular
 
 		$scope.validate = function () {
 			if ($scope.username == '' || $scope.username == null) {
-				toastr.clear();
-				toastr.error('You must provide your Username.', 'Error');
+				// Username is empty
 
 				return false;
 			}
 
 			if ($scope.password == '') {
-				toastr.clear();
-				toastr.warning('You must provide your Password.', 'Error');
+				// Password is empty
 
 				return false;
 			}

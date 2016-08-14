@@ -4,7 +4,6 @@ angular
         $scope.loading = true;
 
         LayoutService.setTitle(['Machines']);
-        LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-index'));
 
         Machines
             .getList({
