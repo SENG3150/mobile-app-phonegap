@@ -1,6 +1,6 @@
-<h4 class="text-center">Uploads</h4>
+<h4 class="text-center" ng-if="uploads.length > 0">Uploads</h4>
 
-<div class="card">
+<div class="card" ng-if="uploads.length > 0">
     <ul class="table-view">
         <li class="table-view-cell p-r-none" ng-repeat="upload in uploads">
             {{ upload.name }}
@@ -10,20 +10,21 @@
             <div class="pull-right text-right p-r-sm">
                 <i class="fa fa-fw fa-spinner fa-spin" ng-show="upload.status == 'uploading'"></i>
                 <i class="fa fa-fw fa-check" ng-show="upload.status == 'completed'"></i>
+                <i class="fa fa-fw fa-remove" ng-show="upload.status == 'error'"></i>
             </div>
 
             <div class="m-r-sm m-t-sm">
                 <div class="progress" style="margin-bottom: 0; width: 100%;">
-                    <div class="progress-bar" ng-class="{true: 'progress-bar-striped active', false: 'progress-bar-success'}[upload.status == 'uploading']" ng-style="upload.style"></div>
+                    <div class="progress-bar" ng-class="{'uploading': 'progress-bar-striped active', 'completed': 'progress-bar-success', 'error': 'progress-bar-danger'}[upload.status]" ng-style="upload.style"></div>
                 </div>
             </div>
         </li>
     </ul>
 </div>
 
-<h4 class="text-center">Downloads</h4>
+<h4 class="text-center" ng-if="downloads.length > 0">Downloads</h4>
 
-<div class="card">
+<div class="card" ng-if="downloads.length > 0">
     <ul class="table-view">
         <li class="table-view-cell p-r-none" ng-repeat="download in downloads">
             {{ download.name }}
@@ -31,11 +32,12 @@
             <div class="pull-right text-right p-r-sm">
                 <i class="fa fa-fw fa-spinner fa-spin" ng-show="download.status == 'downloading'"></i>
                 <i class="fa fa-fw fa-check" ng-show="download.status == 'completed'"></i>
+                <i class="fa fa-fw fa-remove" ng-show="download.status == 'error'"></i>
             </div>
 
             <div class="m-r-sm m-t-sm">
                 <div class="progress" style="margin-bottom: 0; width: 100%;">
-                    <div class="progress-bar" ng-class="{true: 'progress-bar-striped active', false: 'progress-bar-success'}[download.status == 'downloading']" ng-style="download.style"></div>
+                    <div class="progress-bar" ng-class="{'downloading': 'progress-bar-striped active', 'completed': 'progress-bar-success', 'error': 'progress-bar-danger'}[download.status]" ng-style="download.style"></div>
                 </div>
             </div>
         </li>

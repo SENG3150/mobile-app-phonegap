@@ -38,14 +38,20 @@ angular
 					getStorage: function () {
 						return $localStorage.storage[name];
 					},
-					reset: function () {
-						$localStorage.storage[name] = {
-							synced: [],
-							modified: []
-						};
+					reset: function (modified) {
+						$localStorage.storage[name].synced = [];
+
+						if (typeof modified != 'undefined' && modified == true) {
+							$localStorage.storage[name].modified = [];
+						}
+
+						return this;
 					},
 					getList: function (includeModified) {
 						return mergeItems(includeModified);
+					},
+					getModified: function () {
+						return $localStorage.storage[name].modified;
 					},
 					get: function (id, includeModified) {
 						var items = this.getList(includeModified);
@@ -88,7 +94,7 @@ angular
 					},
 					set: function (item, modified) {
 						if (typeof modified == 'undefined') {
-							modified = false;
+							modified = true;
 						}
 
 						if (item.id == false) {

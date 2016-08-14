@@ -1,165 +1,122 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$interval', '$q', 'NotificationService', 'Inspections', 'InspectionsStorage', function ($scope, LayoutService, $interval, $q, NotificationService, Inspections, InspectionsStorage) {
+	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$timeout', '$q', 'NotificationService', 'SyncService', 'TechniciansStorage', function ($scope, LayoutService, $timeout, $q, NotificationService, SyncService, TechniciansStorage) {
 		LayoutService.setTitle('Sync Your Data');
 
-		$scope.uploads = [
-			{
-				name: 'Inspections',
-				status: 'stopped',
-				count: 0,
-				progress: 0,
-				style: {
-					width: '0%'
-				}
-			}
-		];
-
-		$scope.downloads = [
-			{
-				name: 'Models',
-				status: 'stopped',
-				progress: 0,
-				style: {
-					width: '0%'
-				}
-			},
-			{
-				name: 'Machines',
-				status: 'stopped',
-				progress: 0,
-				style: {
-					width: '0%'
-				}
-			},
-			{
-				name: 'Inspections',
-				status: 'stopped',
-				progress: 0,
-				style: {
-					width: '0%'
-				}
-			},
-			{
-				name: 'Technicians',
-				status: 'stopped',
-				progress: 0,
-				style: {
-					width: '0%'
-				}
-			},
-			{
-				name: 'Domain Experts',
-				status: 'stopped',
-				progress: 0,
-				style: {
-					width: '0%'
-				}
-			}
-		];
+		$scope.uploads = [];
+		$scope.downloads = [];
 
 		$scope.reset = function () {
-			angular.forEach($scope.uploads, function (upload) {
-				upload.count = getRandomArbitrary(1, 6);
-				upload.progress = 0;
-				upload.style.width = '0%';
-				upload.status = 'stopped';
-			});
+			$scope.uploads = [];
+			$scope.downloads = [];
 
-			angular.forEach($scope.downloads, function (download) {
-				download.progress = 0;
-				download.style.width = '0%';
-				download.status = 'stopped';
+			angular.forEach(SyncService.getItems(), function (item) {
+				if (item.storage.getModified().length > 0) {
+					$scope.uploads.push({
+						name: item.name,
+						status: 'stopped',
+						count: item.storage.getModified().length,
+						progress: 0,
+						style: {
+							width: '0%'
+						}
+					});
+				}
+
+				$scope.downloads.push({
+					name: item.name,
+					status: 'stopped',
+					progress: 0,
+					style: {
+						width: '0%'
+					}
+				});
 			});
 		};
 
 		$scope.restart = function () {
-			Inspections
-				.getList({
-					include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly'
-				})
-				.then(function(data) {
-					InspectionsStorage.reset();
-					InspectionsStorage.setList(data);
-				});
-
 			$scope.reset();
 
-			var uploadPromises = [];
+			// Add a 600 millisecond timeout so that the progress bar animation will reset
+			$timeout(
+				function () {
+					var uploadPromises = [];
 
-			angular.forEach($scope.uploads, function (upload) {
-				upload.status = 'uploading';
+					angular.forEach($scope.uploads, function (upload) {
+						var promise = SyncService.upload(upload.name);
 
-				var deferred = $q.defer();
+						uploadPromises.push(promise);
 
-				var interval = $interval(
-					function () {
-						upload.progress += getRandomArbitrary(0, 5);
-
-						if (upload.progress > 100.0) {
-							upload.count--;
-
-							if(upload.count <= 1) {
+						promise
+							.then(function (output) {
+								upload.status = 'completed';
 								upload.count = 0;
 								upload.progress = 100.0;
-								upload.status = 'completed';
+								upload.style.width = '100.0%';
+							}, function (error) {
+								upload.status = 'error';
+								upload.error = error;
+								upload.count = 0;
+								upload.progress = 100.0;
+								upload.style.width = '100.0%';
+							}, function (output) {
+								upload.status = 'uploading';
+								upload.count = output.count;
+								upload.progress = output.progress;
+								upload.style.width = output.progress + '%';
+							});
+					});
 
-								$interval.cancel(interval);
+					$q
+						.all(uploadPromises)
+						.then(function () {
+							var downloadPromises = [];
 
-								deferred.resolve();
-							} else {
-								upload.progress = 0.0;
-							}
-						}
+							angular.forEach($scope.downloads, function (download) {
+								var promise = SyncService.download(download.name);
 
-						upload.style.width = upload.progress + '%';
-					},
-					50
-				);
+								downloadPromises.push(promise);
 
-				uploadPromises.push(deferred.promise);
-			});
+								promise
+									.then(function (data) {
+										download.status = 'completed';
+										download.progress = 100.0;
+										download.style.width = '100.0%';
+									}, function () {
+										download.status = 'error';
+									}, function (progress) {
+										download.status = 'downloading';
+										download.progress = progress;
+										download.style.width = progress + '%';
+									});
+							});
 
-			$q.all(uploadPromises).then(function() {
-				var downloadPromises = [];
-
-				angular.forEach($scope.downloads, function (download) {
-					download.status = 'downloading';
-
-					var deferred = $q.defer();
-
-					var interval = $interval(
-						function () {
-							download.progress += getRandomArbitrary(0, 2);
-
-							if (download.progress > 100.0) {
-								download.progress = 100.0;
-								download.status = 'completed';
-
-								$interval.cancel(interval);
-
-								deferred.resolve();
-							}
-
-							download.style.width = download.progress + '%';
-						},
-						50
-					);
-
-					downloadPromises.push(deferred.promise);
-				});
-
-				$q.all(downloadPromises).then(function() {
-					NotificationService.alert('Your data has been synced successfully.', 'Done');
-				});
-			});
+							$q
+								.all(downloadPromises)
+								.then(function () {
+									// Add a 10 millisecond timeout so that the progress bar animations will continue regardless of the alert opening
+									$timeout(
+										function () {
+											NotificationService.alert('Your data has been synced successfully.', 'Done');
+										},
+										10
+									)
+								});
+						}, function() {
+							// Add a 10 millisecond timeout so that the progress bar animations will continue regardless of the alert opening
+							$timeout(
+								function () {
+									NotificationService.alert('There was an error while syncing your data.', 'Error');
+								},
+								10
+							)
+						});
+				},
+				600
+			);
 		};
 
 		LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-download', 'Sync', $scope.restart);
 
-		// Returns a random number between min (inclusive) and max (exclusive)
-		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-		function getRandomArbitrary(min, max) {
-			return Math.random() * (max - min) + min;
-		}
+		$scope.reset();
 	}]);
