@@ -2,6 +2,8 @@ angular
 	.module('joy-global')
 	.controller('TechnicianInspectionsCreateControllerIndex', ['$scope', 'Machines', 'moment', 'LayoutService', 'NotificationService', function ($scope, Machines, moment, LayoutService, NotificationService) {
 
+		$scope.showSubAssemblies = false;
+
 		LayoutService.setTitle(['Create Inspection', 'Machines']);
 		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
 		LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-check', 'Save', function() {
