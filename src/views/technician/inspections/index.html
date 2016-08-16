@@ -16,8 +16,9 @@
             <li class="table-view-cell" ng-repeat="inspection in incompleteInspections">
                 <a ui-sref="technician-inspections-view-index({ inspection: {{ inspection.id }}})"
                    class="navigate-right">
-                    <span ng-class="{true: 'text-bold'}[isModified(inspection)]">Inspection {{ inspection.id
-                        }}</span><br/>
+                    <span ng-class="{true: 'text-bold'}[isModified(inspection)]">Inspection {{ inspection.id }}</span>
+                    <span class="label label-primary" ng-if="moment(inspection.timeScheduled).isSame(moment(), 'day') == true">Today</span>
+                    <br/>
                     <small>
                         {{ moment(inspection.timeScheduled).format('HH:mm, ddd Do MMM YYYY') }}<br/>
                         {{ inspection.machine.name }} ({{ inspection.machine.model.name }})
@@ -30,9 +31,10 @@
         <ul class="table-view">
             <li class="table-view-cell" ng-repeat="inspection in completeInspections">
                 <a ui-sref="technician-inspections-view-index({ inspection: {{ inspection.id }}})"
-                   class="navigate-right">
-                    <span ng-class="{true: 'text-bold'}[isModified(inspection)]">Inspection {{ inspection.id
-                        }}</span><br/>
+                   class="navigate-right" ng-class="{true: 'bg-primary'}[moment(inspection.timeScheduled).isSame(moment(), 'day')]">
+                    <span ng-class="{true: 'text-bold'}[isModified(inspection)]">Inspection {{ inspection.id }}</span>
+                    <span class="label label-primary" ng-if="moment(inspection.timeScheduled).isSame(moment(), 'day') == true">Today</span>
+                    <br/>
                     <small>
                         {{ moment(inspection.timeScheduled).format('HH:mm, ddd Do MMM YYYY') }}<br/>
                         {{ inspection.machine.name }} ({{ inspection.machine.model.name }})
@@ -45,9 +47,10 @@
         <ul class="table-view">
             <li class="table-view-cell" ng-repeat="inspection in inspections">
                 <a ui-sref="technician-inspections-view-index({ inspection: {{ inspection.id }}})"
-                   class="navigate-right">
-                    <span ng-class="{true: 'text-bold'}[isModified(inspection)]">Inspection {{ inspection.id
-                        }}</span><br/>
+                   class="navigate-right" ng-class="{true: 'bg-primary'}[moment(inspection.timeScheduled).isSame(moment(), 'day')]">
+                    <span ng-class="{true: 'text-bold'}[isModified(inspection)]">Inspection {{ inspection.id }}</span>
+                    <span class="label label-primary" ng-if="moment(inspection.timeScheduled).isSame(moment(), 'day') == true">Today</span>
+                    <br/>
                     <small>
                         {{ moment(inspection.timeScheduled).format('HH:mm, ddd Do MMM YYYY') }}<br/>
                         {{ inspection.machine.name }} ({{ inspection.machine.model.name }})
