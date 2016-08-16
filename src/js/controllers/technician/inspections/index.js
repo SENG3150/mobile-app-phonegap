@@ -15,8 +15,6 @@ angular
 			return moment(inspection.timeScheduled).isAfter(moment()) == true;
 		});
 
-		$scope.incompleteInspections = [];
-
 		$scope.completeInspections = _.filter($scope.inspections, function (inspection) {
 			return inspection.timeCompleted != null;
 		});
