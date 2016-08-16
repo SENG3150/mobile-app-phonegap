@@ -91,7 +91,6 @@ var concatCoreConfig = {
 		'bower_components/angular-underscore-module/angular-underscore-module.js',
 		'bower_components/ratchet/js/modals.js',
 		'bower_components/ratchet/js/popovers.js',
-		'bower_components/ratchet/js/segmented-controllers.js',
 		'bower_components/ratchet/js/sliders.js',
 		'bower_components/ratchet/js/toggles.js'
 	],
@@ -112,7 +111,9 @@ gulp.task('concat-core', function () {
 });
 
 var concatPluginsConfig = {
-	source: [],
+	source: [
+		'src/js/plugins/segmented-controllers.js'
+	],
 	destination: 'www/js/',
 	output: 'plugins.js'
 };
@@ -122,7 +123,10 @@ gulp.task('concat-plugins', function () {
 
 	return gulp.src(config.source)
 		.pipe(concat(config.output))
-		.pipe(uglify())
+		.pipe(uglify({
+			mangle: false,
+			compress: false
+		}))
 		.pipe(gulp.dest(config.destination));
 });
 
@@ -324,6 +328,7 @@ gulp.task('watcher', function () {
 	gulp.watch(templateCacheConfig.source, ['template-cache']);
 	gulp.watch(concatCoreConfig.source, ['concat-core']);
 	gulp.watch(concatAppConfig.source, ['concat-app']);
+	gulp.watch(concatPluginsConfig.source, ['concat-plugins']);
 	gulp.watch(concatCSSConfig.source, ['concat-css']);
 	gulp.watch(themeConfig.watch, ['build-theme']);
 });
