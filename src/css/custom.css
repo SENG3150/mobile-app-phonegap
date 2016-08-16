@@ -640,6 +640,10 @@
     text-transform: capitalize;
 }
 
+.text-bold {
+    font-weight: bold;
+}
+
 .bar .btn-nav.pull-left {
     margin-left: 0;
 }

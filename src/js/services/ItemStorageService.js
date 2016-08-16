@@ -72,6 +72,19 @@ angular
 					one: function (id, includeModified) {
 						return this.get(id, includeModified);
 					},
+					isModified: function(id) {
+						var items = this.getModified();
+
+						var output = false;
+
+						angular.forEach(items, function(item) {
+							if(item.key == id) {
+								output = true;
+							}
+						});
+
+						return output;
+					},
 					setList: function (items, modified) {
 						if (typeof modified == 'undefined') {
 							modified = false;
