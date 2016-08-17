@@ -1,11 +1,64 @@
-Scheduled Date: {{ moment(inspection.timeScheduled).format("DD/MM/YYYY hh:mm") }} <br>
-Machine Name: {{ inspection.machine.model.name}} <br>
-<button class="form-button-0" ng-click="showMajorAssemblies = !showMajorAssemblies">Major Assemblies</button>
-<ul class="table-view" ng-if="showMajorAssemblies == true">
-    <li class="table-view-cell" ng-repeat="majorAssembly in inspection.majorAssemblies">
-        <a ui-sref="technician-inspections-view-majorAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{majorAssembly.id}} })"
-           class="navigate-right">
-            {{ majorAssembly.majorAssembly.name }}
-        </a>
-    </li>
-</ul>
+<div class="segmented-control">
+    <a class="control-item active" data-target="#details">
+        Details
+    </a>
+    <a class="control-item" data-target="#major-assemblies">
+        Major Assemblies
+    </a>
+    <a class="control-item" data-target="#action-items">
+        Action Items
+    </a>
+</div>
+
+<div class="card">
+    <div id="details" class="control-content active">
+        <ul class="table-view">
+            <li class="table-view-cell p-r">
+                Date
+                <span class="pull-right text-right">{{ moment(inspection.timeScheduled).format('ddd Do MMM YYYY') }}</span>
+            </li>
+            <li class="table-view-cell p-r">
+                Time
+                <span class="pull-right text-right">{{ moment(inspection.timeScheduled).format('HH:mm') }}</span>
+            </li>
+            <li class="table-view-cell table-view-divider"></li>
+            <li class="table-view-cell p-r">
+                Machine
+                <span class="pull-right text-right">{{ inspection.machine.name }}</span>
+            </li>
+            <li class="table-view-cell p-r">
+                Model
+                <span class="pull-right text-right">{{ inspection.machine.model.name }}</span>
+            </li>
+            <li class="table-view-cell table-view-divider"></li>
+            <li class="table-view-cell p-r">
+                Domain Expert
+                <span class="pull-right text-right">{{ inspection.scheduler.name }}</span>
+            </li>
+        </ul>
+    </div>
+    <div id="major-assemblies" class="control-content">
+        <ul class="table-view" ng-if="inspection.majorAssemblies.length > 0">
+            <li class="table-view-cell" ng-repeat="majorAssembly in inspection.majorAssemblies">
+                <a ui-sref="technician-inspections-view-majorAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{majorAssembly.id}} })"
+                   class="navigate-right">
+                    {{ majorAssembly.majorAssembly.name }}
+                </a>
+            </li>
+        </ul>
+        <p class="text-center p-xs" ng-if="inspection.majorAssemblies.length == 0">Currently there are no major
+            assemblies for this inspection, try syncing some on the Sync tab.</p>
+    </div>
+    <div id="action-items" class="control-content">
+        <ul class="table-view" ng-if="inspection.actionItems.length > 0">
+            <li class="table-view-cell" ng-repeat="actionItem in inspection.actionItems">
+                <a ui-sref="technician-inspections-view-majorAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{majorAssembly.id}} })"
+                   class="navigate-right">
+                    {{ majorAssembly.majorAssembly.name }}
+                </a>
+            </li>
+        </ul>
+        <p class="text-center p-xs" ng-if="inspection.actionItems.length == 0">Currently there are no action items for
+            this inspection, try syncing some on the Sync tab.</p>
+    </div>
+</div>

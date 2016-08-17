@@ -1,8 +1,10 @@
-<ul class="table-view">
-    <li class="table-view-cell" ng-repeat="subAssembly in majorAssembly.subAssemblies">
-        <a ui-sref="technician-inspections-view-subAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{majorAssembly.id}}, subAssembly: {{subAssembly.id}} })"
-           class="navigate-right">
-            {{ subAssembly.subAssembly.name }}
-        </a>
-    </li>
-</ul>
+<div class="card">
+    <ul class="table-view">
+        <li class="table-view-cell" ng-repeat="subAssembly in majorAssembly.subAssemblies">
+            <a ui-sref="technician-inspections-view-subAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{majorAssembly.id}}, subAssembly: {{subAssembly.id}} })"
+               class="navigate-right">
+                {{ subAssembly.subAssembly.name }}
+            </a>
+        </li>
+    </ul>
+</div>

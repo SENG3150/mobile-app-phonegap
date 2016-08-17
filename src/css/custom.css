@@ -762,12 +762,10 @@
 }
 
 .content {
-    margin-top: 20px;
     margin-bottom: 55px;
 }
 
 .content.plain {
-    margin-top: 0;
     margin-bottom: 0;
 }
 
@@ -1757,4 +1755,8 @@ a.label:focus {
     .col-lg-offset-0 {
         margin-left: 0;
     }
+}
+
+.segmented-control {
+    margin: 10px 10px 0;
 }

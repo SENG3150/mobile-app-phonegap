@@ -1,4 +1,4 @@
-<h4 class="text-center" ng-if="uploads.length > 0">Uploads</h4>
+<h4 class="text-center content-padded" ng-if="uploads.length > 0">Uploads</h4>
 
 <div class="card" ng-if="uploads.length > 0">
     <ul class="table-view">
@@ -15,14 +15,16 @@
 
             <div class="m-r-sm m-t-sm">
                 <div class="progress" style="margin-bottom: 0; width: 100%;">
-                    <div class="progress-bar" ng-class="{'uploading': 'progress-bar-striped active', 'completed': 'progress-bar-success', 'error': 'progress-bar-danger'}[upload.status]" ng-style="upload.style"></div>
+                    <div class="progress-bar"
+                         ng-class="{'uploading': 'progress-bar-striped active', 'completed': 'progress-bar-success', 'error': 'progress-bar-danger'}[upload.status]"
+                         ng-style="upload.style"></div>
                 </div>
             </div>
         </li>
     </ul>
 </div>
 
-<h4 class="text-center" ng-if="downloads.length > 0">Downloads</h4>
+<h4 class="text-center content-padded" ng-if="downloads.length > 0">Downloads</h4>
 
 <div class="card" ng-if="downloads.length > 0">
     <ul class="table-view">
@@ -37,12 +39,14 @@
 
             <div class="m-r-sm m-t-sm">
                 <div class="progress" style="margin-bottom: 0; width: 100%;">
-                    <div class="progress-bar" ng-class="{'downloading': 'progress-bar-striped active', 'completed': 'progress-bar-success', 'error': 'progress-bar-danger'}[download.status]" ng-style="download.style"></div>
+                    <div class="progress-bar"
+                         ng-class="{'downloading': 'progress-bar-striped active', 'completed': 'progress-bar-success', 'error': 'progress-bar-danger'}[download.status]"
+                         ng-style="download.style"></div>
                 </div>
             </div>
         </li>
     </ul>
 </div>
 
-<p>Press the button above to sync your data with the system. You will only be able to do this if you have an active
-    internet connection.</p>
+<p class="content-padded">Press the button above to sync your data with the system. You will only be able to do this if
+    you have an active internet connection.</p>
