@@ -7,7 +7,7 @@ angular
 
 		$urlRouterProvider.otherwise('/');
 	}])
-	.run(['$rootScope', '$state', '$auth', '$window', 'PGDeviceReady', 'LayoutService', 'ViewsService', '$timeout', function ($rootScope, $state, $auth, $window, PGDeviceReady, LayoutService, ViewsService, $timeout) {
+	.run(['$rootScope', '$state', '$auth', '$window', 'PGDeviceReady', 'LayoutService', 'ViewsService', '$timeout', 'NetworkInformationService', function ($rootScope, $state, $auth, $window, PGDeviceReady, LayoutService, ViewsService, $timeout, NetworkInformationService) {
 		$rootScope.$on('$stateChangeError',
 			function (event) {
 				event.preventDefault();
@@ -24,46 +24,66 @@ angular
 		ViewsService.addView('sync', 'technician-sync-index');
 		ViewsService.addView('settings', 'technician-settings-index');
 
-		$timeout(function() {
+		$timeout(function () {
 			var currentStateName = $state.current.name;
 
-			if(currentStateName.indexOf('settings') != -1) {
+			if (currentStateName.indexOf('settings') != -1) {
 				ViewsService.setCurrentView('settings');
-			} else if(currentStateName.indexOf('sync') != -1) {
+			} else if (currentStateName.indexOf('sync') != -1) {
 				ViewsService.setCurrentView('sync');
-			} else if(currentStateName.indexOf('machines') != -1) {
+			} else if (currentStateName.indexOf('machines') != -1) {
 				ViewsService.setCurrentView('machines');
 			} else {
 				ViewsService.setCurrentView('inspections');
 			}
 		}, 50);
 
-		LayoutService.getPageFooter().addTab('inspections', 'fa fa-fw fa-wrench', 'Inspections', function() {
+		LayoutService.getPageFooter().addTab('inspections', 'fa fa-fw fa-wrench', 'Inspections', function () {
 			ViewsService.switchView('inspections');
 		});
 
-		LayoutService.getPageFooter().addTab('machines', 'fa fa-fw fa-car', 'Machines', function() {
+		LayoutService.getPageFooter().addTab('machines', 'fa fa-fw fa-car', 'Machines', function () {
 			ViewsService.switchView('machines');
 		});
 
-		LayoutService.getPageFooter().addTab('sync', 'fa fa-fw fa-download', 'Sync', function() {
+		LayoutService.getPageFooter().addTab('sync', 'fa fa-fw fa-download', 'Sync', function () {
 			ViewsService.switchView('sync');
 		});
 
-		LayoutService.getPageFooter().addTab('settings', 'fa fa-fw fa-cog', 'Settings', function() {
+		LayoutService.getPageFooter().addTab('settings', 'fa fa-fw fa-cog', 'Settings', function () {
 			ViewsService.switchView('settings');
 		});
 
 		PGDeviceReady.onReady(function () {
-			if(window.device && window.device.platform == 'iOS') {
+			if (window.device && window.device.platform == 'iOS') {
 				window.StatusBar.overlaysWebView(false);
+			}
+
+			if (window.navigator.connection) {
+				NetworkInformationService.setOnline(window.navigator.connection.type != 'none');
+
+				document.addEventListener(
+					'online',
+					function () {
+						NetworkInformationService.setOnline(true);
+					},
+					false);
+
+				document.addEventListener(
+					'offline',
+					function () {
+						NetworkInformationService.setOnline(false);
+					},
+					false);
+			} else {
+				NetworkInformationService.setOnline(true);
 			}
 		});
 
 		if (window.cordova) {
 			document.addEventListener(
 				'deviceready',
-				function() {
+				function () {
 					PGDeviceReady.setReady();
 				},
 				false

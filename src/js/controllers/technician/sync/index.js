@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$timeout', '$q', 'NotificationService', 'SyncService', 'TechniciansStorage', function ($scope, LayoutService, $timeout, $q, NotificationService, SyncService, TechniciansStorage) {
+	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$timeout', '$q', 'NotificationService', 'SyncService', 'NetworkInformationService', function ($scope, LayoutService, $timeout, $q, NotificationService, SyncService, NetworkInformationService) {
 		LayoutService.setTitle('Sync Your Data');
 
 		$scope.uploads = [];
@@ -35,85 +35,89 @@ angular
 		};
 
 		$scope.restart = function () {
-			$scope.reset();
+			if (NetworkInformationService.isOnline() == true) {
+				$scope.reset();
 
-			// Add a 600 millisecond timeout so that the progress bar animation will reset
-			$timeout(
-				function () {
-					var uploadPromises = [];
+				// Add a 600 millisecond timeout so that the progress bar animation will reset
+				$timeout(
+					function () {
+						var uploadPromises = [];
 
-					angular.forEach($scope.uploads, function (upload) {
-						var promise = SyncService.upload(upload.name);
+						angular.forEach($scope.uploads, function (upload) {
+							var promise = SyncService.upload(upload.name);
 
-						uploadPromises.push(promise);
+							uploadPromises.push(promise);
 
-						promise
-							.then(function (output) {
-								upload.status = 'completed';
-								upload.count = 0;
-								upload.progress = 100.0;
-								upload.style.width = '100.0%';
-							}, function (error) {
-								upload.status = 'error';
-								upload.error = error;
-								upload.count = 0;
-								upload.progress = 100.0;
-								upload.style.width = '100.0%';
-							}, function (output) {
-								upload.status = 'uploading';
-								upload.count = output.count;
-								upload.progress = output.progress;
-								upload.style.width = output.progress + '%';
-							});
-					});
-
-					$q
-						.all(uploadPromises)
-						.then(function () {
-							var downloadPromises = [];
-
-							angular.forEach($scope.downloads, function (download) {
-								var promise = SyncService.download(download.name);
-
-								downloadPromises.push(promise);
-
-								promise
-									.then(function (data) {
-										download.status = 'completed';
-										download.progress = 100.0;
-										download.style.width = '100.0%';
-									}, function () {
-										download.status = 'error';
-									}, function (progress) {
-										download.status = 'downloading';
-										download.progress = progress;
-										download.style.width = progress + '%';
-									});
-							});
-
-							$q
-								.all(downloadPromises)
-								.then(function () {
-									// Add a 10 millisecond timeout so that the progress bar animations will continue regardless of the alert opening
-									$timeout(
-										function () {
-											NotificationService.alert('Your data has been synced successfully.', 'Done');
-										},
-										10
-									)
+							promise
+								.then(function (output) {
+									upload.status = 'completed';
+									upload.count = 0;
+									upload.progress = 100.0;
+									upload.style.width = '100.0%';
+								}, function (error) {
+									upload.status = 'error';
+									upload.error = error;
+									upload.count = 0;
+									upload.progress = 100.0;
+									upload.style.width = '100.0%';
+								}, function (output) {
+									upload.status = 'uploading';
+									upload.count = output.count;
+									upload.progress = output.progress;
+									upload.style.width = output.progress + '%';
 								});
-						}, function() {
-							// Add a 10 millisecond timeout so that the progress bar animations will continue regardless of the alert opening
-							$timeout(
-								function () {
-									NotificationService.alert('There was an error while syncing your data.', 'Error');
-								},
-								10
-							)
 						});
-				},
-				600
-			);
+
+						$q
+							.all(uploadPromises)
+							.then(function () {
+								var downloadPromises = [];
+
+								angular.forEach($scope.downloads, function (download) {
+									var promise = SyncService.download(download.name);
+
+									downloadPromises.push(promise);
+
+									promise
+										.then(function (data) {
+											download.status = 'completed';
+											download.progress = 100.0;
+											download.style.width = '100.0%';
+										}, function () {
+											download.status = 'error';
+										}, function (progress) {
+											download.status = 'downloading';
+											download.progress = progress;
+											download.style.width = progress + '%';
+										});
+								});
+
+								$q
+									.all(downloadPromises)
+									.then(function () {
+										// Add a 10 millisecond timeout so that the progress bar animations will continue regardless of the alert opening
+										$timeout(
+											function () {
+												NotificationService.alert('Your data has been synced successfully.', 'Done');
+											},
+											10
+										)
+									});
+							}, function () {
+								// Add a 10 millisecond timeout so that the progress bar animations will continue regardless of the alert opening
+								$timeout(
+									function () {
+										NotificationService.alert('There was an error while syncing your data.', 'Error');
+									},
+									10
+								)
+							});
+					},
+					600
+				);
+			} else {
+				NotificationService.alert('You must have an active internet connection to sync your data with the system.', 'Error');
+			}
 		};
 
 		LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-download', 'Sync', $scope.restart);
