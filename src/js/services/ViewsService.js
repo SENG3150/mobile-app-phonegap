@@ -51,8 +51,6 @@ angular
 		};
 
 		$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams) {
-			console.log(event, toState, toParams);
-
 			if(self.getCurrentView() != null) {
 				self.views[self.getCurrentView()].history.push([toState, toParams]);
 			}
