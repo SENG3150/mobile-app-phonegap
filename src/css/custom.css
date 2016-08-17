@@ -766,6 +766,11 @@
     margin-bottom: 55px;
 }
 
+.content.plain {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .form-button-0 {
     background-color: #e7e7e7; /* Grey */
     border: none;
