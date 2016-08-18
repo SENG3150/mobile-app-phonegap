@@ -6,11 +6,16 @@ angular
 		$scope.subAssemblyId = $stateParams.subAssembly;
 		$scope.moment = moment;
 		$scope.oilStatus = 1; // Might need to set this to load from save file.
+		$scope.machineStatus = 1;
 		$scope.showComments = false;
 
 		$scope.changeOilStatus = function (input) {
 			$scope.oilStatus = input;
 		};
+
+        $scope.changemachineGeneralStatus = function (input) {
+            $scope.machineStatus = input;
+        };
 
 		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-view-majorAssembly', {
 			inspection: $scope.inspectionId,

@@ -22,7 +22,7 @@
     </div>
     <br>
     Photos: Not sure how I want to display photos yet either <br>
-    Sub-Assembly Status:<br>
+    Oil Status:<br>
     <button class="form-button-1" ng-if="oilStatus == 1">OK</button>
     <button ng-click="changeOilStatus(1)" class="form-button-0" ng-if="oilStatus != 1">OK</button>
     <button class="form-button-2" ng-if="oilStatus == 2">Issue</button>
@@ -36,7 +36,17 @@
 </div>
 
 <div ng-if="machineGeneralTest != null">
-    Test Type: {{ machineGeneralTest.testType }}
+    Test Type: {{ machineGeneralTest.testType }}<br>
+    Sub-Assembly Status:<br>
+    <button class="form-button-1" ng-if="machineStatus == 1">OK</button>
+    <button ng-click="changemachineGeneralStatus(1)" class="form-button-0" ng-if="machineStatus != 1">OK</button>
+    <button class="form-button-2" ng-if="machineStatus == 2">Issue</button>
+    <button ng-click="changemachineGeneralStatus(2)" class="form-button-0" ng-if="machineStatus != 2">Issue</button>
+    <button class="form-button-3" ng-if="machineStatus == 3">Replace</button>
+    <button ng-click="changemachineGeneralStatus(3)" class="form-button-0" ng-if="machineStatus != 3">Replace</button>
+    <div ng-if="machineStatus != 1">
+        Action to be taken:<input class="form-input" type="text" name="action-input" placeholder="Action to be taken">
+    </div>
 </div>
 
 <div ng-if="wearTest != null">
