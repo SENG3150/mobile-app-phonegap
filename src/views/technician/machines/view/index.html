@@ -2,12 +2,12 @@
     <i class="fa fa-spinner fa-spin fa-3x"></i>
 </div>
 
-<div ng-if="loading == false">
+<div>
     Machine ID: {{machine.id}} <br>
     Model: {{machine.model.name}} <br>
     Major Assemblies:
     <ul class="table-view">
-        <li class="table-view-cell" ng-repeat="majorAssembly in machine.model.majorAssemblies">
+        <li class="table-view-cell" ng-repeat="majorAssembly in majorAssemblies">
             {{ majorAssembly.name }}
         </li>
     </ul>
