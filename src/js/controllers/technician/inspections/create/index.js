@@ -1,14 +1,16 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsCreateControllerIndex', ['$scope', 'Inspections', 'Machines', 'Technicians', 'AuthService', '_', 'LayoutService', '$state', 'moment', 'NotificationService',
-		function ($scope, Inspections, Machines, Technicians, AuthService, _, LayoutService, $state, moment, NotificationService) {
+	.controller('TechnicianInspectionsCreateControllerIndex', ['$scope', 'InspectionsStorage', 'MachinesStorage', 'Technicians', 'AuthService', '_', 'LayoutService', '$state', 'moment', 'NotificationService',
+		function ($scope, InspectionsStorage, MachinesStorage, Technicians, AuthService, _, LayoutService, $state, moment, NotificationService) {
 
 		$scope.showSubAssemblies = false;
 
 		LayoutService.setTitle(['Create Inspection', 'Inspections']);
 		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
 		LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-check', 'Save', function() {
-			NotificationService.alert('Saved!');
+			$scope.updateScheduledTests();
+
+			InspectionsStorage.set($scope.inspection);
 		});
 
 		$scope.selectedMachine = null;
@@ -27,14 +29,7 @@ angular
 			majorAssemblies: []
 		};
 
-		Machines
-			.getList({
-				include: 'model,model.majorAssemblies,model.majorAssemblies.subAssemblies,model.majorAssemblies.subAssemblies.tests'
-			})
-			.then(function (data) {
-				$scope.loading = false;
-				$scope.machines = data;
-			});
+		$scope.machines = MachinesStorage.getList();
 
 		$scope.moment = moment;
 
@@ -112,44 +107,7 @@ angular
 		$scope.save = function () {
 			$scope.updateScheduledTests();
 
-			if ($scope.scheduledTests > 0) {
-				$scope.inspection.majorAssemblies = [];
-
-				angular.forEach($scope.inspection.selectedMajorAssemblies, function (majorAssembly, majorAssemblyId) {
-					var local = {
-						majorAssembly: majorAssemblyId,
-						subAssemblies: []
-					};
-
-					angular.forEach(majorAssembly, function (subAssembly, subAssemblyId) {
-							if (subAssembly == true) {
-								local.subAssemblies.push({
-									subAssembly: subAssemblyId
-								});
-							}
-						}
-					);
-
-					if (local.subAssemblies.length > 0) {
-						$scope.inspection.majorAssemblies.push(local);
-					}
-				});
-
-				var inspection = _.clone($scope.inspection);
-
-				delete inspection.selectedMajorAssemblies;
-
-				/*Inspections.getBulk().post(inspection).then(
-					function () {
-						alert('The inspection was scheduled successfully.');
-					},
-					function () {
-						alert('There was an error while scheduling the inspection.', 'Error');
-					}
-				)*/
-			} else {
-				alert('You must schedule at least 1 test.');
-			}
+			InspectionsStorage.set($scope.inspection);
 		};
 
 	}]);
