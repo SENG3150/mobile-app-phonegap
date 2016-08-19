@@ -139,16 +139,16 @@ angular
 
 				delete inspection.selectedMajorAssemblies;
 
-				Inspections.getBulk().post(inspection).then(
+				/*Inspections.getBulk().post(inspection).then(
 					function () {
-						//toastr.success('The inspection was scheduled successfully.');
+						alert('The inspection was scheduled successfully.');
 					},
 					function () {
-						//toastr.error('There was an error while scheduling the inspection.', 'Error');
+						alert('There was an error while scheduling the inspection.', 'Error');
 					}
-				)
+				)*/
 			} else {
-				//toastr.warning('You must schedule at least 1 test.');
+				alert('You must schedule at least 1 test.');
 			}
 		};
 
