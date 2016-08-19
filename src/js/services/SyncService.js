@@ -19,7 +19,7 @@ angular
 				name: 'Machines',
 				service: Machines,
 				storage: MachinesStorage,
-				include: 'model,model.majorAssemblies,model.majorAssemblies.subAssemblies',
+				include: 'model.majorAssemblies.subAssemblies.tests',
 				upload: function (item) {
 					if (item.fromServer) {
 						return item.post();

@@ -110,8 +110,8 @@ angular
 							modified = true;
 						}
 
-						if (item.id == false) {
-							item.id = 'new' + new DateTime().getTime();
+						if (typeof item.id == 'undefined') {
+							item.id = (new Date()).getTime();
 						}
 
 						var insert = {

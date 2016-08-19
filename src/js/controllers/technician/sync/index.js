@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$timeout', '$q', 'NotificationService', 'SyncService', 'NetworkInformationService', function ($scope, LayoutService, $timeout, $q, NotificationService, SyncService, NetworkInformationService) {
+	.controller('TechnicianSyncControllerIndex', ['$scope', 'LayoutService', '$timeout', '$q', 'NotificationService', 'SyncService', 'NetworkInformationService', 'InspectionsStorage', function ($scope, LayoutService, $timeout, $q, NotificationService, SyncService, NetworkInformationService, InspectionsStorage) {
 		LayoutService.setTitle('Sync Your Data');
 
 		$scope.uploads = [];
@@ -121,6 +121,10 @@ angular
 		};
 
 		LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-download', 'Sync', $scope.restart);
+		LayoutService.getPageHeader().setLeftButton('fa fa-fw fa-download', 'Reset', function() {
+			InspectionsStorage.reset(true);
+			$scope.restart();
+		});
 
 		$scope.reset();
 	}]);

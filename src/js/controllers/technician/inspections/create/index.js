@@ -8,7 +8,34 @@ angular
 		LayoutService.setTitle(['Create Inspection', 'Inspections']);
 		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
 		LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-check', 'Save', function() {
+
 			$scope.updateScheduledTests();
+
+			$scope.inspection.machine = $scope.selectedMachine;
+
+			if ($scope.scheduledTests > 0) {
+				$scope.inspection.majorAssemblies = [];
+
+				angular.forEach($scope.inspection.selectedMajorAssemblies, function (majorAssembly, majorAssemblyId) {
+					var local = {
+						majorAssembly: majorAssemblyId,
+						subAssemblies: []
+					};
+
+					angular.forEach(majorAssembly, function (subAssembly, subAssemblyId) {
+							if (subAssembly == true) {
+								local.subAssemblies.push({
+									subAssembly: subAssemblyId
+								});
+							}
+						}
+					);
+
+					if (local.subAssemblies.length > 0) {
+						$scope.inspection.majorAssemblies.push(local);
+					}
+				});
+			};
 
 			InspectionsStorage.set($scope.inspection);
 		});
@@ -21,10 +48,10 @@ angular
 
 		$scope.inspection =
 		{
-			timeScheduled: moment().add(0, 'days'),
+			timeScheduled: moment(),
 			machine: $scope.selectedMachine,
-			technician: AuthService.getUser().primary.id,
-			scheduler: AuthService.getUser().primary.id,
+			technician: AuthService.getUser().primary,
+			scheduler: AuthService.getUser().primary,
 			selectedMajorAssemblies: {},
 			majorAssemblies: []
 		};
@@ -85,11 +112,6 @@ angular
 			$scope.updateScheduledTests();
 		};
 
-		$scope.setTechnician = function (technician) {
-			$scope.selectedTechnician = technician;
-			$scope.inspection.technician = technician.id;
-		};
-
 		$scope.toggleMajorAssembly = function (majorAssembly) {
 			angular.forEach($scope.inspection.selectedMajorAssemblies[majorAssembly], function (value, key) {
 				$scope.inspection.selectedMajorAssemblies[majorAssembly][key] = !value;
@@ -102,12 +124,6 @@ angular
 			$scope.inspection.selectedMajorAssemblies[majorAssembly][subAssembly] = !$scope.inspection.selectedMajorAssemblies[majorAssembly][subAssembly];
 
 			$scope.updateScheduledTests();
-		};
-
-		$scope.save = function () {
-			$scope.updateScheduledTests();
-
-			InspectionsStorage.set($scope.inspection);
 		};
 
 	}]);
