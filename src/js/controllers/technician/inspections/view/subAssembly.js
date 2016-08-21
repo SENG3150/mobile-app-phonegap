@@ -17,6 +17,19 @@ angular
             $scope.machineStatus = input;
         };
 
+		$scope.takePhoto = function (input) {
+            navigator.camera.getPicture( onSuccess, onFail, {quality: 50});
+		};
+
+        function onSuccess(imageData) {
+            var image = document.getElementById('myImage');
+            image.src = "data:image/jpeg;base64," + imageData;
+        }
+
+        function onFail(message) {
+            alert('Failed because: ' + message);
+        }
+
 		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-view-majorAssembly', {
 			inspection: $scope.inspectionId,
 			majorAssembly: $scope.majorAssemblyId

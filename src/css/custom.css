@@ -824,6 +824,17 @@
     font-size: 16px;
 }
 
+.form-input {
+    position: absolute !important;
+    width: 75% !important;
+    right: 10px !important;
+}
+
+.form-label {
+    line-height: 35px !important;
+    padding: 5px;
+}
+
 .label {
     display: inline;
     padding: .2em .6em .3em;
