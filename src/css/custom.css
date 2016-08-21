@@ -827,11 +827,11 @@
 .form-input {
     position: absolute !important;
     width: 75% !important;
-    right: 10px !important;
+    right: 5px !important;
 }
 
 .form-label {
-    line-height: 35px !important;
+    line-height: 37px !important;
     padding: 5px;
 }
 
