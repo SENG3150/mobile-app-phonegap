@@ -1,22 +1,22 @@
 <div ng-if="oilTest != null">
-    <label class="form-label">Lead:</label><input class="form-input" type="text" pattern="d*" name="lead-input" placeholder="{{ oilTest.lead }}"><br>
+    <label class="form-label">Lead:</label><input class="form-input" type="text" pattern="[0-9]*" name="lead-input" placeholder="{{ oilTest.lead }}"><br>
     <label class="form-label">Copper:</label><input class="form-input" type="text" pattern="[0-9]*" name="copper-input" placeholder="{{ oilTest.copper }}"><br>
-    <label class="form-label">Tin:</label><input class="form-input" type="text" pattern="\d+(\.\d*)?" name="tin-input" placeholder="{{ oilTest.tin }}"><br>
-    <label class="form-label">Iron:</label><input class="form-input" type="number" pattern="d*" name="iron-input" placeholder="{{ oilTest.iron }}"><br>
-    <label class="form-label">Pq90:</label><input class="form-input" type="number" pattern="[0-9]*" name="pq90-input" placeholder="{{ oilTest.pq90 }}"><br>
-    <label class="form-label">Silicon:</label><input class="form-input" type="number" pattern="\d+(\.\d*)?" name="silicon-input" placeholder="{{ oilTest.silicon }}"><br>
-    <label class="form-label">Sodium:</label><input class="form-input" type="tel" step="0.01" name="sodium-input" placeholder="{{ oilTest.sodium }}"><br>
-    <label class="form-label">Aluminium:</label><input class="form-input" type="tel" pattern="[0-9]*" name="aluminium-input" placeholder="{{ oilTest.aluminium }}"><br>
-    <label class="form-label">Water:</label><input class="form-input" type="tel" name="water-input" placeholder="{{ oilTest.water }}"><br>
-    <label class="form-label">Viscosity:</label><input class="form-input" type="number" step="0.01" name="viscosity-input" placeholder="{{ oilTest.viscosity }}"><br>
-    Comment: <input class="form-comment" type="text" name="comment-input" placeholder="Comment"><br>
+    <label class="form-label">Tin:</label><input class="form-input" type="text" pattern="[0-9]*" name="tin-input" placeholder="{{ oilTest.tin }}"><br>
+    <label class="form-label">Iron:</label><input class="form-input" type="text" pattern="[0-9]*" name="iron-input" placeholder="{{ oilTest.iron }}"><br>
+    <label class="form-label">Pq90:</label><input class="form-input" type="text" pattern="[0-9]*" name="pq90-input" placeholder="{{ oilTest.pq90 }}"><br>
+    <label class="form-label">Silicon:</label><input class="form-input" type="text" pattern="[0-9]*" name="silicon-input" placeholder="{{ oilTest.silicon }}"><br>
+    <label class="form-label">Sodium:</label><input class="form-input" type="text" pattern="[0-9]*" name="sodium-input" placeholder="{{ oilTest.sodium }}"><br>
+    <label class="form-label">Aluminium:</label><input class="form-input" type="text" pattern="[0-9]*" name="aluminium-input" placeholder="{{ oilTest.aluminium }}"><br>
+    <label class="form-label">Water:</label><input class="form-input" type="number" pattern="d*" placeholder="{{ oilTest.water }}"><br>
+    <label class="form-label">Viscosity:</label><input class="form-input" type="text" pattern="[0-9]*" name="viscosity-input" placeholder="{{ oilTest.viscosity }}"><br>
+    <label class="form-label-comment" height="60">Comment:</label><textarea class="form-comment" rows="4" name="comment-input" placeholder="Comment"></textarea><br>
 
     <button class="form-button-0" ng-click="showComments = !showComments">Comments</button>
     <div ng-if="showComments == true">
         <ul class="table-view">
             <li class="table-view-cell" ng-repeat="comment in oilTest.comments">
-                Author: {{ comment.author.username }}<br>
-                Comment: {{ comment.text }}
+                <b>Author:</b> {{ comment.author.username }}<br>
+                <b>Comment:</b> {{ comment.text }}
             </li>
         </ul>
     </div>
