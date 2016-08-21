@@ -58,7 +58,6 @@ angular
 												oilTest: subA.oilTest,
 												wearTest: subA.wearTest,
 											});
-											console.log(subA.id + " " + subA.name);
 										}
 									})
 								}
@@ -74,9 +73,8 @@ angular
 				});
 			}
 
-			console.log(JSON.stringify($scope.inspection));
-
 			InspectionsStorage.set($scope.inspection);
+			NotificationService.alert('Saved!', 'Success');
 		});
 
 		$scope.selectedMachine = null;

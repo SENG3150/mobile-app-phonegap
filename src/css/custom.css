@@ -1596,3 +1596,35 @@
     margin-right: auto;
     margin-left: auto;
 }
+
+.segregated-table-drop-header {
+    text-align: left;
+    font-size: 20px;
+}
+
+.segregated-table-drop-list {
+    border-bottom: 1px solid black;
+}
+
+.clickable-table-cell {
+    padding: 15px;
+    font-size: 16px
+}
+
+.unclickable-table-cell {
+    padding: 5px;
+    font-size: 18px
+}
+
+.dropdown-menu-rounded {
+    background: transparent;
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+    border-radius: 200px;
+    font-size: 16px;
+}
+
+.dropdown-menu-case {
+    width: 80%;
+    margin: auto;
+}
