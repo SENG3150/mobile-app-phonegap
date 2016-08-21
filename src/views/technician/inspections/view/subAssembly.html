@@ -1,10 +1,10 @@
 <div ng-if="oilTest != null">
-    Lead: <input class="form-input" type="number" step="0.01" name="lead-input" placeholder="{{ oilTest.lead }}"><br>
-    Copper: <input class="form-input" type="number" step="0.01" name="copper-input" placeholder="{{ oilTest.copper }}"><br>
-    Tin: <input class="form-input" type="number" step="0.01" name="tin-input" placeholder="{{ oilTest.tin }}"><br>
-    Iron: <input class="form-input" type="number" step="0.01" name="iron-input" placeholder="{{ oilTest.iron }}"><br>
-    Pq90: <input class="form-input" type="number" step="0.01" name="pq90-input" placeholder="{{ oilTest.pq90 }}"><br>
-    Silicon: <input class="form-input" type="number" step="0.01" name="silicon-input" placeholder="{{ oilTest.silicon }}"><br>
+    Lead: <input class="form-input" type="text" pattern="d*" name="lead-input" placeholder="{{ oilTest.lead }}"><br>
+    Copper: <input class="form-input" type="text" pattern="[0-9]*" name="copper-input" placeholder="{{ oilTest.copper }}"><br>
+    Tin: <input class="form-input" type="text" pattern="\d+(\.\d*)?" name="tin-input" placeholder="{{ oilTest.tin }}"><br>
+    Iron: <input class="form-input" type="number" pattern="d*" name="iron-input" placeholder="{{ oilTest.iron }}"><br>
+    Pq90: <input class="form-input" type="number" pattern="[0-9]*" name="pq90-input" placeholder="{{ oilTest.pq90 }}"><br>
+    Silicon: <input class="form-input" type="number" pattern="\d+(\.\d*)?" name="silicon-input" placeholder="{{ oilTest.silicon }}"><br>
     Sodium: <input class="form-input" type="number" step="0.01" name="sodium-input" placeholder="{{ oilTest.sodium }}"><br>
     Aluminium: <input class="form-input" type="number" step="0.01" name="aluminium-input" placeholder="{{ oilTest.aluminium }}"><br>
     Water: <input class="form-input" type="number" step="0.01" name="water-input" placeholder="{{ oilTest.water }}"><br>
