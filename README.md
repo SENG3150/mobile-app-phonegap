@@ -1,10 +1,8 @@
 # SENG3150 Assignment - Mobile-App (PhoneGap)
 
-To clone the app, including the themes submodule, run this command in the terminal:
+To clone the app, run this command in the terminal:
 
-	git clone --recursive https://github.com/SENG3150/mobile-app-phonegap.git
-
-You will be prompted for credentials for Bitbucket, which we have used to keep the proprietary theme closed-source to stay within the theme's licensing guidelines. To get access to the private repository contact [Mitchell Davis](https://github.com/mitchdav).
+	git clone https://github.com/SENG3150/mobile-app-phonegap.git
 
 ## Requirements
 * Install [NodeJS](https://nodejs.org/en/) and then run the following commands in the terminal:

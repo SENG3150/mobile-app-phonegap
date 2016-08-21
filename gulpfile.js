@@ -5,7 +5,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var cssnano = require('gulp-cssnano');
 var ngConstant = require('gulp-ng-constant');
-var less = require('gulp-less');
+var sass = require('gulp-sass');
 var rename = require('gulp-rename');
 var phonegapBuild = require('gulp-phonegap-build');
 var fs = require('fs');
@@ -165,7 +165,6 @@ gulp.task('concat-app', function () {
 
 var concatCSSConfig = {
 	source: [
-		'bower_components/ratchet/dist/css/ratchet.css',
 		'bower_components/font-awesome/css/font-awesome.min.css',
 		'src/css/custom.css'
 	],
@@ -201,10 +200,10 @@ gulp.task('copy-fonts', function () {
 
 var themeConfig = {
 	source: [
-		'theme/less/style.less'
+		'theme/ratchet.scss'
 	],
 	watch: [
-		'theme/less/*.less'
+		'theme/*.scss'
 	],
 	destination: 'www/css/',
 	output: 'theme.css'
@@ -214,7 +213,7 @@ gulp.task('build-theme', function () {
 	var config = themeConfig;
 
 	return gulp.src(config.source)
-		.pipe(less())
+		.pipe(sass())
 		.pipe(cssnano())
 		.pipe(rename(config.output))
 		.pipe(gulp.dest(config.destination));
