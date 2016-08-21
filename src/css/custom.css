@@ -1771,3 +1771,9 @@ a.label:focus {
 .segmented-control {
     margin: 10px 10px 0;
 }
+
+.center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
