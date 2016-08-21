@@ -20,6 +20,10 @@
                          ng-style="upload.style"></div>
                 </div>
             </div>
+
+            <div class="m-t-sm" ng-if="upload.status == 'error'">
+                <pre>{{ upload.error | json }}</pre>
+            </div>
         </li>
     </ul>
 </div>
