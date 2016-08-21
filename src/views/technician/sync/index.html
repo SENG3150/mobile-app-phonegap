@@ -16,7 +16,7 @@
             <div class="m-r-sm m-t-sm">
                 <div class="progress" style="margin-bottom: 0; width: 100%;">
                     <div class="progress-bar"
-                         ng-class="{'uploading': 'progress-bar-striped active', 'completed': 'progress-bar-success', 'error': 'progress-bar-danger'}[upload.status]"
+                         ng-class="{'uploading': 'progress-bar-success', 'completed': '', 'error': 'progress-bar-danger'}[upload.status]"
                          ng-style="upload.style"></div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             <div class="m-r-sm m-t-sm">
                 <div class="progress" style="margin-bottom: 0; width: 100%;">
                     <div class="progress-bar"
-                         ng-class="{'downloading': 'progress-bar-striped active', 'completed': 'progress-bar-success', 'error': 'progress-bar-danger'}[download.status]"
+                         ng-class="{'downloading': 'progress-bar-success', 'completed': '', 'error': 'progress-bar-danger'}[download.status]"
                          ng-style="download.style"></div>
                 </div>
             </div>

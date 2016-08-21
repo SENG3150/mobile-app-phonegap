@@ -94,3 +94,32 @@ $label-danger-bg:             $brand-danger;
 $label-color:                 #fff;
 //** Default text color of a linked label
 $label-link-hover-color:      #fff;
+
+
+$font-size-base:          14px;
+$font-size-large:         ceil(($font-size-base * 1.25)); // ~18px
+$font-size-small:         ceil(($font-size-base * 0.85)); // ~12px
+//** Unit-less `line-height` for use in components like buttons.
+$line-height-base:        1.428571429; // 20/14
+//** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+$line-height-computed:    floor(($font-size-base * $line-height-base)); // ~20px
+
+$border-radius-base:        4px;
+
+//** Background color of the whole progress component
+$progress-bg:                 #f5f5f5;
+//** Progress bar text color
+$progress-bar-color:          #fff;
+//** Variable for setting rounded corners on progress bar.
+$progress-border-radius:      $border-radius-base;
+
+//** Default progress bar color
+$progress-bar-bg:             $brand-primary;
+//** Success progress bar color
+$progress-bar-success-bg:     $brand-success;
+//** Warning progress bar color
+$progress-bar-warning-bg:     $brand-warning;
+//** Danger progress bar color
+$progress-bar-danger-bg:      $brand-danger;
+//** Info progress bar color
+$progress-bar-info-bg:        $brand-info;
