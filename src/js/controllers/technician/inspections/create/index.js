@@ -13,29 +13,68 @@ angular
 
 			$scope.inspection.machine = $scope.selectedMachine;
 
-			if ($scope.scheduledTests > 0) {
+			if ($scope.scheduledSubAssemblies > 0)
+			{
 				$scope.inspection.majorAssemblies = [];
 
-				angular.forEach($scope.inspection.selectedMajorAssemblies, function (majorAssembly, majorAssemblyId) {
-					var local = {
-						majorAssembly: majorAssemblyId,
-						subAssemblies: []
-					};
+				angular.forEach($scope.inspection.selectedMajorAssemblies, function (majorAssembly, majorAssemblyId)
+				{
+					angular.forEach($scope.inspection.machine.model.majorAssemblies, function (majA, id, name, subAssemblies)
+					{
+						if (majA.id == majorAssemblyId)
+						{
+							var majorAss =
+							{
+								id: majA.id,
+								name: majA.name
+							}
 
-					angular.forEach(majorAssembly, function (subAssembly, subAssemblyId) {
-							if (subAssembly == true) {
-								local.subAssemblies.push({
-									subAssembly: subAssemblyId
-								});
+							var local =
+							{
+								id: majA.id,
+								majorAssembly: majorAss,
+								subAssemblies: []
+							};
+
+							angular.forEach(majorAssembly, function (subAssembly, subAssemblyId)
+							{
+								if (subAssembly == true)
+								{
+
+									angular.forEach(majA.subAssemblies, function (subA, id, name, machineGeneralTest, oilTest, wearTest)
+									{
+										if (subA.id == subAssemblyId)
+										{
+											var subAss =
+											{
+												id: subA.id,
+												name: subA.name,
+											}
+											local.subAssemblies.push(
+											{
+												id: subA.id,
+												subAssembly: subAss,
+												machineGeneralTest: subA.machineGeneralTest,
+												oilTest: subA.oilTest,
+												wearTest: subA.wearTest,
+											});
+											console.log(subA.id + " " + subA.name);
+										}
+									})
+								}
+							});
+
+
+							if (local.subAssemblies.length > 0)
+							{
+								$scope.inspection.majorAssemblies.push(local);
 							}
 						}
-					);
-
-					if (local.subAssemblies.length > 0) {
-						$scope.inspection.majorAssemblies.push(local);
-					}
+					});
 				});
-			};
+			}
+
+			console.log(JSON.stringify($scope.inspection));
 
 			InspectionsStorage.set($scope.inspection);
 		});
@@ -77,15 +116,15 @@ angular
 								return item.id == subAssemblyId;
 							});
 
-							if (modelSubAssembly.tests[0].machineGeneral.test == true) {
+							if (modelSubAssembly.machineGeneralTest == true) {
 								$scope.scheduledTests++;
 							}
 
-							if (modelSubAssembly.tests[0].oil.test == true) {
+							if (modelSubAssembly.oilTest == true) {
 								$scope.scheduledTests++;
 							}
 
-							if (modelSubAssembly.tests[0].wear.test == true) {
+							if (modelSubAssembly.wearTest == true) {
 								$scope.scheduledTests++;
 							}
 						}

@@ -16,33 +16,32 @@
         Machine ID: {{selectedMachine.id}} <br>
         Model: {{selectedMachine.model.name}} <br>
         Major Assemblies:
-        <ul class="table-view" ng-model = "majorAssembly">
-            <li class="table-view-cell" ng-repeat="majorAssembly in selectedMachine.model.majorAssemblies"
-                ng-click = "showSubAssemblies = !showSubAssemblies" style = "cursor: pointer">
-                {{ majorAssembly.name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
-                <button type="button"  class="form-button-0" ng-click = "$event.stopPropagation(); toggleMajorAssembly(majorAssembly.id);">
-                    <i class="fa fa-fw fa-angle-down"></i>
-                    Toggle All
-                </button>
-
-                <ul class = "table-view" ng-if="showSubAssemblies == true" ng-click= "$event.stopPropagation();"
-                    style = "cursor: auto">
-                    <li class = "table-view-cell" ng-repeat= "subAssembly in majorAssembly.subAssemblies">
-                    {{subAssembly.name}}
-                    <button ng-click = "toggleSubAssembly(majorAssembly.id, subAssembly.id)" class = "form-button-0">
-                        <span ng-if="inspection.selectedMajorAssemblies[majorAssembly.id][subAssembly.id] == true">
-                                <i class="fa fa-fw fa-check"></i>
-                                Yes, Test
-                            </span>
-                        <span ng-if="inspection.selectedMajorAssemblies[majorAssembly.id][subAssembly.id] == false">
-                                <i class="fa fa-fw fa-remove"></i>
-                                No, Don't Test
-                            </span>
+        <br><br>
+        <table>
+            <tr ng-repeat-start="majorAssembly in selectedMachine.model.majorAssemblies" ng-click = "showSubAssemblies = !showSubAssemblies"
+                ng-click = "toggleMajorAssembly(majorAssembly.id);">
+                <td colspan="4"> <b>{{ majorAssembly.name }}</b> <i class="fa fa-angle-down" aria-hidden="true"></i></td>
+                <td class="table-header-row">
+                    <button type="button"  class= "fa fa-square-o" ng-if="showSubAssemblies == true"
+                            ng-click = "$event.stopPropagation(); toggleMajorAssembly(majorAssembly.id);">
                     </button>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+                </td>
+            </tr>
+
+            <tr ng-repeat="subAssembly in majorAssembly.subAssemblies" ng-if="showSubAssemblies == true">
+                <td>{{ subAssembly.name }}</td>
+                <td>
+                    <button ng-click = "toggleSubAssembly(majorAssembly.id, subAssembly.id)" class = "fa fa-check-square-o"
+                            ng-if="inspection.selectedMajorAssemblies[majorAssembly.id][subAssembly.id] == true">
+                    </button>
+
+                    <button ng-click = "toggleSubAssembly(majorAssembly.id, subAssembly.id)" class = "fa fa-square-o"
+                            ng-if="inspection.selectedMajorAssemblies[majorAssembly.id][subAssembly.id] == false">
+                    </button>
+                </td>
+            </tr>
+            <tr ng-repeat-end></tr>
+        </table>
     </div>
 </div>
 
