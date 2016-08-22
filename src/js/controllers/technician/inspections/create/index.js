@@ -41,7 +41,7 @@ angular
 								if (subAssembly == true)
 								{
 
-									angular.forEach(majA.subAssemblies, function (subA, id, name, machineGeneralTest, oilTest, wearTest)
+									angular.forEach(majA.subAssemblies, function (subA, id, name, machineGeneral, oil, wear)
 									{
 										if (subA.id == subAssemblyId)
 										{
@@ -54,9 +54,9 @@ angular
 											{
 												id: subA.id,
 												subAssembly: subAss,
-												machineGeneralTest: subA.machineGeneralTest,
-												oilTest: subA.oilTest,
-												wearTest: subA.wearTest,
+												machineGeneralTest: subA.machineGeneral,
+												oilTest: subA.oil,
+												wearTest: subA.wear,
 											});
 										}
 									})

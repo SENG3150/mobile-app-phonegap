@@ -1,4 +1,4 @@
-<div ng-if="oilTest != null">
+<div ng-if="oilTest != false">
     <label class="form-label">Lead:</label><input class="form-input" type="text" pattern="[0-9]*" name="lead-input" placeholder="{{ oilTest.lead }}"><br>
     <label class="form-label">Copper:</label><input class="form-input" type="text" pattern="[0-9]*" name="copper-input" placeholder="{{ oilTest.copper }}"><br>
     <label class="form-label">Tin:</label><input class="form-input" type="text" pattern="[0-9]*" name="tin-input" placeholder="{{ oilTest.tin }}"><br>
@@ -39,7 +39,7 @@
     </div>
 </div>
 
-<div ng-if="machineGeneralTest != null">
+<div ng-if="machineGeneralTest != false">
     Test Type: {{ machineGeneralTest.testType }}<br>
     Sub-Assembly Status:<br>
     <button class="form-button-1" ng-if="machineStatus == 1">OK</button>
@@ -53,7 +53,7 @@
     </div>
 </div>
 
-<div ng-if="wearTest != null">
+<div ng-if="wearTest != false">
     Description: {{ wearTest.description }}
 
     <ul class="table-view">
