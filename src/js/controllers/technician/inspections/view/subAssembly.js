@@ -71,5 +71,11 @@ angular
 				subAssembly: $scope.nextSubAssembly
 			}));
 		}
+		else {
+			LayoutService.getPageHeader().setHeroButton('fa fa-check', 'Done', LayoutService.redirect('technician-inspections-view-majorAssembly', {
+				inspection: $scope.inspectionId,
+				majorAssembly: $scope.majorAssemblyId
+			}));
+		}
 
 	}]);
