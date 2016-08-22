@@ -669,6 +669,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    width: 32%;
 }
 
 .form-button-1 {
@@ -680,6 +681,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    width: 32%;
 }
 
 .form-button-2 {
@@ -691,6 +693,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    width: 32%;
 }
 
 .form-button-3 {
@@ -702,6 +705,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    width: 32%;
 }
 
 .form-button-4 {
@@ -713,6 +717,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    width: 30%;
 }
 
 .form-input {

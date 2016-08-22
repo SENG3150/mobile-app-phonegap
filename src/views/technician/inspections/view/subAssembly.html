@@ -11,7 +11,7 @@
     <label class="form-label">Viscosity:</label><input class="form-input" type="text" pattern="[0-9]*" name="viscosity-input" placeholder="{{ oilTest.viscosity }}"><br>
     <label class="form-label-comment" height="60">Comment:</label><textarea class="form-comment" rows="4" name="comment-input" placeholder="Comment"></textarea><br>
 
-    <button class="form-button-0" ng-click="showComments = !showComments">Comments</button>
+    <a class="form-label" ng-click="showComments = !showComments">Comments</a><i class="fa fa-angle-down" aria-hidden="true"></i>
     <div ng-if="showComments == true">
         <ul class="table-view">
             <li class="table-view-cell" ng-repeat="comment in oilTest.comments">
@@ -21,7 +21,7 @@
         </ul>
     </div>
     <br>
-    Photos: <button ng-click="takePhoto()">➕</button><br>
+    Photos: <button class="fa fa-plus" ng-click="takePhoto()"></button><br>
     <ul class="table-view">
         <li class="table-view-cell" ng-repeat="picture in oilTest.photos">
             Photo: {{ picture }}
@@ -35,7 +35,7 @@
     <button class="form-button-3" ng-if="oilStatus == 3">Replace</button>
     <button ng-click="changeOilStatus(3)" class="form-button-0" ng-if="oilStatus != 3">Replace</button>
     <div ng-if="oilStatus != 1">
-        Action to be taken:<input class="form-input" type="text" name="action-input" placeholder="Action to be taken">
+        <label class="form-label">Action:</label><input class="form-input" type="text" name="action-input" placeholder="Action to be taken">
     </div>
 </div>
 
