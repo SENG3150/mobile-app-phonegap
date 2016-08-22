@@ -8,4 +8,8 @@ angular
         this.get = function(key) {
             return $localStorage.settings[key];
         };
+
+        this.has = function(key) {
+            return key in $localStorage.settings;
+        }
     }]);

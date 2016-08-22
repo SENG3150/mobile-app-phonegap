@@ -8,9 +8,12 @@
             </a>
         </li>
         <li class="table-view-cell">
-            <a ui-sref="">
-                Automatic Sync
-            </a>
+            <label>
+                 Automatic Sync:
+                <input type="checkbox"
+                       ng-model="autoSyncSettingValue()"
+                       ng-change="toggleAutoSync()" />
+            </label>
         </li>
     </ul>
 </div>
