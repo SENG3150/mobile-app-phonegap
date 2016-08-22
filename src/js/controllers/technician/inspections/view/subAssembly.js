@@ -38,11 +38,19 @@ angular
 		// Select the specific inspection
 		$scope.inspection = InspectionsStorage.one($scope.inspectionId);
 
+		// Set the flag for finding the next subAssembly
+		$scope.nextSubAssembly = $scope.subAssemblyId;
+		$scope.foundSubAssembly = false;
+
 		angular.forEach($scope.inspection.majorAssemblies, function (majorAssembly) {
 			if (majorAssembly.id == $scope.majorAssemblyId) {
 				$scope.majorAssembly = majorAssembly;
 				// Find Sub-Assembly
 				angular.forEach(majorAssembly.subAssemblies, function (subAssembly) {
+					if ($scope.foundSubAssembly) {
+						$scope.foundSubAssembly = false;
+						$scope.nextSubAssembly = subAssembly.id;
+					}
 					if (subAssembly.id == $scope.subAssemblyId) {
 						$scope.subAssembly = subAssembly;
 						$scope.oilTest = subAssembly.oilTest;
@@ -50,8 +58,18 @@ angular
 						$scope.wearTest = subAssembly.wearTest;
 						$scope.subAssemblyName = subAssembly.subAssembly.name;
 						LayoutService.setTitle([$scope.subAssemblyName]);
+						$scope.foundSubAssembly = true;
 					}
 				});
 			}
 		});
+
+		if ($scope.nextSubAssembly != $scope.subAssemblyId) {
+			LayoutService.getPageHeader().setHeroButton('fa fa-chevron-right', 'Next', LayoutService.redirect('technician-inspections-view-subAssembly', {
+				inspection: $scope.inspectionId,
+				majorAssembly: $scope.majorAssemblyId,
+				subAssembly: $scope.nextSubAssembly
+			}));
+		}
+
 	}]);
