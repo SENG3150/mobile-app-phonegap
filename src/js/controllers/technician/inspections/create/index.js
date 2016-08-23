@@ -72,8 +72,19 @@ angular
 					});
 				});
 			}
+			$scope.submitInspection =
+			{
+				id: $scope.inspection.id,
+				timeScheduled: $scope.inspection.timeScheduled.format(),
+				machine: $scope.selectedMachine.id,
+				technician: $scope.inspection.technician.id,
+				scheduler: $scope.inspection.scheduler.id,
+				majorAssemblies: $scope.inspection.majorAssemblies
+			}
 
-			InspectionsStorage.set($scope.inspection);
+			console.log($scope.submitInspection);
+
+			InspectionsStorage.set($scope.submitInspection);
 			NotificationService.alert('Saved!', 'Success');
 		});
 
