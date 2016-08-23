@@ -8,6 +8,7 @@
 !/www/.htaccess
 !/www/cordova-dummy.js
 !/www/icon.png
+!/www/splash.png
 !/www/res
 /src/js/ngConstants.js
 Thumbs.db
