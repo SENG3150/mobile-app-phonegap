@@ -1,7 +1,7 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsCreateControllerIndex', ['$scope', 'InspectionsStorage', 'MachinesStorage', 'Technicians', 'AuthService', '_', 'LayoutService', '$state', 'moment', 'NotificationService',
-		function ($scope, InspectionsStorage, MachinesStorage, Technicians, AuthService, _, LayoutService, $state, moment, NotificationService) {
+	.controller('TechnicianInspectionsCreateControllerIndex', ['$scope', 'InspectionsStorage', 'MachinesStorage', 'DomainExpertsStorage', 'Technicians', 'AuthService', '_', 'LayoutService', '$state', 'moment', 'NotificationService',
+		function ($scope, InspectionsStorage, MachinesStorage, DomainExpertsStorage, Technicians, AuthService, _, LayoutService, $state, moment, NotificationService) {
 
 		$scope.showSubAssemblies = false;
 
@@ -31,7 +31,6 @@ angular
 
 							var local =
 							{
-								id: majA.id,
 								majorAssembly: majorAss,
 								subAssemblies: []
 							};
@@ -52,7 +51,6 @@ angular
 											}
 											local.subAssemblies.push(
 											{
-												id: subA.id,
 												subAssembly: subAss,
 												machineGeneralTest: subA.machineGeneral,
 												oilTest: subA.oil,
@@ -72,19 +70,19 @@ angular
 					});
 				});
 			}
-			$scope.submitInspection =
+
+			var inspection =
 			{
-				id: $scope.inspection.id,
 				timeScheduled: $scope.inspection.timeScheduled.format(),
-				machine: $scope.selectedMachine.id,
-				technician: $scope.inspection.technician.id,
-				scheduler: $scope.inspection.scheduler.id,
+				machine: $scope.selectedMachine,
+				technician: $scope.inspection.technician,
+				scheduler: DomainExpertsStorage.get(1),
 				majorAssemblies: $scope.inspection.majorAssemblies
-			}
+			};
 
-			console.log($scope.submitInspection);
+			console.log(inspection);
 
-			InspectionsStorage.set($scope.submitInspection);
+			InspectionsStorage.set(inspection);
 			NotificationService.alert('Saved!', 'Success');
 		});
 

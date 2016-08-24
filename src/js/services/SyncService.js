@@ -149,7 +149,7 @@ angular
 							var promises = [];
 
 							angular.forEach(modifiedItems, function (modifiedItem) {
-								var promise = item.upload(modifiedItem);
+								var promise = item.upload(modifiedItem.value);
 
 								promise
 									.then(function () {
