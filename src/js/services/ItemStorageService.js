@@ -72,13 +72,13 @@ angular
 					one: function (id, includeModified) {
 						return this.get(id, includeModified);
 					},
-					isModified: function(id) {
+					isModified: function (id) {
 						var items = this.getModified();
 
 						var output = false;
 
-						angular.forEach(items, function(item) {
-							if(item.key == id) {
+						angular.forEach(items, function (item) {
+							if (item.key == id) {
 								output = true;
 							}
 						});
@@ -119,10 +119,30 @@ angular
 							value: item
 						};
 
+						var found = false;
+
 						if (modified == true) {
-							$localStorage.storage[name].modified.push(insert);
+							angular.forEach($localStorage.storage[name].modified, function (item, index) {
+								if (item.key == insert.key) {
+									$localStorage.storage[name].modified[index].value = insert.value;
+									found = true;
+								}
+							});
+
+							if (found == false) {
+								$localStorage.storage[name].modified.push(insert);
+							}
 						} else {
-							$localStorage.storage[name].synced.push(insert);
+							angular.forEach($localStorage.storage[name].synced, function (item, index) {
+								if (item.key == insert.key) {
+									$localStorage.storage[name].synced[index].value = insert.value;
+									found = true;
+								}
+							});
+
+							if (found == false) {
+								$localStorage.storage[name].synced.push(insert);
+							}
 						}
 
 						return item;
