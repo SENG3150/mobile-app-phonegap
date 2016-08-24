@@ -6,7 +6,10 @@ angular
 
 		$scope.inspections = _.sortBy(
 			_.filter(InspectionsStorage.getList(), function (inspection) {
-				return AuthService.getUser().technician.id == inspection.technician.id;
+			    if (typeof inspection.technician != 'undefined') {
+                    return AuthService.getUser().technician.id == inspection.technician.id;
+                }
+                return false;
 			})
 			, 'timeScheduled'
 		).reverse();
