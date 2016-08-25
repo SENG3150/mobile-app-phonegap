@@ -58,7 +58,7 @@ angular
 				angular.forEach(majorAssembly.subAssemblies, function (subAssembly) {
 					if ($scope.foundSubAssembly) { //Check if this is the next sub-assembly to be tested (Used for navigation)
 						$scope.foundSubAssembly = false;
-						$scope.nextSubAssembly = subAssembly.id;
+						$scope.nextSubAssembly = subAssembly.subAssembly.id;
 					}
 					if (subAssembly.subAssembly.id == $scope.subAssemblyId) {
 						$scope.subAssembly = subAssembly;
