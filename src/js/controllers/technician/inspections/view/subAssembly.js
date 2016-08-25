@@ -9,6 +9,7 @@ angular
 		$scope.showComments = false;
         $scope.inspection = InspectionsStorage.one($scope.inspectionId);
 
+
 		//Method managing the changing of the action status for the oilTest
 		$scope.changeOilStatus = function (input) {
 		    if(input==null){
@@ -51,7 +52,7 @@ angular
 
         // Angular search that finds all relevant information
 		angular.forEach($scope.inspection.majorAssemblies, function (majorAssembly) {
-			if (majorAssembly.id == $scope.majorAssemblyId) {
+			if (majorAssembly.majorAssembly.id == $scope.majorAssemblyId) {
 				$scope.majorAssembly = majorAssembly;
 				// Find Sub-Assembly
 				angular.forEach(majorAssembly.subAssemblies, function (subAssembly) {
@@ -59,7 +60,7 @@ angular
 						$scope.foundSubAssembly = false;
 						$scope.nextSubAssembly = subAssembly.id;
 					}
-					if (subAssembly.id == $scope.subAssemblyId) {
+					if (subAssembly.subAssembly.id == $scope.subAssemblyId) {
 						$scope.subAssembly = subAssembly;
 						$scope.oilTest = subAssembly.oilTest;
 						$scope.machineGeneralTest = subAssembly.machineGeneralTest;
@@ -72,36 +73,63 @@ angular
 			}
 		});
 
+
         //Reload saved variables to populate the form
-        if($scope.oilTest.comments != null) { //Load the comments if they exist, otherwise create an empty array to be added to
+        if(typeof $scope.oilTest != 'undefined') { //Load the comments if they exist, otherwise create an empty array to be added to
             $scope.oilComments = $scope.oilTest.comments;
         }
         else {
             $scope.oilComments = [];
         }
 
-        if($scope.oilTest.photos != null) { //Load the photos if they exist, otherwise create an empty array to be added to
+        if(typeof $scope.oilTest != 'undefined') { //Load the photos if they exist, otherwise create an empty array to be added to
             $scope.oilPhotos = $scope.oilTest.photos;
         }
         else {
             $scope.oilPhotos = [];
         }
 
-        $scope.oil = { //Fill the text boxes with the previous info
-            id: 1,
-            lead: $scope.oilTest.lead,
-            copper: $scope.oilTest.copper,
-            tin: $scope.oilTest.tin,
-            iron: $scope.oilTest.iron,
-            pq90: $scope.oilTest.pq90,
-            silicon: $scope.oilTest.silicon,
-            sodium: $scope.oilTest.sodium,
-            aluminium: $scope.oilTest.aluminium,
-            water: $scope.oilTest.water*1,
-            viscosity: $scope.oilTest.viscosity,
-            issue: $scope.oilTest.actionItem.issue,
-            action: $scope.oilTest.actionItem.action,
-            comment: $scope.oilComments[$scope.oilComments.length-1].text
+        if (typeof $scope.oilTest != 'undefined'){
+            if ($scope.oilTest.actionItem == null) {
+                $scope.oilTest.actionItem = {issue: '', status: '', action: ''};
+            }
+        }
+
+        if(typeof $scope.oilTest != 'undefined') {
+            $scope.oil = { //Fill the text boxes with the previous info
+                id: 1,
+                lead: $scope.oilTest.lead,
+                copper: $scope.oilTest.copper,
+                tin: $scope.oilTest.tin,
+                iron: $scope.oilTest.iron,
+                pq90: $scope.oilTest.pq90,
+                silicon: $scope.oilTest.silicon,
+                sodium: $scope.oilTest.sodium,
+                aluminium: $scope.oilTest.aluminium,
+                water: $scope.oilTest.water * 1,
+                viscosity: $scope.oilTest.viscosity,
+                issue: $scope.oilTest.actionItem.issue,
+                action: $scope.oilTest.actionItem.action,
+                comment: $scope.oilComments[$scope.oilComments.length - 1].text
+            }
+        }
+        else {
+            $scope.oil = { //Fill the text boxes with the previous info
+                id: 1,
+                lead: null,
+                copper: null,
+                tin: null,
+                iron: null,
+                pq90: null,
+                silicon: null,
+                sodium: null,
+                aluminium: null,
+                water: null,
+                viscosity: null,
+                issue: '',
+                action: '',
+                comment: ''
+            }
         }
 
         if($scope.oilTest != null) {
@@ -120,6 +148,9 @@ angular
                     break;
             }
         }
+        else {
+            $scope.changeOilStatus(1);
+        }
 
         if($scope.machineGeneralTest != null) {
             switch ($scope.machineGeneralTest.actionItem.status) { //Method for reloading the state of the machine general action item. Needs to be a switch to process the text status
@@ -137,7 +168,22 @@ angular
                     break;
             }
         }
+        else {
+            $scope.changemachineGeneralStatus(1);
+        }
 
+        if(typeof $scope.machineGeneralTest != 'undefined') {
+            $scope.machineTest = { //Fill the text boxes with the previous info
+                issue: $scope.machineGeneralTest.actionItem.issue,
+                action: $scope.machineGeneralTest.actionItem.action
+            }
+        }
+        else {
+            $scope.machineTest = { //Fill the text boxes with the previous info
+                issue: '',
+                action: ''
+            }
+        }
 
 
         //Method managing the photo taking (Quality is set to 50 at the moment, this may change based on file size requirements and quality needs)
@@ -180,58 +226,89 @@ angular
 			}));
 		}
         //Function for saving changes to the sub Assembly
-		$scope.saveSubAssembly = function(oil) {
+		$scope.saveSubAssembly = function(oil, machineTest) {
             //Generate OilTest Item
-            $scope.oilActionItem = { //Generate action item
-                id: 1,
-                status: $scope.changeOilStatus(null),
-                issue: oil.issue,
-                action: oil.action,
-                timeActioned: moment(),
-                technician: $scope.inspection.technician
-            }
-            if($scope.changeOilStatus(null) == 'OK') { //Remove action item if the state is set to 'OK' (Because then it isn't an issue)
-                $scope.oilActionItem = null;
-            }
-            if(oil.comment != null && oil.comment != $scope.oilComments[$scope.oilComments.length-1].text) {
-                $scope.oilCommentNew = {
-                    id: $scope.oilComments.length + 1,
-                    timeCommented: moment(),
-                    text: oil.comment,
-                    author: $scope.inspection.technician
+            if($scope.subAssembly.subAssembly.oil != false) {
+                $scope.oilActionItem = { //Generate action item
+                    id: 1,
+                    status: $scope.changeOilStatus(null),
+                    issue: oil.issue,
+                    action: oil.action,
+                    timeActioned: moment(),
+                    technician: $scope.inspection.technician
                 }
-                $scope.oilComments.push($scope.oilCommentNew);
-            }
+                if ($scope.changeOilStatus(null) == 'OK') { //Remove action item if the state is set to 'OK' (Because then it isn't an issue)
+                    $scope.oilActionItem = null;
+                }
+                if (oil.comment != null) {
+                    $scope.oilCommentNew = {
+                        id: $scope.oilComments.length + 1,
+                        timeCommented: moment(),
+                        text: oil.comment,
+                        author: $scope.inspection.technician
+                    }
+                    console.log($scope.oilComments.length);
+                    if ($scope.oilComments.length == 0) {
+                        $scope.oilComments.push($scope.oilCommentNew);
+                    }
+                    else {
+                        if (oil.comment != $scope.oilComments[$scope.oilComments.length - 1].text) {
+                            $scope.oilComments.push($scope.oilCommentNew);
+                        }
+                    }
+                }
 
-            $scope.oilTestSave = {
-                id: 1,
-                lead: oil.lead*1,
-                copper: oil.copper*1,
-                tin: oil.tin*1,
-                iron: oil.iron*1,
-                pq90: oil.pq90*1,
-                silicon: oil.silicon*1,
-                sodium: oil.sodium*1,
-                aluminium: oil.aluminium*1,
-                water: oil.water.toString(),
-                viscosity: oil.viscosity*1,
-                comments: $scope.oilComments,
-                photos: $scope.getPhotos(),
-                actionItem: $scope.oilActionItem
+                $scope.oilTestSave = {
+                    id: 1,
+                    lead: oil.lead * 1,
+                    copper: oil.copper * 1,
+                    tin: oil.tin * 1,
+                    iron: oil.iron * 1,
+                    pq90: oil.pq90 * 1,
+                    silicon: oil.silicon * 1,
+                    sodium: oil.sodium * 1,
+                    aluminium: oil.aluminium * 1,
+                    water: oil.water.toString(),
+                    viscosity: oil.viscosity * 1,
+                    comments: $scope.oilComments,
+                    photos: $scope.getPhotos(),
+                    actionItem: $scope.oilActionItem
+                }
             }
             //Generate Wear Test Item
 
             //Generate Machine General Test Item
-
+            if($scope.subAssembly.subAssembly.machineGeneral != false) {
+                $scope.machineActionItem = { //Generate action item
+                    id: 1,
+                    status: $scope.changemachineGeneralStatus(null),
+                    issue: machineTest.issue,
+                    action: machineTest.action,
+                    timeActioned: moment(),
+                    technician: $scope.inspection.technician
+                }
+                if ($scope.changeOilStatus(null) == 'OK') { //Remove action item if the state is set to 'OK' (Because then it isn't an issue)
+                    $scope.oilActionItem = null;
+                }
+                $scope.machineGeneralTestSave = {
+                    id: 1,
+                    docType: 'A',
+                    docLink: '',
+                    actionItem: $scope.machineActionItem
+                }
+            }
             //Loop through to find the subAssembly to overwrite
             angular.forEach($scope.inspection.majorAssemblies, function (majorAssembly) {
-                if (majorAssembly.id == $scope.majorAssemblyId) {
+                if (majorAssembly.majorAssembly.id == $scope.majorAssemblyId) {
                     $scope.majorAssembly = majorAssembly;
                     // Find Sub-Assembly
                     angular.forEach(majorAssembly.subAssemblies, function (subAssembly) {
-                        if (subAssembly.id == $scope.subAssemblyId) {
-                            if($scope.oilTest != false) { //Save the completed oilTest
+                        if (subAssembly.subAssembly.id == $scope.subAssemblyId) {
+                            if($scope.subAssembly.subAssembly.oil != false) { //Save the completed oilTest
                                 subAssembly.oilTest = $scope.oilTestSave;
+                            }
+                            if($scope.subAssembly.subAssembly.machineGeneral != false) { //Save the completed oilTest
+                                subAssembly.machineGeneralTest = $scope.machineGeneralTestSave;
                             }
                         }
                     });
