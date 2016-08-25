@@ -97,7 +97,7 @@ angular
             silicon: $scope.oilTest.silicon,
             sodium: $scope.oilTest.sodium,
             aluminium: $scope.oilTest.aluminium,
-            water: $scope.oilTest.water,
+            water: $scope.oilTest.water*1,
             viscosity: $scope.oilTest.viscosity,
             issue: $scope.oilTest.actionItem.issue,
             action: $scope.oilTest.actionItem.action,
