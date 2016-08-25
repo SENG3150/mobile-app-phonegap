@@ -1,21 +1,23 @@
-<div ng-if="oilTest != false">
-    <label class="form-label">Lead:</label><input class="form-input" type="text" pattern="[0-9]*" name="lead-input" placeholder="{{ oilTest.lead }}"><br>
-    <label class="form-label">Copper:</label><input class="form-input" type="text" pattern="[0-9]*" name="copper-input" placeholder="{{ oilTest.copper }}"><br>
-    <label class="form-label">Tin:</label><input class="form-input" type="text" pattern="[0-9]*" name="tin-input" placeholder="{{ oilTest.tin }}"><br>
-    <label class="form-label">Iron:</label><input class="form-input" type="text" pattern="[0-9]*" name="iron-input" placeholder="{{ oilTest.iron }}"><br>
-    <label class="form-label">Pq90:</label><input class="form-input" type="text" pattern="[0-9]*" name="pq90-input" placeholder="{{ oilTest.pq90 }}"><br>
-    <label class="form-label">Silicon:</label><input class="form-input" type="text" pattern="[0-9]*" name="silicon-input" placeholder="{{ oilTest.silicon }}"><br>
-    <label class="form-label">Sodium:</label><input class="form-input" type="text" pattern="[0-9]*" name="sodium-input" placeholder="{{ oilTest.sodium }}"><br>
-    <label class="form-label">Aluminium:</label><input class="form-input" type="text" pattern="[0-9]*" name="aluminium-input" placeholder="{{ oilTest.aluminium }}"><br>
-    <label class="form-label">Water:</label><input class="form-input" type="number" pattern="d*" placeholder="{{ oilTest.water }}"><br>
-    <label class="form-label">Viscosity:</label><input class="form-input" type="text" pattern="[0-9]*" name="viscosity-input" placeholder="{{ oilTest.viscosity }}"><br>
-    <label class="form-label-comment" height="60">Comment:</label><textarea class="form-comment" rows="4" name="comment-input" placeholder="Comment"></textarea><br>
+<div ng-if="subAssembly.subAssembly.oilTest != false">
+    <b>Oil Test</b><br>
+    <label class="form-label">Lead:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.lead" placeholder="Lead"><br>
+    <label class="form-label">Copper:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.copper" placeholder="Copper"><br>
+    <label class="form-label">Tin:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.tin" placeholder="Tin"><br>
+    <label class="form-label">Iron:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.iron" placeholder="Iron"><br>
+    <label class="form-label">PQ90:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.pq90" placeholder="PQ90"><br>
+    <label class="form-label">Silicon:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.silicon" placeholder="Silicon"><br>
+    <label class="form-label">Sodium:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.sodium" placeholder="Sodium"><br>
+    <label class="form-label">Aluminium:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.aluminium" placeholder="Aluminium"><br>
+    <label class="form-label">Water:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.water" placeholder="Water"><br>
+    <label class="form-label">Viscosity:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.viscosity" placeholder="Viscosity"><br>
+    <label class="form-label-comment" height="60">Comment:</label><textarea class="form-comment" rows="4" ng-model="oil.comment" placeholder="Comment - Not Required"></textarea><br>
 
-    <a class="form-label" ng-click="showComments = !showComments">Comments</a><i class="fa fa-angle-down" aria-hidden="true"></i>
+    <a class="form-label" ng-click="showComments = !showComments">Previous Comments</a><i class="fa fa-angle-down" aria-hidden="true"></i>
     <div ng-if="showComments == true">
         <ul class="table-view">
             <li class="table-view-cell" ng-repeat="comment in oilTest.comments">
                 <b>Author:</b> {{ comment.author.username }}<br>
+                <b>Time:</b> {{ moment(comment.timeCommented).format('HH:mm, ddd Do MMM YYYY') }}<br/>
                 <b>Comment:</b> {{ comment.text }}
             </li>
         </ul>
@@ -30,30 +32,32 @@
     Oil Status:<br>
     <button class="form-button-1" ng-if="oilStatus == 1">OK</button>
     <button ng-click="changeOilStatus(1)" class="form-button-0" ng-if="oilStatus != 1">OK</button>
-    <button class="form-button-2" ng-if="oilStatus == 2">Issue</button>
-    <button ng-click="changeOilStatus(2)" class="form-button-0" ng-if="oilStatus != 2">Issue</button>
-    <button class="form-button-3" ng-if="oilStatus == 3">Replace</button>
-    <button ng-click="changeOilStatus(3)" class="form-button-0" ng-if="oilStatus != 3">Replace</button>
+    <button class="form-button-2" ng-if="oilStatus == 2">WARNING</button>
+    <button ng-click="changeOilStatus(2)" class="form-button-0" ng-if="oilStatus != 2">WARNING</button>
+    <button class="form-button-3" ng-if="oilStatus == 3">ACTION</button>
+    <button ng-click="changeOilStatus(3)" class="form-button-0" ng-if="oilStatus != 3">ACTION</button>
     <div ng-if="oilStatus != 1">
-        <label class="form-label">Action:</label><input class="form-input" type="text" name="action-input" placeholder="Action to be taken">
+        <label class="form-label">Issue:</label><input class="form-input" type="text" ng-model="oil.issue" placeholder="Issue with machinery"><br>
+        <label class="form-label">Action:</label><input class="form-input" type="text" ng-model="oil.action" placeholder="Action to be taken">
     </div>
 </div>
 
-<div ng-if="machineGeneralTest != false">
+<div ng-if="subAssembly.subAssembly.machineGeneral != false">
     Test Type: {{ machineGeneralTest.testType }}<br>
     Sub-Assembly Status:<br>
     <button class="form-button-1" ng-if="machineStatus == 1">OK</button>
     <button ng-click="changemachineGeneralStatus(1)" class="form-button-0" ng-if="machineStatus != 1">OK</button>
-    <button class="form-button-2" ng-if="machineStatus == 2">Issue</button>
-    <button ng-click="changemachineGeneralStatus(2)" class="form-button-0" ng-if="machineStatus != 2">Issue</button>
-    <button class="form-button-3" ng-if="machineStatus == 3">Replace</button>
-    <button ng-click="changemachineGeneralStatus(3)" class="form-button-0" ng-if="machineStatus != 3">Replace</button>
+    <button class="form-button-2" ng-if="machineStatus == 2">WARNING</button>
+    <button ng-click="changemachineGeneralStatus(2)" class="form-button-0" ng-if="machineStatus != 2">WARNING</button>
+    <button class="form-button-3" ng-if="machineStatus == 3">ACTION</button>
+    <button ng-click="changemachineGeneralStatus(3)" class="form-button-0" ng-if="machineStatus != 3">ACTION</button>
     <div ng-if="machineStatus != 1">
-        Action to be taken:<input class="form-input" type="text" name="action-input" placeholder="Action to be taken">
+        <label class="form-label">Issue:</label><input class="form-input" type="text" ng-model="machineTest.issue" placeholder="Action to be taken"><br>
+        <label class="form-label">Action:</label><input class="form-input" type="text" ng-model="machineTest.action" placeholder="Action to be taken">
     </div>
 </div>
 
-<div ng-if="wearTest != false">
+<div ng-if="subAssembly.subAssembly.wear != false">
     Description: {{ wearTest.description }}
 
     <ul class="table-view">
@@ -62,3 +66,7 @@
         </li>
     </ul>
 </div>
+
+<button class="form-button-3" ng-click="saveSubAssembly(oil)">Save</button>
+
+<pre>{{subAssembly | json}}</pre>
