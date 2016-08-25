@@ -11,7 +11,7 @@ angular
 		$scope.inspection = InspectionsStorage.one($scope.inspectionId);
 
 		angular.forEach($scope.inspection.majorAssemblies, function (majorAssembly) {
-			if (majorAssembly.id == $scope.majorAssemblyId) {
+			if (majorAssembly.majorAssembly.id == $scope.majorAssemblyId) {
 				$scope.majorAssembly = majorAssembly;
 				$scope.majorAssemblyName = majorAssembly.majorAssembly.name;
 

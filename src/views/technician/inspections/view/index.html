@@ -40,7 +40,7 @@
     <div id="major-assemblies" class="control-content">
         <ul class="table-view" ng-if="inspection.majorAssemblies.length > 0">
             <li class="table-view-cell" ng-repeat="majorAssembly in inspection.majorAssemblies">
-                <a ui-sref="technician-inspections-view-majorAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{ majorAssembly.id }} })"
+                <a ui-sref="technician-inspections-view-majorAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{ majorAssembly.majorAssembly.id }} })"
                    class="navigate-right">
                     {{ majorAssembly.majorAssembly.name }}
                 </a>
@@ -62,3 +62,6 @@
             this inspection, try syncing some on the Sync tab.</p>
     </div>
 </div>
+
+
+<pre>{{inspection | json}}</pre>
