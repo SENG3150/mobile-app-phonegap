@@ -1,4 +1,4 @@
-<div ng-if="subAssembly.subAssembly.oilTest != false">
+<div ng-if="subAssembly.oil != false">
     <b>Oil Test</b><br>
     <label class="form-label">Lead:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.lead" placeholder="Lead"><br>
     <label class="form-label">Copper:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.copper" placeholder="Copper"><br>
@@ -42,7 +42,8 @@
     </div>
 </div>
 
-<div ng-if="subAssembly.subAssembly.machineGeneral != false">
+<div ng-if="subAssembly.machineGeneral != false">
+    <b>General Machine Test</b><br>
     Test Type: {{ machineGeneralTest.testType }}<br>
     Sub-Assembly Status:<br>
     <button class="form-button-1" ng-if="machineStatus == 1">OK</button>
@@ -57,7 +58,8 @@
     </div>
 </div>
 
-<div ng-if="subAssembly.subAssembly.wear != false">
+<div ng-if="subAssembly.wear != false">
+    <b>Wear Test</b><br>
     Description: {{ wearTest.description }}
 
     <ul class="table-view">
