@@ -73,12 +73,18 @@ angular
 		});
 
         //Reload saved variables to populate the form
-
         if($scope.oilTest.comments != null) { //Load the comments if they exist, otherwise create an empty array to be added to
             $scope.oilComments = $scope.oilTest.comments;
         }
         else {
             $scope.oilComments = [];
+        }
+
+        if($scope.oilTest.photos != null) { //Load the photos if they exist, otherwise create an empty array to be added to
+            $scope.oilPhotos = $scope.oilTest.photos;
+        }
+        else {
+            $scope.oilPhotos = [];
         }
 
         $scope.oil = { //Fill the text boxes with the previous info
@@ -96,13 +102,6 @@ angular
             issue: $scope.oilTest.actionItem.issue,
             action: $scope.oilTest.actionItem.action,
             comment: $scope.oilComments[$scope.oilComments.length-1].text
-        }
-
-        if($scope.oilTest.photos != null) { //Load the photos if they exist, otherwise create an empty array to be added to
-            $scope.oilPhotos = $scope.oilTest.photos;
-        }
-        else {
-            $scope.oilPhotos = [];
         }
 
         if($scope.oilTest != null) {
@@ -150,14 +149,21 @@ angular
         function onSuccess(imageData) {
             var image = document.getElementById('myImage');
             image.src = "data:image/jpeg;base64," + imageData;
-            $scope.oilPhotos.push(image);
+            $scope.getPhotos(image);
         }
         //Take photo failed for some reason
         function onFail(message) {
             alert('Failed because: ' + message);
         }
 
-
+        $scope.getPhotos = function (input) {
+            if(input != null){
+                $scope.oilPhotos.push(image);
+            }
+            else {
+                return $scope.oilPhotos;
+            }
+        }
 
 
 		if ($scope.nextSubAssembly != $scope.subAssemblyId) { //Display the next sub-Assembly button if there is one
@@ -210,7 +216,7 @@ angular
                 water: oil.water.toString(),
                 viscosity: oil.viscosity*1,
                 comments: $scope.oilComments,
-                photos: $scope.oilPhotos,
+                photos: $scope.getPhotos(),
                 actionItem: $scope.oilActionItem
             }
             //Generate Wear Test Item
