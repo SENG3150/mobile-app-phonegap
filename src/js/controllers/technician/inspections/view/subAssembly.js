@@ -158,7 +158,7 @@ angular
 
         $scope.getPhotos = function (input) {
             if(input != null){
-                $scope.oilPhotos.push(image);
+                $scope.oilPhotos.push({image: input});
             }
             else {
                 return $scope.oilPhotos;
