@@ -32,7 +32,7 @@ angular
 				name: 'Inspections',
 				service: Inspections,
 				storage: InspectionsStorage,
-				include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly',
+				include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly,photos.raw,majorAssemblies.photos.raw,majorAssemblies.subAssemblies.photos.raw,majorAssemblies.subAssemblies.machineGeneralTest.photos.raw,majorAssemblies.subAssemblies.oilTest.photos.raw,majorAssemblies.subAssemblies.wearTest.photos.raw',
 				upload: function (item) {
 					if (item.fromServer) {
 						return item.post();
@@ -115,10 +115,10 @@ angular
 									.setList(data);
 
 								deferred.resolve(data);
-							}, function () {
+							}, function (error) {
 								$interval.cancel(interval);
 
-								deferred.reject();
+								deferred.reject(error);
 							});
 					}
 				});

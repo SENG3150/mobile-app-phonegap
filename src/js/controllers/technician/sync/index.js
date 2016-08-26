@@ -83,8 +83,11 @@ angular
 											download.status = 'completed';
 											download.progress = 100.0;
 											download.style.width = '100.0%';
-										}, function () {
+										}, function (error) {
 											download.status = 'error';
+											download.error = error;
+											download.progress = 100.0;
+											download.style.width = '100.0%';
 										}, function (progress) {
 											download.status = 'downloading';
 											download.progress = progress;
