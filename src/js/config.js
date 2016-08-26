@@ -38,6 +38,18 @@ angular
 			}
 		}, 50);
 
+		// Auto sync when application starts
+		var autoSyncSettingKey = "autoSync";
+
+		if (!SettingsService.has(autoSyncSettingKey)) {
+			SettingsService.set(autoSyncSettingKey, true);
+		}
+
+		if (SettingsService.get(autoSyncSettingKey) && NetworkInformationService.isOnline()) {
+
+		}
+
+
 		LayoutService.getPageFooter().addTab('inspections', 'fa fa-fw fa-wrench', 'Inspections', function () {
 			ViewsService.switchView('inspections');
 		});
