@@ -6,10 +6,6 @@ angular
 
 		var autoSyncSettingKey = "autoSync";
 
-		if (!SettingsService.has(autoSyncSettingKey)) {
-			SettingsService.set(autoSyncSettingKey, true);
-		}
-
 		$scope.autoSyncSettingValue = function() {
 			return SettingsService.get(autoSyncKey);
 		}
