@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('AuthControllerLogin', ['$scope', 'AuthService', '$state', '$stateParams', '$window', 'SettingsService', 'NetworkInformationService', 'SyncService', 'ViewsService', function ($scope, AuthService, $state, $stateParams, $window, SettingsService, NetworkInformationService, SyncService, ViewsService) {
+	.controller('AuthControllerLogin', ['$scope', 'AuthService', '$state', '$stateParams', '$window', 'SettingsService', 'NetworkInformationService', 'SyncService', 'NotificationService', function ($scope, AuthService, $state, $stateParams, $window, SettingsService, NetworkInformationService, SyncService, NotificationService) {
 		$scope.username = '';
 		$scope.password = '';
 		$scope.type = 'technician';
@@ -18,23 +18,24 @@ angular
 					type: $scope.type
 				};
 
-				AuthService
-					.authenticate(credentials)
-					.then(
-						function (user) {
-							if (SettingsService.get('auto-sync') == true && NetworkInformationService.isOnline() == true) {
-								SyncService.downloadAll();
-							}
+				if(NetworkInformationService.isOnline() == true) {
+					AuthService
+						.authenticate(credentials)
+						.then(
+							function (user) {
+								if (SettingsService.get('auto-sync') == true && NetworkInformationService.isOnline() == true) {
+									SyncService.downloadAll();
+								}
 
-							$state.go('index');
-						},
-						function () {
-							// Called when there is an error
-						},
-						function () {
-							// Called when there is some progress with their login
-						}
-					);
+								$state.go('index');
+							},
+							function () {
+								NotificationService.alert('There was an error with your details, please try again or contact an administrator.', 'Error');
+							}
+						);
+				} else {
+					NotificationService.alert('You must have an active internet connection to login.', 'Error');
+				}
 			}
 
 			return false;
@@ -42,13 +43,13 @@ angular
 
 		$scope.validate = function () {
 			if ($scope.username == '' || $scope.username == null) {
-				// Username is empty
+				NotificationService.alert('You must provide your username.', 'Error');
 
 				return false;
 			}
 
 			if ($scope.password == '') {
-				// Password is empty
+				NotificationService.alert('You must provide your password.', 'Error');
 
 				return false;
 			}
