@@ -3,6 +3,10 @@ angular
 	.service('AuthService', ['$auth', 'ENV', '$localStorage', '$q', '$http', function ($auth, ENV, $localStorage, $q, $http) {
 		this.user = $localStorage.user;
 
+		this.isAuthenticated = function() {
+			return $auth.isAuthenticated();
+		};
+
 		this.setUser = function (user) {
 			this.user = user;
 			$localStorage.user = user;

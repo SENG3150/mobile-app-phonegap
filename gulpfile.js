@@ -134,6 +134,7 @@ var concatAppConfig = {
 	source: [
 		'src/js/app.js',
 		'src/js/config.js',
+		'src/js/run.js',
 		'src/js/ngConstants.js',
 		'src/js/controllers/**/*.js',
 		'src/js/controllers/*.js',
