@@ -13,12 +13,8 @@ angular
 			.state('auth.login', {
 				parent: 'auth',
 				url: '/login?r',
-				views: {
-					'inspections': {
-						templateUrl: 'views/auth/login.html',
-						controller: 'AuthControllerLogin'
-					}
-				}
+				templateUrl: 'views/auth/login.html',
+				controller: 'AuthControllerLogin'
 			})
 			.state('auth.logout', {
 				parent: 'auth',
