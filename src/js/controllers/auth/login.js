@@ -7,7 +7,6 @@ angular
 
 		if (AuthService.getUser()) {
 			$scope.username = AuthService.getUser().primary.username;
-			$scope.type = AuthService.getUser().type;
 		}
 
 		$scope.login = function () {
