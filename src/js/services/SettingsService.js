@@ -1,15 +1,56 @@
 angular
-    .module('joy-global')
-    .service('SettingsService', ['$localStorage', function($localStorage) {
-        this.set = function(key, value) {
-            $localStorage.settings[key] = value;
-        };
+	.module('joy-global')
+	.service('SettingsService', ['$localStorage', function ($localStorage) {
+		if (typeof $localStorage.settings == 'undefined') {
+			$localStorage.settings = [];
+		}
 
-        this.get = function(key) {
-            return $localStorage.settings[key];
-        };
+		return {
+			setDefaults: function (defaults) {
+				var self = this;
 
-        this.has = function(key) {
-            return key in $localStorage.settings;
-        }
-    }]);
+				angular.forEach(defaults, function (value, key) {
+					if (self.get(key) == null) {
+						$localStorage.settings.push({
+							key: key,
+							value: value
+						});
+					}
+				});
+
+				return this;
+			},
+			set: function (key, value) {
+				var insert = {
+					key: key,
+					value: value
+				};
+
+				var found = false;
+
+				angular.forEach($localStorage.settings, function (item, index) {
+					if (item.key == insert.key) {
+						$localStorage.settings[index].value = insert.value;
+						found = true;
+					}
+				});
+
+				if (found == false) {
+					$localStorage.settings.push(insert);
+				}
+
+				return this;
+			},
+			get: function (key) {
+				var output = null;
+
+				angular.forEach($localStorage.settings, function (item) {
+					if (item.key == key) {
+						output = item.value;
+					}
+				});
+
+				return output;
+			}
+		};
+	}]);

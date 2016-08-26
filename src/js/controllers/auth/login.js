@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('AuthControllerLogin', ['$scope', 'AuthService', '$state', '$stateParams', '$window', function ($scope, AuthService, $state, $stateParams, $window) {
+	.controller('AuthControllerLogin', ['$scope', 'AuthService', '$state', '$stateParams', '$window', 'SettingsService', 'NetworkInformationService', 'SyncService', 'ViewsService', function ($scope, AuthService, $state, $stateParams, $window, SettingsService, NetworkInformationService, SyncService, ViewsService) {
 		$scope.username = '';
 		$scope.password = '';
 		$scope.type = 'technician';
@@ -22,12 +22,11 @@ angular
 					.authenticate(credentials)
 					.then(
 						function (user) {
-							// Called when user is logged in successfully
-							if ($stateParams.r) {
-								$window.location.href = $stateParams.r;
-							} else {
-								$state.go('index');
+							if (SettingsService.get('auto-sync') == true && NetworkInformationService.isOnline() == true) {
+								SyncService.downloadAll();
 							}
+
+							$state.go('index');
 						},
 						function () {
 							// Called when there is an error

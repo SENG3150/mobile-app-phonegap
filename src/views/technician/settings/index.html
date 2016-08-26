@@ -1,4 +1,19 @@
-<h1 class="text-center content-padded">App settings go here!</h1>
+<div class="card">
+    <ul class="table-view">
+        <li class="table-view-cell">
+            <div class="row">
+                <div class="col-xs-10">
+                    Automatic Sync<br/>
+                    <small>Your data will automatically be synced when you first login or open the app.</small>
+                </div>
+            </div>
+
+            <div class="toggle" ng-class="{true: 'active'}[settingsService.get('auto-sync')]" id="auto-sync">
+                <div class="toggle-handle"></div>
+            </div>
+        </li>
+    </ul>
+</div>
 
 <div class="card">
     <ul class="table-view">
@@ -6,14 +21,6 @@
             <a ui-sref="technician-settings-credits" class="navigate-right">
                 Credits
             </a>
-        </li>
-        <li class="table-view-cell">
-            <label>
-                 Automatic Sync:
-                <input type="checkbox"
-                       ng-model="autoSyncSettingValue()"
-                       ng-change="toggleAutoSync()" />
-            </label>
         </li>
     </ul>
 </div>

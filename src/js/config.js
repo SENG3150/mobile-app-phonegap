@@ -7,7 +7,7 @@ angular
 
 		$urlRouterProvider.otherwise('/');
 	}])
-	.run(['$rootScope', '$state', '$auth', '$window', 'PGDeviceReady', 'LayoutService', 'ViewsService', '$timeout', 'NetworkInformationService', function ($rootScope, $state, $auth, $window, PGDeviceReady, LayoutService, ViewsService, $timeout, NetworkInformationService) {
+	.run(['$rootScope', '$state', '$auth', '$window', 'PGDeviceReady', 'LayoutService', 'ViewsService', '$timeout', 'NetworkInformationService', 'SettingsService', 'SyncService', function ($rootScope, $state, $auth, $window, PGDeviceReady, LayoutService, ViewsService, $timeout, NetworkInformationService, SettingsService, SyncService) {
 		$rootScope.$on('$stateChangeError',
 			function (event) {
 				event.preventDefault();
@@ -54,6 +54,10 @@ angular
 			ViewsService.switchView('settings');
 		});
 
+		SettingsService.setDefaults({
+			'auto-sync': true
+		});
+
 		PGDeviceReady.onReady(function () {
 			if (window.device && window.device.platform == 'iOS') {
 				window.StatusBar.overlaysWebView(false);
@@ -77,6 +81,21 @@ angular
 					false);
 			} else {
 				NetworkInformationService.setOnline(true);
+			}
+
+			if (SettingsService.get('auto-sync') == true) {
+				if (NetworkInformationService.isOnline() == true) { // Check if device is already online
+					SyncService.downloadAll();
+				} else { // Add timeout to allow online event to fire
+					$timeout(
+						function () {
+							if (NetworkInformationService.isOnline() == true) {
+								SyncService.downloadAll();
+							}
+						},
+						1000
+					);
+				}
 			}
 		});
 

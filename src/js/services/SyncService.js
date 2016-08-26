@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.service('SyncService', ['$q', '$interval', 'Inspections', 'InspectionsStorage', 'Models', 'ModelsStorage', 'Machines', 'MachinesStorage', 'Technicians', 'TechniciansStorage', 'DomainExperts', 'DomainExpertsStorage', function ($q, $interval, Inspections, InspectionsStorage, Models, ModelsStorage, Machines, MachinesStorage, Technicians, TechniciansStorage, DomainExperts, DomainExpertsStorage) {
+	.service('SyncService', ['$q', '$interval', 'Inspections', 'InspectionsStorage', 'Models', 'ModelsStorage', 'Machines', 'MachinesStorage', 'Technicians', 'TechniciansStorage', 'DomainExperts', 'DomainExpertsStorage', '$rootScope', function ($q, $interval, Inspections, InspectionsStorage, Models, ModelsStorage, Machines, MachinesStorage, Technicians, TechniciansStorage, DomainExperts, DomainExpertsStorage, $rootScope) {
 		this.items = [
 			{
 				name: 'Models',
@@ -75,22 +75,24 @@ angular
 			return Math.random() * (max - min) + min;
 		};
 
-		var self = this;
+		var root = this;
 
 		return {
 			getItems: function () {
-				return self.items;
+				return root.items;
 			},
 			download: function (name) {
 				var deferred = $q.defer();
 
-				angular.forEach(this.getItems(), function (item) {
+				var self = this;
+
+				angular.forEach(self.getItems(), function (item) {
 					if (item.name == name) {
 						var progress = 0;
 
 						var interval = $interval(
 							function () {
-								progress += self.getRandomArbitrary(0, 3);
+								progress += root.getRandomArbitrary(0, 3);
 
 								if (progress > 100.0) {
 									progress = 100.0;
@@ -114,6 +116,8 @@ angular
 									.reset()
 									.setList(data);
 
+								self.fireDownloadFinishedEvent(name);
+
 								deferred.resolve(data);
 							}, function (error) {
 								$interval.cancel(interval);
@@ -128,8 +132,10 @@ angular
 			downloadAll: function () {
 				var promises = [];
 
-				angular.forEach(this.getItems(), function (item) {
-					promises.push(this.download(item.name));
+				var self = this;
+
+				angular.forEach(self.getItems(), function (item) {
+					promises.push(self.download(item.name));
 				});
 
 				return $q.all(promises);
@@ -137,7 +143,9 @@ angular
 			upload: function (name) {
 				var deferred = $q.defer();
 
-				angular.forEach(this.getItems(), function (item) {
+				var self = this;
+
+				angular.forEach(self.getItems(), function (item) {
 					if (item.name == name) {
 						var modifiedItems = item.storage.getModified();
 
@@ -177,6 +185,8 @@ angular
 							$q
 								.all(promises)
 								.then(function (data) {
+									self.fireUploadFinishedEvent(name);
+
 									deferred.resolve(data);
 								}, function (error) {
 									deferred.reject(error);
@@ -192,11 +202,37 @@ angular
 			uploadAll: function () {
 				var promises = [];
 
+				var self = this;
+
 				angular.forEach(this.getItems(), function (item) {
-					promises.push(this.upload(item.name));
+					promises.push(self.upload(item.name));
 				});
 
 				return $q.all(promises);
+			},
+			fireDownloadFinishedEvent: function (name) {
+				$rootScope.$broadcast('syncService.downloadFinished', {
+					name: name
+				});
+
+				return this;
+			},
+			fireDownloadsFinishedEvent: function () {
+				$rootScope.$broadcast('syncService.downloadsFinished');
+
+				return this;
+			},
+			fireUploadFinishedEvent: function (name) {
+				$rootScope.$broadcast('syncService.uploadFinished', {
+					name: name
+				});
+
+				return this;
+			},
+			fireUploadsFinishedEvent: function () {
+				$rootScope.$broadcast('syncService.uploadsFinished');
+
+				return this;
 			}
 		};
 	}]);
