@@ -48,6 +48,10 @@
                          ng-style="download.style"></div>
                 </div>
             </div>
+
+            <div class="m-t-sm" ng-if="download.status == 'error'">
+                <pre>{{ download.error | json }}</pre>
+            </div>
         </li>
     </ul>
 </div>
