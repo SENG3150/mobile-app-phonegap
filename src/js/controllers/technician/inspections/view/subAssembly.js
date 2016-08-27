@@ -170,9 +170,11 @@ angular
         };
         //Take photo succeeded
         function onSuccess(imageData) {
+            var image = document.getElementById('myImage');
+            image.src = "data:image/jpeg;base64," + imageData;
             $scope.oilPhotos.push({
                 format: 'jpeg',
-                photo: imageData
+                photo: image
             });
         }
         //Take photo failed for some reason
