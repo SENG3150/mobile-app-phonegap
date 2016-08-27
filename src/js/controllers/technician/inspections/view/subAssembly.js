@@ -8,6 +8,7 @@ angular
 		$scope.moment = moment;
 		$scope.showComments = false;
         $scope.inspection = InspectionsStorage.one($scope.inspectionId);
+        $scope.oilPhotos = [];
 
 
 		//Method managing the changing of the action status for the oilTest
@@ -73,29 +74,13 @@ angular
 			}
 		});
 
-
         //Reload saved variables to populate the form
-        if(typeof $scope.oilTest != 'undefined') { //Load the comments if they exist, otherwise create an empty array to be added to
-            $scope.oilComments = $scope.oilTest.comments;
-        }
-        else {
-            $scope.oilComments = [];
-        }
-
-        if(typeof $scope.oilTest != 'undefined') { //Load the photos if they exist, otherwise create an empty array to be added to
-            $scope.oilPhotos = $scope.oilTest.photos;
-        }
-        else {
-            $scope.oilPhotos = [];
-        }
-
-        if (typeof $scope.oilTest != 'undefined'){
-            if ($scope.oilTest.actionItem == null) {
+        if(typeof $scope.oilTest != 'undefined') { //Load the existing oilTest data if it exists, otherwise create empty data
+            $scope.oilComments = $scope.oilTest.comments; //Load the comments
+            $scope.oilPhotos = $scope.oilTest.photos; //Load the photos
+            if ($scope.oilTest.actionItem == null) { //If there is no action item, create an empty one so that we can populate the text boxes with nothing (this won't be saved)
                 $scope.oilTest.actionItem = {issue: '', status: '', action: ''};
             }
-        }
-
-        if(typeof $scope.oilTest != 'undefined') {
             $scope.oil = { //Fill the text boxes with the previous info
                 id: 1,
                 lead: $scope.oilTest.lead,
@@ -112,9 +97,26 @@ angular
                 action: $scope.oilTest.actionItem.action,
                 comment: $scope.oilComments[$scope.oilComments.length - 1].text
             }
+            switch ($scope.oilTest.actionItem.status) { //Method for reloading the state of the oil action item. Needs to be a switch to process the text status
+                case 'OK':
+                    $scope.changeOilStatus(1);
+                    break;
+                case 'WARNING':
+                    $scope.changeOilStatus(2);
+                    break;
+                case 'ACTION':
+                    $scope.changeOilStatus(3);
+                    break;
+                default:
+                    $scope.changeOilStatus(1);
+                    break;
+            }
         }
         else {
-            $scope.oil = { //Fill the text boxes with the previous info
+            $scope.oilComments = []; //Create an empty array of comments
+            $scope.oilPhotos = []; //Create an empty array of photos
+            $scope.changeOilStatus(1); //Default the status to OK
+            $scope.oil = { //Fill the text boxes with blank info
                 id: 1,
                 lead: null,
                 copper: null,
@@ -132,27 +134,11 @@ angular
             }
         }
 
-        if($scope.oilTest != null) {
-            switch ($scope.oilTest.actionItem.status) { //Method for reloading the state of the oil action item. Needs to be a switch to process the text status
-                case 'OK':
-                    $scope.changeOilStatus(1);
-                    break;
-                case 'WARNING':
-                    $scope.changeOilStatus(2);
-                    break;
-                case 'ACTION':
-                    $scope.changeOilStatus(3);
-                    break;
-                default:
-                    $scope.changeOilStatus(1);
-                    break;
+        if(typeof $scope.machineGeneralTest != 'undefined' && $scope.machineGeneralTest.actionItem != null) { //Load the existing machineGeneralTest data if it exists, otherwise create empty data
+            $scope.machineTest = { //Fill the text boxes with the previous info
+                issue: $scope.machineGeneralTest.actionItem.issue,
+                action: $scope.machineGeneralTest.actionItem.action
             }
-        }
-        else {
-            $scope.changeOilStatus(1);
-        }
-
-        if($scope.machineGeneralTest != null) {
             switch ($scope.machineGeneralTest.actionItem.status) { //Method for reloading the state of the machine general action item. Needs to be a switch to process the text status
                 case 'OK':
                     $scope.changemachineGeneralStatus(1);
@@ -169,16 +155,7 @@ angular
             }
         }
         else {
-            $scope.changemachineGeneralStatus(1);
-        }
-
-        if(typeof $scope.machineGeneralTest != 'undefined') {
-            $scope.machineTest = { //Fill the text boxes with the previous info
-                issue: $scope.machineGeneralTest.actionItem.issue,
-                action: $scope.machineGeneralTest.actionItem.action
-            }
-        }
-        else {
+            $scope.changemachineGeneralStatus(1); //Default the status to OK
             $scope.machineTest = { //Fill the text boxes with the previous info
                 issue: '',
                 action: ''
@@ -193,23 +170,16 @@ angular
         };
         //Take photo succeeded
         function onSuccess(imageData) {
-            var image = document.getElementById('myImage');
-            image.src = "data:image/jpeg;base64," + imageData;
-            $scope.getPhotos(image);
+            $scope.oilPhotos.push({
+                format: 'jpeg',
+                photo: imageData
+            });
         }
         //Take photo failed for some reason
         function onFail(message) {
             alert('Failed because: ' + message);
         }
 
-        $scope.getPhotos = function (input) {
-            if(input != null){
-                $scope.oilPhotos.push({image: input});
-            }
-            else {
-                return $scope.oilPhotos;
-            }
-        }
 
 
 		if ($scope.nextSubAssembly != $scope.subAssemblyId) { //Display the next sub-Assembly button if there is one
@@ -226,7 +196,7 @@ angular
 			}));
 		}
         //Function for saving changes to the sub Assembly
-		$scope.saveSubAssembly = function(oil, machineTest) {
+		$scope.saveSubAssembly = function(oil, machineTest, wear) {
             //Generate OilTest Item
             if($scope.subAssembly.subAssembly.oil != false) {
                 $scope.oilActionItem = { //Generate action item
@@ -238,7 +208,8 @@ angular
                     technician: $scope.inspection.technician
                 }
                 if ($scope.changeOilStatus(null) == 'OK') { //Remove action item if the state is set to 'OK' (Because then it isn't an issue)
-                    $scope.oilActionItem = null;
+                    $scope.oilActionItem.issue = '';
+                    $scope.oilActionItem.action = '';
                 }
                 if (oil.comment != null) {
                     $scope.oilCommentNew = {
@@ -268,10 +239,10 @@ angular
                     silicon: oil.silicon * 1,
                     sodium: oil.sodium * 1,
                     aluminium: oil.aluminium * 1,
-                    water: oil.water.toString(),
+                    water: oil.water.toString(), //The toString may be redundant
                     viscosity: oil.viscosity * 1,
                     comments: $scope.oilComments,
-                    photos: $scope.getPhotos(),
+                    photos: $scope.oilPhotos,
                     actionItem: $scope.oilActionItem
                 }
             }
@@ -287,13 +258,12 @@ angular
                     timeActioned: moment(),
                     technician: $scope.inspection.technician
                 }
-                if ($scope.changeOilStatus(null) == 'OK') { //Remove action item if the state is set to 'OK' (Because then it isn't an issue)
-                    $scope.oilActionItem = null;
+                if ($scope.changemachineGeneralStatus(null) == 'OK') { //Remove action item issue and action if the state is set to 'OK' (Because then it isn't an issue)
+                    $scope.machineActionItem.issue = '';
+                    $scope.machineActionItem.action = '';
                 }
                 $scope.machineGeneralTestSave = {
                     id: 1,
-                    docType: 'A',
-                    docLink: '',
                     actionItem: $scope.machineActionItem
                 }
             }

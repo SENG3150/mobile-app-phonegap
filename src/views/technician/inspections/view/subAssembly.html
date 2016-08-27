@@ -26,7 +26,7 @@
     Photos: <button class="fa fa-plus" ng-click="takePhoto()"></button><br>
     <ul class="table-view" ng-if="oilTest.photos.length >=1">
         <li class="table-view-cell" ng-repeat="picture in oilTest.photos">
-            Photo: {{ picture.image }}
+            Photo: {{ picture.raw }}
         </li>
     </ul>
     Oil Status:<br>
@@ -44,7 +44,6 @@
 
 <div ng-if="subAssembly.subAssembly.machineGeneral != false">
     <b>General Machine Test</b><br>
-    Test Type: {{ machineGeneralTest.testType }}<br>
     Sub-Assembly Status:<br>
     <button class="form-button-1" ng-if="machineStatus == 1">OK</button>
     <button ng-click="changemachineGeneralStatus(1)" class="form-button-0" ng-if="machineStatus != 1">OK</button>
@@ -60,13 +59,11 @@
 
 <div ng-if="subAssembly.subAssembly.wear != false">
     <b>Wear Test</b><br>
-    Description: {{ wearTest.description }}
-
-    <ul class="table-view">
-        <li class="table-view-cell" ng-repeat="uniqueDetails in wearTest.uniqueDetails">
-            Unique Detail: {{ uniqueDetails }}
-        </li>
-    </ul>
+    <div ng-repeat="uniqueDetails in subAssembly.subAssembly.uniqueDetails">
+        <label class="form-label">{{ uniqueDetails }}:</label><input class="form-input" type="text" ng-model="wear.detail[$index]" placeholder="{{ uniqueDetails }}"><br>
+    </div>
 </div>
 
-<button class="form-button-3" ng-click="saveSubAssembly(oil, machineTest)">Save</button>
+<button class="form-button-3" ng-click="saveSubAssembly(oil, machineTest, wear)">Save</button>
+
+<pre>{{subAssembly | json}}</pre>
