@@ -174,7 +174,7 @@ angular
             image.src = "data:image/jpeg;base64," + imageData;
             $scope.oilPhotos.push({
                 format: 'jpeg',
-                photo: image
+                photo: image.src
             });
         }
         //Take photo failed for some reason
