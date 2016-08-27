@@ -24,9 +24,9 @@
     </div>
     <br>
     Photos: <button class="fa fa-plus" ng-click="takePhoto()"></button><br>
-    <ul class="table-view" ng-if="oilTest.photos.length >=1">
-        <li class="table-view-cell" ng-repeat="picture in oilTest.photos">
-            Photo: {{ picture.raw }}
+    <ul class="table-view" ng-if="oilPhotos.length >=1">
+        <li class="table-view-cell" ng-repeat="picture in oilPhotos">
+            Photo: {{ picture.photo }}
         </li>
     </ul>
     Oil Status:<br>
