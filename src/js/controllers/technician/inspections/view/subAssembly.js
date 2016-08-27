@@ -168,14 +168,33 @@ angular
 
         //Method managing the photo taking (Quality is set to 50 at the moment, this may change based on file size requirements and quality needs)
         $scope.takePhoto = function (input) {
-            navigator.camera.getPicture( onSuccess(input), onFail, {
-                quality: 50,
-                destinationType: Camera.DestinationType.DATA_URL
-            });
+            switch(input){
+                case 'oil':
+                    navigator.camera.getPicture(saveOilPhotos, onFail, {quality: 50, destinationType: Camera.DestinationType.DATA_URL});
+                    break;
+                case 'machine':
+                    navigator.camera.getPicture(saveMachinePhotos, onFail, {quality: 50, destinationType: Camera.DestinationType.DATA_URL});
+                    break;
+                case 'wear':
+                    navigator.camera.getPicture(saveWearPhotos, onFail, {quality: 50, destinationType: Camera.DestinationType.DATA_URL});
+                    break;
+            }
         };
         //Take photo succeeded
-        function onSuccess(imageData, location) {
-            location.push({
+        function saveOilPhotos(imageData) {
+            $scope.oilPhotos.push({
+                format: 'jpeg',
+                photo: imageData
+            });
+        }
+        function saveMachinePhotos(imageData) {
+            $scope.machinePhotos.push({
+                format: 'jpeg',
+                photo: imageData
+            });
+        }
+        function saveWearPhotos(imageData) {
+            $scope.wearPhotos.push({
                 format: 'jpeg',
                 photo: imageData
             });
