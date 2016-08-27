@@ -166,7 +166,10 @@ angular
         //Method managing the photo taking (Quality is set to 50 at the moment, this may change based on file size requirements and quality needs)
         //Photos need testing on iOS device!!!
         $scope.takePhoto = function (input) {
-            navigator.camera.getPicture( onSuccess, onFail, {quality: 50, DATA_URL: 0});
+            navigator.camera.getPicture( onSuccess, onFail, {
+                quality: 50, 
+                destinationType: Camera.DestinationType.DATA_URL
+            });
         };
         //Take photo succeeded
         function onSuccess(imageData) {
