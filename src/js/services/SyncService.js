@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.service('SyncService', ['$q', '$interval', 'Inspections', 'InspectionsStorage', 'Models', 'ModelsStorage', 'Machines', 'MachinesStorage', 'Technicians', 'TechniciansStorage', 'DomainExperts', 'DomainExpertsStorage', '$rootScope', function ($q, $interval, Inspections, InspectionsStorage, Models, ModelsStorage, Machines, MachinesStorage, Technicians, TechniciansStorage, DomainExperts, DomainExpertsStorage, $rootScope) {
+	.service('SyncService', ['$q', '$interval', 'Inspections', 'InspectionsStorage', 'Models', 'ModelsStorage', 'Machines', 'MachinesStorage', 'Technicians', 'TechniciansStorage', 'DomainExperts', 'DomainExpertsStorage', '$rootScope', '_', function ($q, $interval, Inspections, InspectionsStorage, Models, ModelsStorage, Machines, MachinesStorage, Technicians, TechniciansStorage, DomainExperts, DomainExpertsStorage, $rootScope, _) {
 		this.items = [
 			{
 				name: 'Models',
@@ -34,7 +34,17 @@ angular
 				storage: InspectionsStorage,
 				include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly,photos.raw,majorAssemblies.photos.raw,majorAssemblies.subAssemblies.photos.raw,majorAssemblies.subAssemblies.machineGeneralTest.photos.raw,majorAssemblies.subAssemblies.oilTest.photos.raw,majorAssemblies.subAssemblies.wearTest.photos.raw',
 				upload: function (item) {
-					return this.service.getBulk().post(item);
+					var clone = _.clone(item);
+
+					if (clone.fromServer) {
+						return this.service.getBulk().post(clone);
+					} else {
+						if (clone.id) {
+							delete clone.id;
+						}
+
+						return this.service.getBulk().post(clone);
+					}
 				}
 			},
 			{
