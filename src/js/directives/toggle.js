@@ -2,13 +2,15 @@ angular
 	.module('joy-global')
 	.directive('toggle', ['ToggleService', '$timeout', function (ToggleService, $timeout) {
 		return {
-			restrict: 'A',
+			restrict: 'AE',
 			require: 'ngModel',
 			templateUrl: 'views/common/toggle.html',
 			scope: {
 				id: '='
 			},
 			link: function (scope, element, attrs, ngModel) {
+				element.addClass('toggle');
+
 				scope.$watch(function () {
 					return ngModel.$modelValue;
 				}, function (newValue) {

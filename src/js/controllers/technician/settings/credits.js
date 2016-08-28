@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianSettingsControllerCredits', ['$scope', 'LayoutService', 'PGDeviceReady', function ($scope, LayoutService, PGDeviceReady) {
+	.controller('TechnicianSettingsControllerCredits', ['$scope', 'LayoutService', function ($scope, LayoutService) {
 		LayoutService.setTitle(['Credits', 'Settings']);
 		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-settings-index'));
 

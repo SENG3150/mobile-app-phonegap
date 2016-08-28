@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.service('NetworkInformationService', ['PGDeviceReady', function (PGDeviceReady) {
+	.service('NetworkInformationService', [function () {
 		return {
 			online: false,
 			setOnline: function (online) {

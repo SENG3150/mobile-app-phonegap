@@ -1,16 +1,14 @@
 <div class="card">
     <ul class="table-view">
-        <li class="table-view-cell">
+        <li class="table-view-cell" ng-repeat="(key, setting) in settings">
             <div class="row">
                 <div class="col-xs-10">
-                    Automatic Sync<br/>
-                    <small>Your data will be automatically synced when you first login or open the app.</small>
+                    {{ setting.name }}<br/>
+                    <small>{{ setting.description }}</small>
                 </div>
             </div>
 
-            <div class="toggle" ng-class="{true: 'active'}[settingsService.get('auto-sync')]" id="auto-sync">
-                <div class="toggle-handle"></div>
-            </div>
+            <toggle ng-model="setting.value" id="key"></toggle>
         </li>
     </ul>
 </div>

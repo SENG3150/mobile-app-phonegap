@@ -73,11 +73,9 @@
                 </td>
                 <td></td>
                 <td>
-                    <div class="toggle pull-right m-r m-b-xs"
-                         ng-model="inspection.selectedMajorAssemblies['root']"
-                         toggle
-                         id="{ type: 'majorAssembly', id: majorAssembly.id }">
-                    </div>
+                    <toggle class="toggle pull-right m-r m-b-xs"
+                            ng-model="inspection.selectedMajorAssemblies['root']"
+                            id="{ type: 'majorAssembly', id: majorAssembly.id }"></toggle>
                 </td>
             </tr>
 
@@ -97,11 +95,9 @@
                     </span>
                 </td>
                 <td>
-                    <div class="toggle pull-right m-r m-b-xs"
-                         ng-model="inspection.selectedMajorAssemblies[majorAssembly.id][subAssembly.id]"
-                         toggle
-                         id="{ type: 'subAssembly', id: subAssembly.id }">
-                    </div>
+                    <toggle class="pull-right m-r m-b-xs"
+                            ng-model="inspection.selectedMajorAssemblies[majorAssembly.id][subAssembly.id]"
+                            id="{ type: 'subAssembly', id: subAssembly.id }"></toggle>
                 </td>
             </tr>
             <tr ng-repeat-end></tr>
