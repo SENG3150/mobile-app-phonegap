@@ -8,6 +8,19 @@ angular
 				$state.go('auth.login', {r: $window.location.href});
 			});
 
+		$rootScope.$on('$stateChangeSuccess',
+			function (event, toState) {
+				if (toState.name.indexOf('settings') != -1) {
+					ViewsService.setCurrentView('settings');
+				} else if (toState.name.indexOf('sync') != -1) {
+					ViewsService.setCurrentView('sync');
+				} else if (toState.name.indexOf('machines') != -1) {
+					ViewsService.setCurrentView('machines');
+				} else {
+					ViewsService.setCurrentView('inspections');
+				}
+			});
+
 		$rootScope.$state = $state;
 
 		LayoutService.getPageFooter().reset();

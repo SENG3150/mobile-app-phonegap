@@ -1,14 +1,57 @@
-<div class="text-center" ng-if="loading == true">
-    <i class="fa fa-spinner fa-spin fa-3x"></i>
+<div class="segmented-control">
+    <a class="control-item active" data-target="#details">
+        Details
+    </a>
+    <a class="control-item" data-target="#major-assemblies">
+        Major Assemblies
+    </a>
+    <a class="control-item" data-target="#inspections">
+        Inspections
+    </a>
 </div>
 
-<div>
-    Machine ID: {{machine.id}} <br>
-    Model: {{machine.model.name}} <br>
-    Major Assemblies:
-    <ul class="table-view">
-        <li class="table-view-cell" ng-repeat="majorAssembly in majorAssemblies">
-            {{ majorAssembly.name }}
-        </li>
-    </ul>
+<div class="card">
+    <div id="details" class="control-content active">
+        <ul class="table-view">
+            <li class="table-view-cell p-r">
+                Machine
+                <span class="pull-right text-right">{{ machine.name }}</span>
+            </li>
+            <li class="table-view-cell p-r">
+                Model
+                <span class="pull-right text-right">{{ machine.model.name }}</span>
+            </li>
+        </ul>
+    </div>
+    <div id="major-assemblies" class="control-content">
+        <ul class="table-view" ng-if="machine.model.majorAssemblies.length > 0">
+            <li class="table-view-cell" ng-repeat="majorAssembly in machine.model.majorAssemblies">
+                <a ui-sref="technician-machines-view-majorAssembly({ machine: {{ machine.id }}, majorAssembly: {{ majorAssembly.id }} })"
+                   class="navigate-right">
+                    {{ majorAssembly.name }}
+                </a>
+            </li>
+        </ul>
+        <p class="text-center p-xs" ng-if="machine.majorAssemblies.length == 0">Currently there are no major
+            assemblies for this machine, try syncing some on the Sync tab.</p>
+    </div>
+    <div id="inspections" class="control-content">
+        <ul class="table-view" ng-if="inspections.length > 0">
+            <li class="table-view-cell" ng-repeat="inspection in inspections">
+                <a ng-click="viewInspection(inspection.id)"
+                   class="navigate-right">
+                    <span ng-class="{true: 'text-bold'}[isModified(inspection)]">Inspection {{ inspection.id }}</span>
+                    <span class="label label-primary"
+                          ng-if="moment(inspection.timeScheduled).isSame(moment(), 'day') == true">Today</span>
+                    <br/>
+                    <small>
+                        {{ moment(inspection.timeScheduled).format('HH:mm, ddd Do MMM YYYY') }}<br/>
+                        {{ inspection.machine.name }} ({{ inspection.machine.model.name }})
+                    </small>
+                </a>
+            </li>
+        </ul>
+        <p class="text-center p-xs" ng-if="inspections.length == 0">Currently there are no inspections for
+            this machine, try syncing some on the Sync tab.</p>
+    </div>
 </div>
