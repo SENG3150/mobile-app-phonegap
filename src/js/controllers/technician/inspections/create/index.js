@@ -27,7 +27,7 @@ angular
 							{
 								id: majA.id,
 								name: majA.name
-							}
+							};
 
 							var local =
 							{
@@ -83,10 +83,9 @@ angular
 				majorAssemblies: $scope.inspection.majorAssemblies
 			};
 
-			console.log(inspection);
-
 			InspectionsStorage.set(inspection);
 			NotificationService.alert('Saved!', 'Success');
+			$state.go('technician-inspections-index');
 		});
 
 		$scope.selectedMachine = null;

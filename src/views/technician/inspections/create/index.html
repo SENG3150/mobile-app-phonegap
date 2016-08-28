@@ -36,15 +36,24 @@
                                 ng-click = "toggleMajorAssembly(majorAssembly.id);" class = "segregated-table-drop-list">
                                 <td class = "clickable-table-cell"> <b>{{ majorAssembly.name }}</b> <i class="fa fa-angle-down" aria-hidden="true"></i></td>
                                 <td>
-                                    <button type="button"  class= "fa form-button-plus" ng-if="showSubAssemblies == true"
+                                    <button type="button"  class= "form-button-all" ng-if="showSubAssemblies == true"
                                             ng-click = "$event.stopPropagation(); toggleMajorAssembly(majorAssembly.id);">
-                                        <b>+</b> All
+                                        <b>+</b>All
                                     </button>
                                 </td>
                             </tr>
 
                             <tr ng-repeat="subAssembly in majorAssembly.subAssemblies" ng-if="showSubAssemblies == true">
                                 <td class = "unclickable-table-cell">{{ subAssembly.name }}</td>
+                                <td class = "unclickable-table-cell" ng-if = "subAssembly.oil == true">
+                                    <i class="fa fa-eyedropper" aria-hidden="true"></i>
+                                </td>
+                                <td class = "unclickable-table-cell" ng-if = "subAssembly.wear == true">
+                                    <i class="fa fa-chain-broken" aria-hidden="true"></i>
+                                </td>
+                                <td class = "unclickable-table-cell" ng-if = "subAssembly.machineGeneral == true">
+                                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                                </td>
                                 <td class = "unclickable-table-cell">
                                     <button ng-click = "toggleSubAssembly(majorAssembly.id, subAssembly.id)" class = "form-button-plus"
                                             ng-if="inspection.selectedMajorAssemblies[majorAssembly.id][subAssembly.id] == true">
@@ -58,6 +67,13 @@
                                 </td>
                             </tr>
                             <tr ng-repeat-end></tr>
+                            <tr>
+                                <td class = "unclickable-table-cell-small">
+                                    Oil Test = <i class="fa fa-eyedropper" aria-hidden="true"></i><br/>
+                                    Wear Test = <i class="fa fa-chain-broken" aria-hidden="true"></i><br/>
+                                    Machine General Test = <i class="fa fa-cogs" aria-hidden="true"></i><br/>
+                                </td>
+                            </tr>
                         </table>
                     </li>
                     <li class="table-view-cell table-view-divider"></li>
