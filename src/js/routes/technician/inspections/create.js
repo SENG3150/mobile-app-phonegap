@@ -19,23 +19,5 @@ angular
 						return LayoutService.reset();
 					}]
 				}
-			})
-			.state('technician-inspections-create-majorAssembly', {
-				parent: 'technician',
-				url: '/inspections/create/:majorAssembly',
-				views: {
-					'inspections': {
-						templateUrl: 'views/technician/inspections/create/majorAssembly.html',
-						controller: 'TechnicianInspectionsCreateControllerMajorAssembly'
-					}
-				},
-				resolve: {
-					loggedIn: ['AuthService', function (AuthService) {
-						return AuthService.checkPermissions(true);
-					}],
-					layoutService: ['LayoutService', function (LayoutService) {
-						return LayoutService.reset();
-					}]
-				}
 			});
 	}]);
