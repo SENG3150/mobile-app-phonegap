@@ -36,21 +36,24 @@
                                 ng-click = "toggleMajorAssembly(majorAssembly.id);" class = "segregated-table-drop-list">
                                 <td class = "clickable-table-cell"> <b>{{ majorAssembly.name }}</b> <i class="fa fa-angle-down" aria-hidden="true"></i></td>
                                 <td>
-                                    <button type="button"  class= "fa fa-square-o" ng-if="showSubAssemblies == true"
+                                    <button type="button"  class= "fa form-button-plus" ng-if="showSubAssemblies == true"
                                             ng-click = "$event.stopPropagation(); toggleMajorAssembly(majorAssembly.id);">
+                                        <b>+</b> All
                                     </button>
                                 </td>
                             </tr>
 
                             <tr ng-repeat="subAssembly in majorAssembly.subAssemblies" ng-if="showSubAssemblies == true">
                                 <td class = "unclickable-table-cell">{{ subAssembly.name }}</td>
-                                <td>
-                                    <button ng-click = "toggleSubAssembly(majorAssembly.id, subAssembly.id)" class = "fa fa-check-square-o"
+                                <td class = "unclickable-table-cell">
+                                    <button ng-click = "toggleSubAssembly(majorAssembly.id, subAssembly.id)" class = "form-button-plus"
                                             ng-if="inspection.selectedMajorAssemblies[majorAssembly.id][subAssembly.id] == true">
+                                            <b>+</b>
                                     </button>
 
-                                    <button ng-click = "toggleSubAssembly(majorAssembly.id, subAssembly.id)" class = "fa fa-square-o"
+                                    <button ng-click = "toggleSubAssembly(majorAssembly.id, subAssembly.id)" class = "form-button-minus"
                                             ng-if="inspection.selectedMajorAssemblies[majorAssembly.id][subAssembly.id] == false">
+                                            <b>-</b>
                                     </button>
                                 </td>
                             </tr>
@@ -63,4 +66,3 @@
         </div>
     </div>
 </div>
-

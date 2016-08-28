@@ -40,7 +40,7 @@ angular
 								if (subAssembly == true)
 								{
 
-									angular.forEach(majA.subAssemblies, function (subA, id, name, machineGeneral, oil, wear)
+									angular.forEach(majA.subAssemblies, function (subA, id, name, machineGeneral, oil, wear, uniqueDetails)
 									{
 										if (subA.id == subAssemblyId)
 										{
@@ -48,13 +48,15 @@ angular
 											{
 												id: subA.id,
 												name: subA.name,
-											}
+												oil: subA.oil,
+												wear: subA.wear,
+												machineGeneral: subA.machineGeneral,
+												uniqueDetails: subA.uniqueDetails
+											};
+
 											local.subAssemblies.push(
 											{
-												subAssembly: subAss,
-												machineGeneralTest: subA.machineGeneral,
-												oilTest: subA.oil,
-												wearTest: subA.wear,
+												subAssembly: subAss
 											});
 										}
 									})
@@ -73,6 +75,7 @@ angular
 
 			var inspection =
 			{
+				timeCreated: $scope.inspection.timeCreated.format(),
 				timeScheduled: $scope.inspection.timeScheduled.format(),
 				machine: $scope.selectedMachine,
 				technician: $scope.inspection.technician,
@@ -94,7 +97,8 @@ angular
 
 		$scope.inspection =
 		{
-			timeScheduled: moment(),
+			timeScheduled: moment().add(30, 'minutes'),
+			timeCreated: moment(),
 			machine: $scope.selectedMachine,
 			technician: AuthService.getUser().primary,
 			scheduler: AuthService.getUser().primary,
@@ -160,7 +164,7 @@ angular
 
 		$scope.toggleMajorAssembly = function (majorAssembly) {
 			angular.forEach($scope.inspection.selectedMajorAssemblies[majorAssembly], function (value, key) {
-				$scope.inspection.selectedMajorAssemblies[majorAssembly][key] = !value;
+				$scope.inspection.selectedMajorAssemblies[majorAssembly][key] = true;
 			});
 
 			$scope.updateScheduledTests();
