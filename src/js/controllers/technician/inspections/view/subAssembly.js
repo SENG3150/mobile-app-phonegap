@@ -255,6 +255,8 @@ angular
 
                 $scope.oilTestSave = {
                     id: 1,
+                    inspection: $scope.inspectionId,
+                    subAssembly: $scope.subAssembly.id,
                     lead: oil.lead * 1,
                     copper: oil.copper * 1,
                     tin: oil.tin * 1,
@@ -302,6 +304,8 @@ angular
                 }
                 $scope.machineGeneralTestSave = {
                     id: 1,
+                    inspection: $scope.inspectionId,
+                    subAssembly: $scope.subAssembly.id,
                     comments: $scope.machineComments,
                     photos:  $scope.machinePhotos,
                     actionItem: $scope.machineActionItem
@@ -345,6 +349,8 @@ angular
                 }
                 $scope.wearTestSave = {
                     id: 1,
+                    inspection: $scope.inspectionId,
+                    subAssembly: $scope.subAssembly.id,
                     smu: wear.SMU,
                     uniqueDetails: $scope.wearUniqueDetails,
                     comments: $scope.wearComments,
