@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.directive('toggle', ['ToggleService', '$timeout', function (ToggleService, $timeout) {
+	.directive('toggle', ['ToggleService', function (ToggleService) {
 		return {
 			restrict: 'AE',
 			require: 'ngModel',
