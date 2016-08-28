@@ -34,11 +34,7 @@ angular
 				storage: InspectionsStorage,
 				include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly,photos.raw,majorAssemblies.photos.raw,majorAssemblies.subAssemblies.photos.raw,majorAssemblies.subAssemblies.machineGeneralTest.photos.raw,majorAssemblies.subAssemblies.oilTest.photos.raw,majorAssemblies.subAssemblies.wearTest.photos.raw',
 				upload: function (item) {
-					if (item.fromServer) {
-						return item.post();
-					} else {
-						return this.service.getBulk().post(item);
-					}
+					return this.service.getBulk().post(item);
 				}
 			},
 			{
