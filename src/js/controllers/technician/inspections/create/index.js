@@ -73,8 +73,10 @@ angular
 				});
 			}
 
+			var inspections = InspectionsStorage.getList();
 			var inspection =
 			{
+				id: inspections.length + 1,
 				timeCreated: $scope.inspection.timeCreated.format(),
 				timeScheduled: $scope.inspection.timeScheduled.format(),
 				machine: $scope.selectedMachine,
@@ -82,6 +84,8 @@ angular
 				scheduler: DomainExpertsStorage.get(1),
 				majorAssemblies: $scope.inspection.majorAssemblies
 			};
+
+			console.log(inspection);
 
 			InspectionsStorage.set(inspection);
 			NotificationService.alert('Saved!', 'Success');
@@ -96,7 +100,7 @@ angular
 
 		$scope.inspection =
 		{
-			timeScheduled: moment().add(30, 'minutes'),
+			timeScheduled: moment().add(15, 'minutes'),
 			timeCreated: moment(),
 			machine: $scope.selectedMachine,
 			technician: AuthService.getUser().primary,
