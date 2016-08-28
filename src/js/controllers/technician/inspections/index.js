@@ -15,9 +15,9 @@ angular
 				, 'timeScheduled'
 			).reverse();
 
-			$scope.incompleteInspections = _.filter($scope.inspections, function (inspection) {
+			$scope.upcomingInspections = _.filter($scope.inspections, function (inspection) {
 				return moment(inspection.timeScheduled).isAfter(moment()) == true;
-			});
+			}).reverse();
 
 			$scope.completeInspections = _.filter($scope.inspections, function (inspection) {
 				return inspection.timeCompleted != null;

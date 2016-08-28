@@ -1,6 +1,6 @@
 <div class="segmented-control">
-    <a class="control-item active" data-target="#incomplete">
-        Incomplete
+    <a class="control-item active" data-target="#upcoming">
+        Upcoming
     </a>
     <a class="control-item" data-target="#complete">
         Complete
@@ -11,9 +11,9 @@
 </div>
 
 <div class="card">
-    <div id="incomplete" class="control-content active">
-        <ul class="table-view" ng-if="incompleteInspections.length > 0">
-            <li class="table-view-cell" ng-repeat="inspection in incompleteInspections">
+    <div id="upcoming" class="control-content active">
+        <ul class="table-view" ng-if="upcomingInspections.length > 0">
+            <li class="table-view-cell" ng-repeat="inspection in upcomingInspections">
                 <a ui-sref="technician-inspections-view-index({ inspection: {{ inspection.id }}})"
                    class="navigate-right">
                     <span ng-class="{true: 'text-bold'}[isModified(inspection)]">Inspection {{ inspection.id }}</span>
