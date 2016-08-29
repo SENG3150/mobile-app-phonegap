@@ -14,6 +14,7 @@ angular
 			}
 		};
 
+		ToggleService.reset();
 		ToggleService.onToggled(function (event, args) {
 			SettingsService.set(args.id, args.value);
 			$scope.settings[args.id].value = args.value;

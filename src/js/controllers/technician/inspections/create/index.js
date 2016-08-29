@@ -153,6 +153,7 @@ angular
 				$scope.updateScheduledTests();
 			};
 
+			ToggleService.reset();
 			ToggleService.onToggled(function (e, args) {
 				var type = args.id.type;
 				var id = args.id.id;

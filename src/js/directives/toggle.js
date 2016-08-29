@@ -11,7 +11,7 @@ angular
 			link: function (scope, element, attrs, ngModel) {
 				element.addClass('toggle');
 
-				/*scope.$watch(function () {
+				scope.$watch(function () {
 					return ngModel.$modelValue;
 				}, function (newValue) {
 					if (newValue == true) {
@@ -27,7 +27,7 @@ angular
 							transform: 'translate3d(0px, 0px, 0px)'
 						};
 					}
-				});*/
+				});
 
 				element[0].addEventListener('toggle', function (e) {
 					ToggleService.fireToggledEvent(scope.id, e.detail.isActive);
