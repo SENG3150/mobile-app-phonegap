@@ -293,8 +293,9 @@ angular
 							NotificationService.alert(error, 'Error');
 						},
 						{
-							quality: 50,
-							destinationType: Camera.DestinationType.DATA_URL
+							quality: 30,
+							destinationType: Camera.DestinationType.DATA_URL,
+							correctOrientation: true
 						}
 					);
 				} else {
