@@ -315,6 +315,18 @@ angular
 				}
 			};
 
+			$scope.getPhotosCount = function (photos) {
+				var count = 0;
+
+				angular.forEach(photos, function (photo) {
+					if (photo.photo) {
+						count++;
+					}
+				});
+
+				return count;
+			};
+
 			$scope.save = function () {
 				// Loop through to find the subAssembly to overwrite
 				angular.forEach($scope.inspection.majorAssemblies, function (majorAssembly, majorAssemblyKey) {

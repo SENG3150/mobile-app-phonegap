@@ -377,9 +377,9 @@
             </button>
         </div>
 
-        <div class="card" ng-if="subAssembly.machineGeneralTest.photos.length > 0">
+        <div class="card" ng-if="getPhotosCount(subAssembly.machineGeneralTest.photos) > 0">
             <ul class="table-view">
-                <li class="table-view-cell p-r" ng-repeat="picture in subAssembly.machineGeneralTest.photos">
+                <li class="table-view-cell p-r" ng-repeat="picture in subAssembly.machineGeneralTest.photos" ng-if="picture.photo">
                     <img class="img-responsive" ng-src="data:image/jpeg;base64,{{ picture.photo }}">
                 </li>
             </ul>
@@ -396,9 +396,9 @@
             </button>
         </div>
 
-        <div class="card" ng-if="subAssembly.oilTest.photos.length > 0">
+        <div class="card" ng-if="getPhotosCount(subAssembly.oilTest.photos) > 0">
             <ul class="table-view">
-                <li class="table-view-cell p-r" ng-repeat="picture in subAssembly.oilTest.photos">
+                <li class="table-view-cell p-r" ng-repeat="picture in subAssembly.oilTest.photos" ng-if="picture.photo">
                     <img class="img-responsive" ng-src="data:image/jpeg;base64,{{ picture.photo }}">
                 </li>
             </ul>
@@ -415,9 +415,9 @@
             </button>
         </div>
 
-        <div class="card" ng-if="subAssembly.wearTest.photos.length > 0">
+        <div class="card" ng-if="getPhotosCount(subAssembly.wearTest.photos) > 0">
             <ul class="table-view">
-                <li class="table-view-cell p-r" ng-repeat="picture in subAssembly.wearTest.photos">
+                <li class="table-view-cell p-r" ng-repeat="picture in subAssembly.wearTest.photos" ng-if="picture.photo">
                     <img class="img-responsive" ng-src="data:image/jpeg;base64,{{ picture.photo }}">
                 </li>
             </ul>
