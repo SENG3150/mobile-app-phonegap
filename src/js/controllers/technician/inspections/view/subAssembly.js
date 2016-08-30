@@ -62,7 +62,8 @@ angular
 							inspection: $scope.inspectionId,
 							majorAssembly: $scope.majorAssemblyId,
 							subAssembly: $scope.nextSubAssembly
-						}
+						},
+						true
 					);
 				}
 			);
@@ -79,7 +80,8 @@ angular
 						{
 							inspection: $scope.inspectionId,
 							majorAssembly: $scope.majorAssemblyId
-						}
+						},
+						true
 					);
 				}
 			);
