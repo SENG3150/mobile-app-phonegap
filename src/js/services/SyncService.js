@@ -32,7 +32,7 @@ angular
 				name: 'Inspections',
 				service: Inspections,
 				storage: InspectionsStorage,
-				include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly,photos.raw,majorAssemblies.photos.raw,majorAssemblies.subAssemblies.photos.raw,majorAssemblies.subAssemblies.machineGeneralTest.photos.raw,majorAssemblies.subAssemblies.oilTest.photos.raw,majorAssemblies.subAssemblies.wearTest.photos.raw',
+				include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly',
 				upload: function (item) {
 					var clone = _.clone(item);
 
