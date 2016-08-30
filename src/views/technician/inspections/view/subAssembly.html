@@ -283,7 +283,7 @@
         <div class="card" ng-if="subAssembly.machineGeneralTest.comments.length > 0">
             <ul class="table-view">
                 <li class="table-view-cell media" ng-repeat="comment in subAssembly.machineGeneralTest.comments">
-                    <img class="media-object pull-left" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
+                    <img class="media-object pull-left img-circle" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
                     <div class="media-body">
                         {{ comment.author.name }}<br/>
                         <small>
@@ -316,7 +316,7 @@
         <div class="card" ng-if="subAssembly.oilTest.comments.length > 0">
             <ul class="table-view">
                 <li class="table-view-cell media" ng-repeat="comment in subAssembly.oilTest.comments">
-                    <img class="media-object pull-left" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
+                    <img class="media-object pull-left img-circle" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
                     <div class="media-body">
                         {{ comment.author.name }}<br/>
                         <small>
@@ -349,7 +349,7 @@
         <div class="card" ng-if="subAssembly.wearTest.comments.length > 0">
             <ul class="table-view">
                 <li class="table-view-cell media" ng-repeat="comment in subAssembly.wearTest.comments">
-                    <img class="media-object pull-left" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
+                    <img class="media-object pull-left img-circle" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
                     <div class="media-body">
                         {{ comment.author.name }}<br/>
                         <small>
