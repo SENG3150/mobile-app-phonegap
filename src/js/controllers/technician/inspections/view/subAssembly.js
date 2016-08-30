@@ -38,14 +38,21 @@ angular
 			});
 
 			// Set the back button
-			LayoutService.getPageHeader().setBackButton(
-				LayoutService.redirect(
-					'technician-inspections-view-majorAssembly',
-					{
-						inspection: $scope.inspectionId,
-						majorAssembly: $scope.majorAssemblyId
-					}
-				)
+			LayoutService.getPageHeader().setLeftButton(
+				'icon icon-left-nav',
+				'Back',
+				function () {
+					$scope.save();
+
+					LayoutService.redirect(
+						'technician-inspections-view-majorAssembly',
+						{
+							inspection: $scope.inspectionId,
+							majorAssembly: $scope.majorAssemblyId
+						},
+						true
+					);
+				}
 			);
 
 			if ($scope.nextSubAssembly != $scope.subAssemblyId) {

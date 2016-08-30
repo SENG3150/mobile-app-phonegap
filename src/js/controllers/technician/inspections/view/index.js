@@ -1,6 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsViewControllerIndex', ['$scope', 'InspectionsStorage', 'moment', '$stateParams', 'LayoutService', '_', function ($scope, InspectionsStorage, moment, $stateParams, LayoutService, _) {
+	.controller('TechnicianInspectionsViewControllerIndex', ['$scope', 'InspectionsStorage', 'moment', '$stateParams', 'LayoutService', '_', 'NotificationService', function ($scope, InspectionsStorage, moment, $stateParams, LayoutService, _, NotificationService) {
 		$scope.inspectionId = $stateParams.inspection;
 		$scope.moment = moment;
 
@@ -73,11 +73,41 @@ angular
 			LayoutService.redirect('technician-inspections-index', null, true);
 		}
 
-		LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
-		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
-		LayoutService.getPageHeader().setHeroButton('icon icon-check', 'Complete', function () {
-			$scope.inspection.timeCompleted = moment().format();
+		$scope.setupForStart = function () {
+			LayoutService.reset();
+			LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
+			LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
+			LayoutService.getPageHeader().setHeroButton('icon icon-check', 'Start', function () {
+				$scope.inspection.timeCompleted = moment().format();
 
-			InspectionsStorage.set($scope.inspection);
-		});
+				InspectionsStorage.set($scope.inspection);
+
+				NotificationService.alert('You can now start the inspection.');
+
+				$scope.setupForComplete();
+			});
+		};
+
+		$scope.setupForComplete = function () {
+			LayoutService.reset();
+			LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
+			LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
+			LayoutService.getPageHeader().setHeroButton('icon icon-check', 'Complete', function () {
+				$scope.inspection.timeCompleted = moment().format();
+
+				InspectionsStorage.set($scope.inspection);
+
+				NotificationService.alert('The inspection was marked as complete.');
+
+				LayoutService.reset();
+				LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
+				LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
+			});
+		};
+
+		if ($scope.inspection.timeStarted == null) {
+			$scope.setupForStart();
+		} else if ($scope.inspection.timeCompleted == null) {
+			$scope.setupForComplete();
+		}
 	}]);

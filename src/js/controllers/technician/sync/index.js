@@ -46,6 +46,8 @@ angular
 						angular.forEach($scope.uploads, function (upload) {
 							var promise = SyncService.upload(upload.name);
 
+							upload.status = 'uploading';
+
 							uploadPromises.push(promise);
 
 							promise
