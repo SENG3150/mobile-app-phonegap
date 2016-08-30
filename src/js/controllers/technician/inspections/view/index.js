@@ -109,5 +109,9 @@ angular
 			$scope.setupForStart();
 		} else if ($scope.inspection.timeCompleted == null) {
 			$scope.setupForComplete();
+		} else {
+			LayoutService.reset();
+			LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
+			LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
 		}
 	}]);
