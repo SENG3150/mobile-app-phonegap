@@ -102,11 +102,8 @@ gulp.task('concat-core', function () {
 	var config = concatCoreConfig;
 
 	return gulp.src(config.source)
-		.pipe(concat(config.output))/*
-		.pipe(uglify({
-			mangle: false,
-			compress: false
-		}))*/
+		.pipe(concat(config.output))
+		.pipe(uglify())
 		.pipe(gulp.dest(config.destination));
 });
 
