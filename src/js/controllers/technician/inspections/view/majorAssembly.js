@@ -10,12 +10,16 @@ angular
 		// Select the specific inspection
 		$scope.inspection = InspectionsStorage.one($scope.inspectionId);
 
-		angular.forEach($scope.inspection.majorAssemblies, function (majorAssembly) {
-			if (majorAssembly.majorAssembly.id == $scope.majorAssemblyId) {
-				$scope.majorAssembly = majorAssembly;
-				$scope.majorAssemblyName = majorAssembly.majorAssembly.name;
+		if ($scope.inspection) {
+			angular.forEach($scope.inspection.majorAssemblies, function (majorAssembly) {
+				if (majorAssembly.majorAssembly.id == $scope.majorAssemblyId) {
+					$scope.majorAssembly = majorAssembly;
+					$scope.majorAssemblyName = majorAssembly.majorAssembly.name;
 
-				LayoutService.setTitle([$scope.majorAssemblyName]);
-			}
-		});
+					LayoutService.setTitle([$scope.majorAssemblyName]);
+				}
+			});
+		} else {
+			LayoutService.redirect('technician-inspections-index', {}, true);
+		}
 	}]);

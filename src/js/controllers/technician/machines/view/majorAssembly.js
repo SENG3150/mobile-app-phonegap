@@ -10,11 +10,15 @@ angular
 		// Select the specific machine
 		$scope.machine = MachinesStorage.one($scope.machineId);
 
-		angular.forEach($scope.machine.model.majorAssemblies, function (majorAssembly) {
-			if (majorAssembly.id == $scope.majorAssemblyId) {
-				$scope.majorAssembly = majorAssembly;
+		if ($scope.machine && $scope.machine.model && $scope.machine.model.majorAssemblies) {
+			angular.forEach($scope.machine.model.majorAssemblies, function (majorAssembly) {
+				if (majorAssembly.id == $scope.majorAssemblyId) {
+					$scope.majorAssembly = majorAssembly;
 
-				LayoutService.setTitle([majorAssembly.name]);
-			}
-		});
+					LayoutService.setTitle([majorAssembly.name]);
+				}
+			});
+		} else {
+			LayoutService.redirect('technician-machines-index', {}, true);
+		}
 	}]);

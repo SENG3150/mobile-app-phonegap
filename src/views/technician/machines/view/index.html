@@ -1,17 +1,17 @@
 <div class="segmented-control">
-    <a class="control-item active" data-target="#details">
+    <a class="control-item active" data-target="#details" data-group="header">
         Details
     </a>
-    <a class="control-item" data-target="#major-assemblies">
+    <a class="control-item" data-target="#major-assemblies" data-group="header">
         Major Assemblies
     </a>
-    <a class="control-item" data-target="#inspections">
+    <a class="control-item" data-target="#inspections" data-group="header">
         Inspections
     </a>
 </div>
 
 <div class="card">
-    <div id="details" class="control-content active">
+    <div id="details" class="control-content active" data-group="header">
         <ul class="table-view">
             <li class="table-view-cell p-r">
                 Machine
@@ -23,7 +23,7 @@
             </li>
         </ul>
     </div>
-    <div id="major-assemblies" class="control-content">
+    <div id="major-assemblies" class="control-content" data-group="header">
         <ul class="table-view" ng-if="machine.model.majorAssemblies.length > 0">
             <li class="table-view-cell" ng-repeat="majorAssembly in machine.model.majorAssemblies">
                 <a ui-sref="technician-machines-view-majorAssembly({ machine: {{ machine.id }}, majorAssembly: {{ majorAssembly.id }} })"
@@ -35,7 +35,7 @@
         <p class="text-center p-xs" ng-if="machine.majorAssemblies.length == 0">Currently there are no major
             assemblies for this machine, try syncing some on the Sync tab.</p>
     </div>
-    <div id="inspections" class="control-content">
+    <div id="inspections" class="control-content" data-group="header">
         <ul class="table-view" ng-if="inspections.length > 0">
             <li class="table-view-cell" ng-repeat="inspection in inspections">
                 <a ng-click="viewInspection(inspection.id)"
