@@ -13,7 +13,17 @@ angular
 
 				$scope.inspection.machine = $scope.selectedMachine;
 
-				if ($scope.scheduledSubAssemblies > 0) {
+				if ($scope.inspection.machine == null)
+				{
+					NotificationService.alert('Please select a machine!', 'Error');
+				}
+
+				else if ($scope.scheduledSubAssemblies == 0)
+				{
+					NotificationService.alert('Please select at least 1 sub assembly!', 'Error');
+				}
+
+				else {
 					$scope.inspection.majorAssemblies = [];
 
 					angular.forEach($scope.inspection.selectedMajorAssemblies, function (majorAssembly, majorAssemblyId) {
@@ -58,25 +68,22 @@ angular
 							}
 						});
 					});
+					var inspections = InspectionsStorage.getList();
+
+					var inspection = {
+						id: inspections.length + 1,
+						timeCreated: $scope.inspection.timeCreated.format(),
+						timeScheduled: $scope.inspection.timeScheduled.format(),
+						machine: $scope.selectedMachine,
+						technician: $scope.inspection.technician,
+						scheduler: DomainExpertsStorage.get(1),
+						majorAssemblies: $scope.inspection.majorAssemblies
+					};
+
+					InspectionsStorage.set(inspection);
+					NotificationService.alert('Saved!', 'Success');
+					$state.go('technician-inspections-index');
 				}
-
-				var inspections = InspectionsStorage.getList();
-
-				var inspection = {
-					id: inspections.length + 1,
-					timeCreated: $scope.inspection.timeCreated.format(),
-					timeScheduled: $scope.inspection.timeScheduled.format(),
-					machine: $scope.selectedMachine,
-					technician: $scope.inspection.technician,
-					scheduler: DomainExpertsStorage.get(1),
-					majorAssemblies: $scope.inspection.majorAssemblies
-				};
-
-				console.log(inspection);
-
-				InspectionsStorage.set(inspection);
-				NotificationService.alert('Saved!', 'Success');
-				$state.go('technician-inspections-index');
 			});
 
 			$scope.selectedMachine = null;
