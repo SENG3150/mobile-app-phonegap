@@ -84,6 +84,7 @@ angular
 
 				NotificationService.alert('You can now start the inspection.');
 
+				$scope.resetTitle();
 				$scope.setupForComplete();
 			});
 		};
@@ -99,19 +100,23 @@ angular
 
 				NotificationService.alert('The inspection was marked as complete.');
 
-				LayoutService.reset();
-				LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
-				LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
+				$scope.resetTitle();
 			});
 		};
 
-		if ($scope.inspection.timeStarted == null) {
-			$scope.setupForStart();
-		} else if ($scope.inspection.timeCompleted == null) {
-			$scope.setupForComplete();
-		} else {
+		$scope.resetTitle = function () {
 			LayoutService.reset();
 			LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
 			LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
+		};
+
+		if ($scope.inspection.timeStarted == null) {
+			$scope.resetTitle();
+			$scope.setupForStart();
+		} else if ($scope.inspection.timeCompleted == null) {
+			$scope.resetTitle();
+			$scope.setupForComplete();
+		} else {
+			$scope.resetTitle();
 		}
 	}]);
