@@ -95,8 +95,8 @@ angular
 						photos: [],
 						actionItem: {
 							status: 'OK',
-							issue: null,
-							action: null,
+							issue: '',
+							action: '',
 							timeActioned: moment().format()
 						}
 					};
@@ -129,8 +129,8 @@ angular
 						photos: [],
 						actionItem: {
 							status: 'OK',
-							issue: null,
-							action: null,
+							issue: '',
+							action: '',
 							timeActioned: moment().format()
 						}
 					};
@@ -155,8 +155,8 @@ angular
 						photos: [],
 						actionItem: {
 							status: 'OK',
-							issue: null,
-							action: null,
+							issue: '',
+							action: '',
 							timeActioned: moment().format()
 						}
 					};
