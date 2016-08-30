@@ -1,68 +1,76 @@
 <div class="segmented-control">
-    <a class="control-item active" data-target="#test">
+    <a class="control-item active" data-target="#test" data-group="header">
         Test
     </a>
-    <a class="control-item" data-target="#comments">
+    <a class="control-item" data-target="#comments" data-group="header">
         Comments
     </a>
-    <a class="control-item" data-target="#photos">
+    <a class="control-item" data-target="#photos" data-group="header">
         Photos
     </a>
 </div>
 
-<div id="test" class="control-content active">
-    <div ng-if="subAssembly.subAssembly.machineGeneral != false">
+<div id="test" class="control-content active" data-group="header">
+    <div ng-if="subAssembly.subAssembly.machineGeneral == true">
         <h4 class="text-center m-t">Machine General Status</h4>
 
         <div class="segmented-control">
-            <a class="control-item active" data-target="#test-machineGeneral-ok" ng-click="changeActionStatus('OK', 2)">
+            <a class="control-item" data-target="#test-machineGeneral-ok" data-group="test-machineGeneral"
+               ng-click="subAssembly.machineGeneralTest.actionItem.status = 'OK'"
+               ng-class="{true: 'active'}[subAssembly.machineGeneralTest.actionItem.status == null || subAssembly.machineGeneralTest.actionItem.status == 'OK']">
                 OK
             </a>
-            <a class="control-item" data-target="#test-machineGeneral-warning"
-               ng-click="changeActionStatus('WARNING', 2)">
+            <a class="control-item" data-target="#test-machineGeneral-warning" data-group="test-machineGeneral"
+               ng-click="subAssembly.machineGeneralTest.actionItem.status = 'WARNING'"
+               ng-class="{true: 'active'}[subAssembly.machineGeneralTest.actionItem.status == 'WARNING']">
                 Warning
             </a>
-            <a class="control-item" data-target="#test-machineGeneral-action"
-               ng-click="changeActionStatus('ACTION', 2)">
+            <a class="control-item" data-target="#test-machineGeneral-action" data-group="test-machineGeneral"
+               ng-click="subAssembly.machineGeneralTest.actionItem.status = 'ACTION'"
+               ng-class="{true: 'active'}[subAssembly.machineGeneralTest.actionItem.status == 'ACTION']">
                 Action
             </a>
         </div>
 
         <div class="card">
-            <div id="test-machineGeneral-ok" class="control-content"
-                 ng-class="{true: 'active'}[status.machine == null || status.machine == 'OK']">
+            <div id="test-machineGeneral-ok" class="control-content" data-group="test-machineGeneral"
+                 ng-class="{true: 'active'}[subAssembly.machineGeneralTest.actionItem.status == null || subAssembly.machineGeneralTest.actionItem.status == 'OK']">
                 <p class="text-center m-t-sm">No further action required.</p>
             </div>
-            <div id="test-machineGeneral-warning" class="control-content"
-                 ng-class="{true: 'active'}[status.machine == 'WARNING']">
+            <div id="test-machineGeneral-warning" class="control-content" data-group="test-machineGeneral"
+                 ng-class="{true: 'active'}[subAssembly.machineGeneralTest.actionItem.status == 'WARNING']">
                 <form class="input-group">
                     <div class="input-row">
                         <label>Issue</label>
-                        <input type="text" ng-model="machineTest.issue" placeholder="Issue with machinery">
+                        <input type="text" ng-model="subAssembly.machineGeneralTest.actionItem.issue"
+                               placeholder="Issue with machinery">
                     </div>
                     <div class="input-row">
                         <label>Action</label>
-                        <input type="text" ng-model="machineTest.action" placeholder="Action to be taken">
+                        <input type="text" ng-model="subAssembly.machineGeneralTest.actionItem.action"
+                               placeholder="Action to be taken">
                     </div>
                 </form>
             </div>
-            <div id="test-machineGeneral-action" class="control-content"
-                 ng-class="{true: 'active'}[status.machine == 'ACTION']">
+            <div id="test-machineGeneral-action" class="control-content" data-group="test-machineGeneral"
+                 ng-class="{true: 'active'}[subAssembly.machineGeneralTest.actionItem.status == 'ACTION']">
                 <form class="input-group">
                     <div class="input-row">
                         <label>Issue</label>
-                        <input type="text" ng-model="machineTest.issue" placeholder="Issue with machinery">
+                        <input type="text" ng-model="subAssembly.machineGeneralTest.actionItem.issue"
+                               placeholder="Issue with machinery">
                     </div>
                     <div class="input-row">
                         <label>Action</label>
-                        <input type="text" ng-model="machineTest.action" placeholder="Action to be taken">
+                        <input type="text" ng-model="subAssembly.machineGeneralTest.actionItem.action"
+                               placeholder="Action to be taken">
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <div ng-if="subAssembly.subAssembly.oil != false">
+    <div ng-if="subAssembly.subAssembly.oil == true">
         <h4 class="text-center m-t">Oil Test</h4>
 
         <div class="card">
@@ -122,62 +130,75 @@
         <h4 class="text-center m-t">Oil Status</h4>
 
         <div class="segmented-control">
-            <a class="control-item active" data-target="#test-oil-ok" ng-click="changeActionStatus('OK', 1)">
+            <a class="control-item" data-target="#test-oil-ok" data-group="test-oil"
+               ng-click="subAssembly.oilTest.actionItem.status = 'OK'"
+               ng-class="{true: 'active'}[subAssembly.oilTest.actionItem.status == null || subAssembly.oilTest.actionItem.status == 'OK']">
                 OK
             </a>
-            <a class="control-item" data-target="#test-oil-warning" ng-click="changeActionStatus('WARNING', 1)">
+            <a class="control-item" data-target="#test-oil-warning" data-group="test-oil"
+               ng-click="subAssembly.oilTest.actionItem.status = 'WARNING'"
+               ng-class="{true: 'active'}[subAssembly.oilTest.actionItem.status == 'WARNING']">
                 Warning
             </a>
-            <a class="control-item" data-target="#test-oil-action" ng-click="changeActionStatus('ACTION', 1)">
+            <a class="control-item" data-target="#test-oil-action" data-group="test-oil"
+               ng-click="subAssembly.oilTest.actionItem.status = 'ACTION'"
+               ng-class="{true: 'active'}[subAssembly.oilTest.actionItem.status == 'ACTION']">
                 Action
             </a>
         </div>
 
         <div class="card">
-            <div id="test-oil-ok" class="control-content"
-                 ng-class="{true: 'active'}[status.oil == null || status.oil == 'OK']">
+            <div id="test-oil-ok" class="control-content" data-group="test-oil"
+                 ng-class="{true: 'active'}[subAssembly.oilTest.actionItem.status == null || subAssembly.oilTest.actionItem.status == 'OK']">
                 <p class="text-center m-t-sm">No further action required.</p>
             </div>
-            <div id="test-oil-warning" class="control-content" ng-class="{true: 'active'}[status.oil == 'WARNING']">
+            <div id="test-oil-warning" class="control-content" data-group="test-oil"
+                 ng-class="{true: 'active'}[subAssembly.oilTest.actionItem.status == 'WARNING']">
                 <form class="input-group">
                     <div class="input-row">
                         <label>Issue</label>
-                        <input type="text" ng-model="oil.issue" placeholder="Issue with machinery">
+                        <input type="text" ng-model="subAssembly.oilTest.actionItem.issue"
+                               placeholder="Issue with machinery">
                     </div>
                     <div class="input-row">
                         <label>Action</label>
-                        <input type="text" ng-model="oil.action" placeholder="Action to be taken">
+                        <input type="text" ng-model="subAssembly.oilTest.actionItem.action"
+                               placeholder="Action to be taken">
                     </div>
                 </form>
             </div>
-            <div id="test-oil-action" class="control-content" ng-class="{true: 'active'}[status.oil == 'ACTION']">
+            <div id="test-oil-action" class="control-content" data-group="test-oil"
+                 ng-class="{true: 'active'}[subAssembly.oilTest.actionItem.status == 'ACTION']">
                 <form class="input-group">
                     <div class="input-row">
                         <label>Issue</label>
-                        <input type="text" ng-model="oil.issue" placeholder="Issue with machinery">
+                        <input type="text" ng-model="subAssembly.oilTest.actionItem.issue"
+                               placeholder="Issue with machinery">
                     </div>
                     <div class="input-row">
                         <label>Action</label>
-                        <input type="text" ng-model="oil.action" placeholder="Action to be taken">
+                        <input type="text" ng-model="subAssembly.oilTest.actionItem.action"
+                               placeholder="Action to be taken">
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <div ng-if="subAssembly.subAssembly.wear != false">
+    <div ng-if="subAssembly.subAssembly.wear == true">
         <h4 class="text-center m-t">Wear Test</h4>
 
         <div class="card">
             <form class="input-group">
                 <div class="input-row">
                     <label>SMU</label>
-                    <input type="text" pattern="[0-9]*" ng-model="wear.SMU" placeholder="SMU">
+                    <input type="text" pattern="[0-9]*" ng-model="subAssembly.wearTest.smu" placeholder="SMU">
                 </div>
 
                 <div class="input-row" ng-repeat="uniqueDetails in subAssembly.subAssembly.uniqueDetails">
                     <label>{{ uniqueDetails }}</label>
-                    <input type="text" ng-model="wear.detail[$index]" placeholder="{{ uniqueDetails }}">
+                    <input type="text" ng-model="subAssembly.wearTest.uniqueDetails[$index]"
+                           placeholder="{{ uniqueDetails }}">
                 </div>
             </form>
         </div>
@@ -185,53 +206,63 @@
         <h4 class="text-center m-t">Wear Status</h4>
 
         <div class="segmented-control">
-            <a class="control-item active" data-target="#test-wear-ok" ng-click="changeActionStatus('OK', 3)">
+            <a class="control-item" data-target="#test-wear-ok" data-group="test-wear"
+               ng-click="subAssembly.wearTest.actionItem.status == 'OK'"
+               ng-class="{true: 'active'}[subAssembly.wearTest.actionItem.status == null || subAssembly.wearTest.actionItem.status == 'OK']">
                 OK
             </a>
-            <a class="control-item" data-target="#test-wear-warning" ng-click="changeActionStatus('WARNING', 3)">
+            <a class="control-item" data-target="#test-wear-warning" data-group="test-wear"
+               ng-click="subAssembly.wearTest.actionItem.status == 'WARNING'"
+               ng-class="{true: 'active'}[subAssembly.wearTest.actionItem.status == 'WARNING']">
                 Warning
             </a>
-            <a class="control-item" data-target="#test-wear-action" ng-click="changeActionStatus('ACTION', 3)">
+            <a class="control-item" data-target="#test-wear-action" data-group="test-wear"
+               ng-click="subAssembly.wearTest.actionItem.status == 'ACTION'"
+               ng-class="{true: 'active'}[subAssembly.wearTest.actionItem.status == 'ACTION']">
                 Action
             </a>
         </div>
 
         <div class="card">
-            <div id="test-wear-ok" class="control-content"
-                 ng-class="{true: 'active'}[status.wear == null || status.wear == 'OK']">
+            <div id="test-wear-ok" class="control-content" data-group="test-wear"
+                 ng-class="{true: 'active'}[subAssembly.wearTest.actionItem.status == null || subAssembly.wearTest.actionItem.status == 'OK']">
                 <p class="text-center m-t-sm">No further action required.</p>
             </div>
-            <div id="test-wear-warning" class="control-content" ng-class="{true: 'active'}[status.wear == 'WARNING']">
+            <div id="test-wear-warning" class="control-content" data-group="test-wear"
+                 ng-class="{true: 'active'}[subAssembly.wearTest.actionItem.status == 'WARNING']">
                 <form class="input-group">
                     <div class="input-row">
                         <label>Issue</label>
-                        <input type="text" ng-model="wear.issue" placeholder="Issue with machinery">
+                        <input type="text" ng-model="subAssembly.wearTest.actionItem.issue"
+                               placeholder="Issue with machinery">
                     </div>
                     <div class="input-row">
                         <label>Action</label>
-                        <input type="text" ng-model="wear.action" placeholder="Action to be taken">
+                        <input type="text" ng-model="subAssembly.wearTest.actionItem.action"
+                               placeholder="Action to be taken">
                     </div>
                 </form>
             </div>
-            <div id="test-wear-action" class="control-content" ng-class="{true: 'active'}[status.wear == 'ACTION']">
+            <div id="test-wear-action" class="control-content" data-group="test-wear"
+                 ng-class="{true: 'active'}[subAssembly.wearTest.actionItem.status == 'ACTION']">
                 <form class="input-group">
                     <div class="input-row">
                         <label>Issue</label>
-                        <input type="text" ng-model="wear.issue" placeholder="Issue with machinery">
+                        <input type="text" ng-model="subAssembly.wearTest.actionItem.issue"
+                               placeholder="Issue with machinery">
                     </div>
                     <div class="input-row">
                         <label>Action</label>
-                        <input type="text" ng-model="wear.action" placeholder="Action to be taken">
+                        <input type="text" ng-model="subAssembly.wearTest.actionItem.action"
+                               placeholder="Action to be taken">
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-    <button class="btn btn-negative" ng-click="saveSubAssembly(oil, machineTest, wear)">Save</button>
 </div>
 
-<div id="comments" class="control-content">
+<div id="comments" class="control-content" data-group="header">
     <p class="content-padded text-center">Comments are not required, but allow you to pass on further information to the
         Domain Expert.</p>
 
@@ -239,14 +270,19 @@
         <h4 class="text-center m-t">Machine General Test</h4>
 
         <div class="content-padded">
-            <form class="form-group m-b-n-xs">
-                <textarea class="m-b-none" rows="3" ng-model="machineTest.comment" placeholder="Comment"></textarea>
+            <form class="form-group">
+                <textarea class="m-b-none" rows="3" ng-model="comments.machineGeneral" placeholder="Comment"></textarea>
+
+                <button type="button" class="btn btn-primary btn-block" ng-click="addComment('machineGeneral')">
+                    <i class="fa fa-plus"></i>
+                    Add Comment
+                </button>
             </form>
         </div>
 
-        <div class="card">
-            <ul class="table-view" ng-if="machineGeneralTest.comments.length > 0">
-                <li class="table-view-cell media" ng-repeat="comment in machineGeneralTest.comments">
+        <div class="card" ng-if="subAssembly.machineGeneralTest.comments.length > 0">
+            <ul class="table-view">
+                <li class="table-view-cell media" ng-repeat="comment in subAssembly.machineGeneralTest.comments">
                     <img class="media-object pull-left" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
                     <div class="media-body">
                         {{ comment.author.name }}<br/>
@@ -267,14 +303,19 @@
         <h4 class="text-center m-t">Oil Test</h4>
 
         <div class="content-padded">
-            <form class="form-group m-b-n-xs">
-                <textarea class="m-b-none" rows="3" ng-model="oil.comment" placeholder="Comment"></textarea>
+            <form class="form-group">
+                <textarea class="m-b-none" rows="3" ng-model="comments.oil" placeholder="Comment"></textarea>
+
+                <button type="button" class="btn btn-primary btn-block" ng-click="addComment('oil')">
+                    <i class="fa fa-plus"></i>
+                    Add Comment
+                </button>
             </form>
         </div>
 
-        <div class="card">
-            <ul class="table-view" ng-if="oilTest.comments.length > 0">
-                <li class="table-view-cell media" ng-repeat="comment in oilTest.comments">
+        <div class="card" ng-if="subAssembly.oilTest.comments.length > 0">
+            <ul class="table-view">
+                <li class="table-view-cell media" ng-repeat="comment in subAssembly.oilTest.comments">
                     <img class="media-object pull-left" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
                     <div class="media-body">
                         {{ comment.author.name }}<br/>
@@ -295,14 +336,19 @@
         <h4 class="text-center m-t">Wear Test</h4>
 
         <div class="content-padded">
-            <form class="form-group m-b-n-xs">
-                <textarea class="m-b-none" rows="3" ng-model="wear.comment" placeholder="Comment"></textarea>
+            <form class="form-group">
+                <textarea class="m-b-none" rows="3" ng-model="comments.wear" placeholder="Comment"></textarea>
+
+                <button type="button" class="btn btn-primary btn-block" ng-click="addComment('wear')">
+                    <i class="fa fa-plus"></i>
+                    Add Comment
+                </button>
             </form>
         </div>
 
-        <div class="card">
-            <ul class="table-view" ng-if="wearTest.comments.length > 0">
-                <li class="table-view-cell media" ng-repeat="comment in wearTest.comments">
+        <div class="card" ng-if="subAssembly.wearTest.comments.length > 0">
+            <ul class="table-view">
+                <li class="table-view-cell media" ng-repeat="comment in subAssembly.wearTest.comments">
                     <img class="media-object pull-left" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
                     <div class="media-body">
                         {{ comment.author.name }}<br/>
@@ -321,40 +367,55 @@
 </div>
 
 
-<div id="photos" class="control-content">
-    <div ng-if="subAssembly.subAssembly.oil != false">
-        <button class="btn btn-negative btn-block" ng-click="takePhoto('oil')">Take Photo <i class="fa fa-camera"
-                                                                                             aria-hidden="true"></i>
-        </button>
-        <br>
-        <ul class="table-view" ng-if="oilPhotos.length >=1">
-            <li class="table-view-cell" ng-repeat="picture in oilPhotos">
-                Photo: <img ng-src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
-            </li>
-        </ul>
+<div id="photos" class="control-content" data-group="header">
+    <div ng-if="subAssembly.subAssembly.machineGeneral != false">
+        <div class="content-padded">
+            <button class="btn btn-negative btn-block" ng-click="takePhoto('machineGeneral')">
+                <i class="fa fa-camera"></i>
+                Take Photo
+            </button>
+        </div>
+
+        <div class="card" ng-if="subAssembly.machineGeneralTest.photos.length > 0">
+            <ul class="table-view">
+                <li class="table-view-cell p-r" ng-repeat="picture in subAssembly.machineGeneralTest.photos">
+                    <img class="img-responsive" ng-src="data:image/jpeg;base64,{{ picture.photo }}">
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <div ng-if="subAssembly.subAssembly.machineGeneral != false">
-        <button class="btn btn-negative btn-block" ng-click="takePhoto('machine')">Take Photo <i class="fa fa-camera"
-                                                                                                 aria-hidden="true"></i>
-        </button>
-        <br>
-        <ul class="table-view" ng-if="machinePhotos.length >=1">
-            <li class="table-view-cell" ng-repeat="picture in machinePhotos">
-                Photo: <img ng-src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
-            </li>
-        </ul>
+    <div ng-if="subAssembly.subAssembly.oil != false">
+        <div class="content-padded">
+            <button class="btn btn-negative btn-block" ng-click="takePhoto('oil')">
+                <i class="fa fa-camera"></i>
+                Take Photo
+            </button>
+        </div>
+
+        <div class="card" ng-if="subAssembly.oilTest.photos.length > 0">
+            <ul class="table-view">
+                <li class="table-view-cell p-r" ng-repeat="picture in subAssembly.oilTest.photos">
+                    <img class="img-responsive" ng-src="data:image/jpeg;base64,{{ picture.photo }}">
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div ng-if="subAssembly.subAssembly.wear != false">
-        <button class="btn btn-negative btn-block" ng-click="takePhoto('wear')">Take Photo <i class="fa fa-camera"
-                                                                                              aria-hidden="true"></i>
-        </button>
-        <br>
-        <ul class="table-view" ng-if="wearPhotos.length >=1">
-            <li class="table-view-cell" ng-repeat="picture in wearPhotos">
-                Photo: <img ng-src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
-            </li>
-        </ul>
+        <div class="content-padded">
+            <button class="btn btn-negative btn-block" ng-click="takePhoto('wear')">
+                <i class="fa fa-camera"></i>
+                Take Photo
+            </button>
+        </div>
+
+        <div class="card" ng-if="subAssembly.wearTest.photos.length > 0">
+            <ul class="table-view">
+                <li class="table-view-cell p-r" ng-repeat="picture in subAssembly.wearTest.photos">
+                    <img class="img-responsive" ng-src="data:image/jpeg;base64,{{ picture.photo }}">
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

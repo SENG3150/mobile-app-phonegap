@@ -22,7 +22,7 @@
 		}
 	};
 
-	var handle = function(e) {
+	var handle = function (e) {
 		var activeTab;
 		var activeBodies;
 		var targetBody;
@@ -34,6 +34,12 @@
 			return;
 		}
 
+		var group = targetTab.dataset.group;
+
+		if (!group) {
+			return;
+		}
+
 		activeTab = targetTab.parentNode.querySelector(classSelector);
 
 		if (activeTab) {
@@ -42,9 +48,9 @@
 
 		targetTab.classList.add(className);
 
-		var targetString = targetTab.hash || targetTab.dataset.target;
+		var targetString = targetTab.dataset.target;
 
-		if(!targetString) {
+		if (!targetString) {
 			return;
 		}
 
@@ -57,7 +63,9 @@
 		activeBodies = targetBody.parentNode.querySelectorAll(classSelector);
 
 		for (var i = 0; i < activeBodies.length; i++) {
-			activeBodies[i].classList.remove(className);
+			if (activeBodies[i].dataset.group == group) {
+				activeBodies[i].classList.remove(className);
+			}
 		}
 
 		targetBody.classList.add(className);
