@@ -3,12 +3,16 @@ angular
 	.controller('TechnicianInspectionsViewControllerIndex', ['$scope', 'InspectionsStorage', 'moment', '$stateParams', 'LayoutService', function ($scope, InspectionsStorage, moment, $stateParams, LayoutService) {
 		$scope.inspectionId = $stateParams.inspection;
 		$scope.showMajorAssemblies = true;
+        $scope.moment = moment;
+
+        $scope.inspection = InspectionsStorage.one($scope.inspectionId);
 
 		LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
 		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
-
-		$scope.moment = moment;
-		$scope.inspection = InspectionsStorage.one($scope.inspectionId);
+		LayoutService.getPageHeader().setHeroButton('icon icon-check', 'Complete', function () {
+            $scope.inspection.timeCompleted = moment();
+            InspectionsStorage.set($scope.inspection);
+		});
 
 		$scope.actionItems = [];
 
