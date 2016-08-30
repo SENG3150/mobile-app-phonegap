@@ -207,7 +207,7 @@ angular
 
 
 		if ($scope.nextSubAssembly != $scope.subAssemblyId) { //Display the next sub-Assembly button if there is one
-			LayoutService.getPageHeader().setHeroButton('fa fa-chevron-right', 'Next', LayoutService.redirect('technician-inspections-view-subAssembly', {
+			LayoutService.getPageHeader().setHeroButton('icon icon-right-nav', 'Next', LayoutService.redirect('technician-inspections-view-subAssembly', {
 				inspection: $scope.inspectionId,
 				majorAssembly: $scope.majorAssemblyId,
 				subAssembly: $scope.nextSubAssembly
