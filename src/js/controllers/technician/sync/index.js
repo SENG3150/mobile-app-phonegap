@@ -124,7 +124,10 @@ angular
 		};
 
 		LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-download', 'Sync', $scope.restart);
-
+		LayoutService.getPageHeader().setLeftButton('fa fa-fw fa-download', 'Reset', function() {
+			InspectionsStorage.reset(true);
+			$scope.reset();
+		});
 
 		$scope.reset();
 	}]);
