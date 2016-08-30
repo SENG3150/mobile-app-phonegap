@@ -51,7 +51,7 @@
     </div>
     <div id="action-items" class="control-content">
         <ul class="table-view" ng-if="actionItems.length > 0">
-            <li class="table-view-cell" ng-repeat="actionItem in actionItems">
+            <li class="table-view-cell" ng-repeat="actionItem in actionItems" ng-if="actionItem.status !='OK'">
                 <a ui-sref="technician-inspections-view-subAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{ actionItem.majorAssembly.majorAssembly.id }}, subAssembly: {{ actionItem.subAssembly.subAssembly.id }} })"
                    class="navigate-right">
                     {{ actionItem.status }}: {{ actionItem.issue }}
