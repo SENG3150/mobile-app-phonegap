@@ -51,7 +51,7 @@ angular
 				name: 'Technicians',
 				service: Technicians,
 				storage: TechniciansStorage,
-				include: '',
+				include: 'photo',
 				upload: function (item) {
 					if (item.fromServer) {
 						return item.post();
@@ -64,7 +64,7 @@ angular
 				name: 'Domain Experts',
 				service: DomainExperts,
 				storage: DomainExpertsStorage,
-				include: '',
+				include: 'photo',
 				upload: function (item) {
 					if (item.fromServer) {
 						return item.post();

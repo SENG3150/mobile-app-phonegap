@@ -10,133 +10,351 @@
     </a>
 </div>
 
-<div class="card">
-    <div id="test" class="control-content active">
-        <div ng-if="subAssembly.subAssembly.oil != false">
-            <label class="form-label">Lead:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.lead" placeholder="Lead"><br>
-            <label class="form-label">Copper:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.copper" placeholder="Copper"><br>
-            <label class="form-label">Tin:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.tin" placeholder="Tin"><br>
-            <label class="form-label">Iron:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.iron" placeholder="Iron"><br>
-            <label class="form-label">PQ90:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.pq90" placeholder="PQ90"><br>
-            <label class="form-label">Silicon:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.silicon" placeholder="Silicon"><br>
-            <label class="form-label">Sodium:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.sodium" placeholder="Sodium"><br>
-            <label class="form-label">Aluminium:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.aluminium" placeholder="Aluminium"><br>
-            <label class="form-label">Water:</label><input class="form-input" type="number" ng-model="oil.water" placeholder="Water"><br>
-            <label class="form-label">Viscosity:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.viscosity" placeholder="Viscosity"><br>
-            Oil Status:<br>
-            <button class="btn btn-primary" ng-if="status.oil == 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
-            <button ng-click="changeActionStatus('OK', 1)" class="btn" ng-if="status.oil != 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
-            <button class="btn btn-positive" ng-if="status.oil == 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
-            <button ng-click="changeActionStatus('WARNING', 1)" class="btn" ng-if="status.oil != 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
-            <button class="btn btn-negative" ng-if="status.oil == 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
-            <button ng-click="changeActionStatus('ACTION', 1)" class="btn" ng-if="status.oil != 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
-            <br>
-            <div ng-if="status.oil != 'OK'">
-                <label class="form-label">Issue:</label><input class="form-input" type="text" ng-model="oil.issue" placeholder="Issue with machinery"><br>
-                <label class="form-label">Action:</label><input class="form-input" type="text" ng-model="oil.action" placeholder="Action to be taken">
+<div id="test" class="control-content active">
+    <div ng-if="subAssembly.subAssembly.machineGeneral != false">
+        <h4 class="text-center m-t">Machine General Status</h4>
+
+        <div class="segmented-control">
+            <a class="control-item active" data-target="#test-machineGeneral-ok" ng-click="changeActionStatus('OK', 2)">
+                OK
+            </a>
+            <a class="control-item" data-target="#test-machineGeneral-warning"
+               ng-click="changeActionStatus('WARNING', 2)">
+                Warning
+            </a>
+            <a class="control-item" data-target="#test-machineGeneral-action"
+               ng-click="changeActionStatus('ACTION', 2)">
+                Action
+            </a>
+        </div>
+
+        <div class="card">
+            <div id="test-machineGeneral-ok" class="control-content"
+                 ng-class="{true: 'active'}[status.machine == null || status.machine == 'OK']">
+                <p class="text-center m-t-sm">No further action required.</p>
             </div>
-        </div>
-
-        <div ng-if="subAssembly.subAssembly.machineGeneral != false">
-            Sub-Assembly Status:<br>
-            <button class="btn btn-primary" ng-if="status.machine == 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
-            <button ng-click="changeActionStatus('OK', 2)" class="btn" ng-if="status.machine != 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
-            <button class="btn btn-positive" ng-if="status.machine == 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
-            <button ng-click="changeActionStatus('WARNING', 2)" class="btn" ng-if="status.machine != 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
-            <button class="btn btn-negative" ng-if="status.machine == 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
-            <button ng-click="changeActionStatus('ACTION', 2)" class="btn" ng-if="status.machine != 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
-            <br ng-if="status.machine == 'OK'">
-            <div ng-if="status.machine != 'OK'">
-                <label class="form-label">Issue:</label><input class="form-input" type="text" ng-model="machineTest.issue" placeholder="Action to be taken"><br>
-                <label class="form-label">Action:</label><input class="form-input" type="text" ng-model="machineTest.action" placeholder="Action to be taken">
+            <div id="test-machineGeneral-warning" class="control-content"
+                 ng-class="{true: 'active'}[status.machine == 'WARNING']">
+                <form class="input-group">
+                    <div class="input-row">
+                        <label>Issue</label>
+                        <input type="text" ng-model="machineTest.issue" placeholder="Issue with machinery">
+                    </div>
+                    <div class="input-row">
+                        <label>Action</label>
+                        <input type="text" ng-model="machineTest.action" placeholder="Action to be taken">
+                    </div>
+                </form>
             </div>
-        </div>
-
-        <div ng-if="subAssembly.subAssembly.wear != false">
-            <label class="form-label">SMU:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="wear.SMU" placeholder="SMU"><br>
-            <div ng-repeat="uniqueDetails in subAssembly.subAssembly.uniqueDetails">
-                <label class="form-label">{{ uniqueDetails }}:</label><input class="form-input" type="text" ng-model="wear.detail[$index]" placeholder="{{ uniqueDetails }}"><br>
+            <div id="test-machineGeneral-action" class="control-content"
+                 ng-class="{true: 'active'}[status.machine == 'ACTION']">
+                <form class="input-group">
+                    <div class="input-row">
+                        <label>Issue</label>
+                        <input type="text" ng-model="machineTest.issue" placeholder="Issue with machinery">
+                    </div>
+                    <div class="input-row">
+                        <label>Action</label>
+                        <input type="text" ng-model="machineTest.action" placeholder="Action to be taken">
+                    </div>
+                </form>
             </div>
-            Wear Status:<br>
-            <button class="btn btn-primary" ng-if="status.wear == 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
-            <button ng-click="changeActionStatus('OK', 3)" class="btn" ng-if="status.wear != 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
-            <button class="btn btn-positive" ng-if="status.wear == 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
-            <button ng-click="changeActionStatus('WARNING', 3)" class="btn" ng-if="status.wear != 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
-            <button class="btn btn-negative" ng-if="status.wear == 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
-            <button ng-click="changeActionStatus('ACTION', 3)" class="btn" ng-if="status.wear != 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
-            <br ng-if="status.wear == 'OK'">
-            <div ng-if="status.wear != 'OK'">
-                <label class="form-label">Issue:</label><input class="form-input" type="text" ng-model="wear.issue" placeholder="Action to be taken"><br>
-                <label class="form-label">Action:</label><input class="form-input" type="text" ng-model="wear.action" placeholder="Action to be taken">
-            </div>
-        </div>
-        <button class="btn btn-negative" ng-click="saveSubAssembly(oil, machineTest, wear)">Save</button>
-    </div>
-
-
-    <div id="comments" class="control-content">
-        <div ng-if="subAssembly.subAssembly.oil != false">
-            <textarea rows="4" ng-model="oil.comment" placeholder="Comment - Not Required"></textarea><br>
-            <ul class="table-view">
-                <li class="table-view-cell" ng-repeat="comment in oilTest.comments">
-                    <b>Author:</b> {{ comment.author.username }}<br>
-                    <b>Time:</b> {{ moment(comment.timeCommented).format('HH:mm, ddd Do MMM YYYY') }}<br/>
-                    <b>Comment:</b> {{ comment.text }}
-                </li>
-            </ul>
-        </div>
-
-        <div ng-if="subAssembly.subAssembly.machineGeneral != false">
-            <textarea rows="4" ng-model="machineTest.comment" placeholder="Comment - Not Required"></textarea><br>
-            <ul class="table-view">
-                <li class="table-view-cell" ng-repeat="comment in machineGeneralTest.comments">
-                    <b>Author:</b> {{ comment.author.username }}<br>
-                    <b>Time:</b> {{ moment(comment.timeCommented).format('HH:mm, ddd Do MMM YYYY') }}<br/>
-                    <b>Comment:</b> {{ comment.text }}
-                </li>
-            </ul>
-        </div>
-
-        <div ng-if="subAssembly.subAssembly.wear != false">
-            <textarea rows="4" ng-model="wear.comment" placeholder="Comment - Not Required"></textarea><br>
-            <ul class="table-view">
-                <li class="table-view-cell" ng-repeat="comment in wearTest.comments">
-                    <b>Author:</b> {{ comment.author.username }}<br>
-                    <b>Time:</b> {{ moment(comment.timeCommented).format('HH:mm, ddd Do MMM YYYY') }}<br/>
-                    <b>Comment:</b> {{ comment.text }}
-                </li>
-            </ul>
         </div>
     </div>
 
+    <div ng-if="subAssembly.subAssembly.oil != false">
+        <h4 class="text-center m-t">Oil Test</h4>
 
-    <div id="photos" class="control-content">
-        <div ng-if="subAssembly.subAssembly.oil != false">
-            <button class="btn btn-negative btn-block" ng-click="takePhoto('oil')">Take Photo <i class="fa fa-camera" aria-hidden="true"></i></button><br>
-            <ul class="table-view" ng-if="oilPhotos.length >=1">
-                <li class="table-view-cell" ng-repeat="picture in oilPhotos">
-                    Photo: <img src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
-                </li>
-            </ul>
+        <div class="card">
+            <form class="input-group">
+                <div class="input-row">
+                    <label>Lead</label>
+                    <input type="text" pattern="[0-9]*" ng-model="oil.lead" placeholder="Lead">
+                </div>
+
+                <div class="input-row">
+                    <label>Copper</label>
+                    <input type="text" pattern="[0-9]*" ng-model="oil.copper" placeholder="Copper">
+                </div>
+
+                <div class="input-row">
+                    <label>Tin</label>
+                    <input type="text" pattern="[0-9]*" ng-model="oil.tin" placeholder="Tin">
+                </div>
+
+                <div class="input-row">
+                    <label>Iron</label>
+                    <input type="text" pattern="[0-9]*" ng-model="oil.iron" placeholder="Iron">
+                </div>
+
+                <div class="input-row">
+                    <label>PQ90</label>
+                    <input type="text" pattern="[0-9]*" ng-model="oil.pq90" placeholder="PQ90">
+                </div>
+
+                <div class="input-row">
+                    <label>Silicon</label>
+                    <input type="text" pattern="[0-9]*" ng-model="oil.silicon" placeholder="Silicon">
+                </div>
+
+                <div class="input-row">
+                    <label>Sodium</label>
+                    <input type="text" pattern="[0-9]*" ng-model="oil.sodium" placeholder="Sodium">
+                </div>
+
+                <div class="input-row">
+                    <label>Aluminium</label>
+                    <input type="text" pattern="[0-9]*" ng-model="oil.aluminium" placeholder="Aluminium">
+                </div>
+
+                <div class="input-row">
+                    <label>Water</label>
+                    <input type="number" ng-model="oil.water" placeholder="Water">
+                </div>
+
+                <div class="input-row">
+                    <label>Viscosity</label>
+                    <input type="text" pattern="[0-9]*" ng-model="oil.viscosity" placeholder="Viscosity">
+                </div>
+            </form>
         </div>
 
-        <div ng-if="subAssembly.subAssembly.machineGeneral != false">
-            <button class="btn btn-negative btn-block" ng-click="takePhoto('machine')">Take Photo <i class="fa fa-camera" aria-hidden="true"></i></button><br>
-            <ul class="table-view" ng-if="machinePhotos.length >=1">
-                <li class="table-view-cell" ng-repeat="picture in machinePhotos">
-                    Photo: <img src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
-                </li>
-            </ul>
+        <h4 class="text-center m-t">Oil Status</h4>
+
+        <div class="segmented-control">
+            <a class="control-item active" data-target="#test-oil-ok" ng-click="changeActionStatus('OK', 1)">
+                OK
+            </a>
+            <a class="control-item" data-target="#test-oil-warning" ng-click="changeActionStatus('WARNING', 1)">
+                Warning
+            </a>
+            <a class="control-item" data-target="#test-oil-action" ng-click="changeActionStatus('ACTION', 1)">
+                Action
+            </a>
         </div>
 
-        <div ng-if="subAssembly.subAssembly.wear != false">
-            <button class="btn btn-negative btn-block" ng-click="takePhoto('wear')">Take Photo <i class="fa fa-camera" aria-hidden="true"></i></button><br>
-            <ul class="table-view" ng-if="wearPhotos.length >=1">
-                <li class="table-view-cell" ng-repeat="picture in wearPhotos">
-                    Photo: <img src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
+        <div class="card">
+            <div id="test-oil-ok" class="control-content"
+                 ng-class="{true: 'active'}[status.oil == null || status.oil == 'OK']">
+                <p class="text-center m-t-sm">No further action required.</p>
+            </div>
+            <div id="test-oil-warning" class="control-content" ng-class="{true: 'active'}[status.oil == 'WARNING']">
+                <form class="input-group">
+                    <div class="input-row">
+                        <label>Issue</label>
+                        <input type="text" ng-model="oil.issue" placeholder="Issue with machinery">
+                    </div>
+                    <div class="input-row">
+                        <label>Action</label>
+                        <input type="text" ng-model="oil.action" placeholder="Action to be taken">
+                    </div>
+                </form>
+            </div>
+            <div id="test-oil-action" class="control-content" ng-class="{true: 'active'}[status.oil == 'ACTION']">
+                <form class="input-group">
+                    <div class="input-row">
+                        <label>Issue</label>
+                        <input type="text" ng-model="oil.issue" placeholder="Issue with machinery">
+                    </div>
+                    <div class="input-row">
+                        <label>Action</label>
+                        <input type="text" ng-model="oil.action" placeholder="Action to be taken">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="subAssembly.subAssembly.wear != false">
+        <h4 class="text-center m-t">Wear Test</h4>
+
+        <div class="card">
+            <form class="input-group">
+                <div class="input-row">
+                    <label>SMU</label>
+                    <input type="text" pattern="[0-9]*" ng-model="wear.SMU" placeholder="SMU">
+                </div>
+
+                <div class="input-row" ng-repeat="uniqueDetails in subAssembly.subAssembly.uniqueDetails">
+                    <label>{{ uniqueDetails }}</label>
+                    <input type="text" ng-model="wear.detail[$index]" placeholder="{{ uniqueDetails }}">
+                </div>
+            </form>
+        </div>
+
+        <h4 class="text-center m-t">Wear Status</h4>
+
+        <div class="segmented-control">
+            <a class="control-item active" data-target="#test-wear-ok" ng-click="changeActionStatus('OK', 3)">
+                OK
+            </a>
+            <a class="control-item" data-target="#test-wear-warning" ng-click="changeActionStatus('WARNING', 3)">
+                Warning
+            </a>
+            <a class="control-item" data-target="#test-wear-action" ng-click="changeActionStatus('ACTION', 3)">
+                Action
+            </a>
+        </div>
+
+        <div class="card">
+            <div id="test-wear-ok" class="control-content"
+                 ng-class="{true: 'active'}[status.wear == null || status.wear == 'OK']">
+                <p class="text-center m-t-sm">No further action required.</p>
+            </div>
+            <div id="test-wear-warning" class="control-content" ng-class="{true: 'active'}[status.wear == 'WARNING']">
+                <form class="input-group">
+                    <div class="input-row">
+                        <label>Issue</label>
+                        <input type="text" ng-model="wear.issue" placeholder="Issue with machinery">
+                    </div>
+                    <div class="input-row">
+                        <label>Action</label>
+                        <input type="text" ng-model="wear.action" placeholder="Action to be taken">
+                    </div>
+                </form>
+            </div>
+            <div id="test-wear-action" class="control-content" ng-class="{true: 'active'}[status.wear == 'ACTION']">
+                <form class="input-group">
+                    <div class="input-row">
+                        <label>Issue</label>
+                        <input type="text" ng-model="wear.issue" placeholder="Issue with machinery">
+                    </div>
+                    <div class="input-row">
+                        <label>Action</label>
+                        <input type="text" ng-model="wear.action" placeholder="Action to be taken">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-negative" ng-click="saveSubAssembly(oil, machineTest, wear)">Save</button>
+</div>
+
+<div id="comments" class="control-content">
+    <p class="content-padded text-center">Comments are not required, but allow you to pass on further information to the
+        Domain Expert.</p>
+
+    <div ng-if="subAssembly.subAssembly.machineGeneral != false">
+        <h4 class="text-center m-t">Machine General Test</h4>
+
+        <div class="content-padded">
+            <form class="form-group m-b-n-xs">
+                <textarea class="m-b-none" rows="3" ng-model="machineTest.comment" placeholder="Comment"></textarea>
+            </form>
+        </div>
+
+        <div class="card">
+            <ul class="table-view" ng-if="machineGeneralTest.comments.length > 0">
+                <li class="table-view-cell media" ng-repeat="comment in machineGeneralTest.comments">
+                    <img class="media-object pull-left" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
+                    <div class="media-body">
+                        {{ comment.author.name }}<br/>
+                        <small>
+                            {{ moment(comment.timeCommented).format('HH:mm, ddd Do MMM YYYY') }}
+                        </small>
+                        <br/>
+                        <p>
+                            {{ comment.text }}
+                        </p>
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
 
+    <div ng-if="subAssembly.subAssembly.oil != false">
+        <h4 class="text-center m-t">Oil Test</h4>
+
+        <div class="content-padded">
+            <form class="form-group m-b-n-xs">
+                <textarea class="m-b-none" rows="3" ng-model="oil.comment" placeholder="Comment"></textarea>
+            </form>
+        </div>
+
+        <div class="card">
+            <ul class="table-view" ng-if="oilTest.comments.length > 0">
+                <li class="table-view-cell media" ng-repeat="comment in oilTest.comments">
+                    <img class="media-object pull-left" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
+                    <div class="media-body">
+                        {{ comment.author.name }}<br/>
+                        <small>
+                            {{ moment(comment.timeCommented).format('HH:mm, ddd Do MMM YYYY') }}
+                        </small>
+                        <br/>
+                        <p>
+                            {{ comment.text }}
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div ng-if="subAssembly.subAssembly.wear != false">
+        <h4 class="text-center m-t">Wear Test</h4>
+
+        <div class="content-padded">
+            <form class="form-group m-b-n-xs">
+                <textarea class="m-b-none" rows="3" ng-model="wear.comment" placeholder="Comment"></textarea>
+            </form>
+        </div>
+
+        <div class="card">
+            <ul class="table-view" ng-if="wearTest.comments.length > 0">
+                <li class="table-view-cell media" ng-repeat="comment in wearTest.comments">
+                    <img class="media-object pull-left" ng-src="data:image/jpeg;base64,{{ getAuthorPhoto(comment) }}">
+                    <div class="media-body">
+                        {{ comment.author.name }}<br/>
+                        <small>
+                            {{ moment(comment.timeCommented).format('HH:mm, ddd Do MMM YYYY') }}
+                        </small>
+                        <br/>
+                        <p>
+                            {{ comment.text }}
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div id="photos" class="control-content">
+    <div ng-if="subAssembly.subAssembly.oil != false">
+        <button class="btn btn-negative btn-block" ng-click="takePhoto('oil')">Take Photo <i class="fa fa-camera"
+                                                                                             aria-hidden="true"></i>
+        </button>
+        <br>
+        <ul class="table-view" ng-if="oilPhotos.length >=1">
+            <li class="table-view-cell" ng-repeat="picture in oilPhotos">
+                Photo: <img ng-src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-if="subAssembly.subAssembly.machineGeneral != false">
+        <button class="btn btn-negative btn-block" ng-click="takePhoto('machine')">Take Photo <i class="fa fa-camera"
+                                                                                                 aria-hidden="true"></i>
+        </button>
+        <br>
+        <ul class="table-view" ng-if="machinePhotos.length >=1">
+            <li class="table-view-cell" ng-repeat="picture in machinePhotos">
+                Photo: <img ng-src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
+            </li>
+        </ul>
+    </div>
+
+    <div ng-if="subAssembly.subAssembly.wear != false">
+        <button class="btn btn-negative btn-block" ng-click="takePhoto('wear')">Take Photo <i class="fa fa-camera"
+                                                                                              aria-hidden="true"></i>
+        </button>
+        <br>
+        <ul class="table-view" ng-if="wearPhotos.length >=1">
+            <li class="table-view-cell" ng-repeat="picture in wearPhotos">
+                Photo: <img ng-src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
+            </li>
+        </ul>
+    </div>
 </div>
