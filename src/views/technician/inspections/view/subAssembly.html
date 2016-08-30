@@ -1,5 +1,4 @@
 <div ng-if="subAssembly.subAssembly.oil != false">
-    <b>Oil Test</b><br>
     <label class="form-label">Lead:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.lead" placeholder="Lead"><br>
     <label class="form-label">Copper:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.copper" placeholder="Copper"><br>
     <label class="form-label">Tin:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="oil.tin" placeholder="Tin"><br>
@@ -13,12 +12,13 @@
     <label class="form-label-comment" height="60">Comment:</label><textarea class="form-comment" rows="4" ng-model="oil.comment" placeholder="Comment - Not Required"></textarea><br>
 
     Oil Status:<br>
-    <button class="form-button-1" ng-if="status.oil == 'OK'">OK</button>
-    <button ng-click="changeActionStatus('OK', 1)" class="form-button-0" ng-if="status.oil != 'OK'">OK</button>
-    <button class="form-button-2" ng-if="status.oil == 'WARNING'">WARNING</button>
-    <button ng-click="changeActionStatus('WARNING', 1)" class="form-button-0" ng-if="status.oil != 'WARNING'">WARNING</button>
-    <button class="form-button-3" ng-if="status.oil == 'ACTION'">ACTION</button>
-    <button ng-click="changeActionStatus('ACTION', 1)" class="form-button-0" ng-if="status.oil != 'ACTION'">ACTION</button>
+    <button class="btn btn-primary" ng-if="status.oil == 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+    <button ng-click="changeActionStatus('OK', 1)" class="btn" ng-if="status.oil != 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+    <button class="btn btn-positive" ng-if="status.oil == 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
+    <button ng-click="changeActionStatus('WARNING', 1)" class="btn" ng-if="status.oil != 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
+    <button class="btn btn-negative" ng-if="status.oil == 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
+    <button ng-click="changeActionStatus('ACTION', 1)" class="btn" ng-if="status.oil != 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
+    <br>
     <div ng-if="status.oil != 'OK'">
         <label class="form-label">Issue:</label><input class="form-input" type="text" ng-model="oil.issue" placeholder="Issue with machinery"><br>
         <label class="form-label">Action:</label><input class="form-input" type="text" ng-model="oil.action" placeholder="Action to be taken">
@@ -34,7 +34,7 @@
         </ul>
     </div>
     <br>
-    Photos: <button class="fa fa-plus" ng-click="takePhoto('oil')"></button><br>
+    Photos: <button class="btn" ng-click="takePhoto('oil')"><i class="fa fa-camera" aria-hidden="true"></i></button><br>
     <ul class="table-view" ng-if="oilPhotos.length >=1">
         <li class="table-view-cell" ng-repeat="picture in oilPhotos">
             Photo: <img src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
@@ -43,14 +43,14 @@
 </div>
 
 <div ng-if="subAssembly.subAssembly.machineGeneral != false">
-    <b>General Machine Test</b><br>
     Sub-Assembly Status:<br>
-    <button class="form-button-1" ng-if="status.machine == 'OK'">OK</button>
-    <button ng-click="changeActionStatus('OK', 2)" class="form-button-0" ng-if="status.machine != 'OK'">OK</button>
-    <button class="form-button-2" ng-if="status.machine == 'WARNING'">WARNING</button>
-    <button ng-click="changeActionStatus('WARNING', 2)" class="form-button-0" ng-if="status.machine != 'WARNING'">WARNING</button>
-    <button class="form-button-3" ng-if="status.machine == 'ACTION'">ACTION</button>
-    <button ng-click="changeActionStatus('ACTION', 2)" class="form-button-0" ng-if="status.machine != 'ACTION'">ACTION</button>
+    <button class="btn btn-primary" ng-if="status.machine == 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+    <button ng-click="changeActionStatus('OK', 2)" class="btn" ng-if="status.machine != 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+    <button class="btn btn-positive" ng-if="status.machine == 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
+    <button ng-click="changeActionStatus('WARNING', 2)" class="btn" ng-if="status.machine != 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
+    <button class="btn btn-negative" ng-if="status.machine == 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
+    <button ng-click="changeActionStatus('ACTION', 2)" class="btn" ng-if="status.machine != 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
+    <br ng-if="status.machine == 'OK'">
     <div ng-if="status.machine != 'OK'">
         <label class="form-label">Issue:</label><input class="form-input" type="text" ng-model="machineTest.issue" placeholder="Action to be taken"><br>
         <label class="form-label">Action:</label><input class="form-input" type="text" ng-model="machineTest.action" placeholder="Action to be taken">
@@ -67,7 +67,7 @@
         </ul>
     </div>
     <br>
-    Photos: <button class="fa fa-plus" ng-click="takePhoto('machine')"></button><br>
+    Photos: <button class="btn" ng-click="takePhoto('machine')"><i class="fa fa-camera" aria-hidden="true"></i></button><br>
     <ul class="table-view" ng-if="machinePhotos.length >=1">
         <li class="table-view-cell" ng-repeat="picture in machinePhotos">
             Photo: <img src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
@@ -76,18 +76,18 @@
 </div>
 
 <div ng-if="subAssembly.subAssembly.wear != false">
-    <b>Wear Test</b><br>
     <label class="form-label">SMU:</label><input class="form-input" type="text" pattern="[0-9]*" ng-model="wear.SMU" placeholder="SMU"><br>
     <div ng-repeat="uniqueDetails in subAssembly.subAssembly.uniqueDetails">
         <label class="form-label">{{ uniqueDetails }}:</label><input class="form-input" type="text" ng-model="wear.detail[$index]" placeholder="{{ uniqueDetails }}"><br>
     </div>
     Wear Status:<br>
-    <button class="form-button-1" ng-if="status.wear == 'OK'">OK</button>
-    <button ng-click="changeActionStatus('OK', 3)" class="form-button-0" ng-if="status.wear != 'OK'">OK</button>
-    <button class="form-button-2" ng-if="status.wear == 'WARNING'">WARNING</button>
-    <button ng-click="changeActionStatus('WARNING', 3)" class="form-button-0" ng-if="status.wear != 'WARNING'">WARNING</button>
-    <button class="form-button-3" ng-if="status.wear == 'ACTION'">ACTION</button>
-    <button ng-click="changeActionStatus('ACTION', 3)" class="form-button-0" ng-if="status.wear != 'ACTION'">ACTION</button>
+    <button class="btn btn-primary" ng-if="status.wear == 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+    <button ng-click="changeActionStatus('OK', 3)" class="btn" ng-if="status.wear != 'OK'">OK <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+    <button class="btn btn-positive" ng-if="status.wear == 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
+    <button ng-click="changeActionStatus('WARNING', 3)" class="btn" ng-if="status.wear != 'WARNING'">WARNING <i class="fa fa fa-question-circle" aria-hidden="true"></i></button>
+    <button class="btn btn-negative" ng-if="status.wear == 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
+    <button ng-click="changeActionStatus('ACTION', 3)" class="btn" ng-if="status.wear != 'ACTION'">ACTION <i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
+    <br ng-if="status.wear == 'OK'">
     <div ng-if="status.wear != 'OK'">
         <label class="form-label">Issue:</label><input class="form-input" type="text" ng-model="wear.issue" placeholder="Action to be taken"><br>
         <label class="form-label">Action:</label><input class="form-input" type="text" ng-model="wear.action" placeholder="Action to be taken">
@@ -104,7 +104,7 @@
         </ul>
     </div>
     <br>
-    Photos: <button class="fa fa-plus" ng-click="takePhoto('wear')"></button><br>
+    Photos: <button class="btn" ng-click="takePhoto('wear')"><i class="fa fa-camera" aria-hidden="true"></i></button><br>
     <ul class="table-view" ng-if="wearPhotos.length >=1">
         <li class="table-view-cell" ng-repeat="picture in wearPhotos">
             Photo: <img src="data:image/jpeg;base64,{{ picture.photo }}" height="42" width="42"/>
@@ -112,6 +112,6 @@
     </ul>
 </div>
 
-<button class="form-button-3" ng-click="saveSubAssembly(oil, machineTest, wear)">Save</button>
+<button class="btn btn-negative" ng-click="saveSubAssembly(oil, machineTest, wear)">Save</button>
 
 <pre>{{subAssembly | json}}</pre>
