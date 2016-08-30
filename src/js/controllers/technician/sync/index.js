@@ -71,6 +71,8 @@ angular
 						$q
 							.all(uploadPromises)
 							.then(function () {
+								SyncService.resetAll();
+
 								var downloadPromises = [];
 
 								angular.forEach($scope.downloads, function (download) {

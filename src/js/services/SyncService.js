@@ -216,6 +216,24 @@ angular
 
 				return $q.all(promises);
 			},
+			reset: function (name) {
+				angular.forEach(self.getItems(), function (item) {
+					if (item.name == name) {
+						item.storage.reset(true);
+					}
+				});
+
+				return this;
+			},
+			resetAll: function () {
+				var self = this;
+
+				angular.forEach(this.getItems(), function (item) {
+					self.reset(item.name);
+				});
+
+				return this;
+			},
 			fireDownloadFinishedEvent: function (name) {
 				$rootScope.$broadcast('syncService.downloadFinished', {
 					name: name
