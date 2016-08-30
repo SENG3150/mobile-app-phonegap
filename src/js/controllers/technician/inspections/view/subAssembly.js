@@ -1,7 +1,6 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsViewControllerSubAssembly', ['$scope', '$stateParams', 'moment', 'InspectionsStorage', 'LayoutService', 'DomainExpertsStorage', 'TechniciansStorage', 'NotificationService', 'AuthService', function ($scope, $stateParams, moment, InspectionsStorage, LayoutService, DomainExpertsStorage, TechniciansStorage, NotificationService, AuthService) {
-		//Initial variable declaration
+	.controller('TechnicianInspectionsViewControllerSubAssembly', ['$scope', '$stateParams', 'moment', 'InspectionsStorage', 'LayoutService', 'DomainExpertsStorage', 'TechniciansStorage', 'NotificationService', 'AuthService', '$timeout', function ($scope, $stateParams, moment, InspectionsStorage, LayoutService, DomainExpertsStorage, TechniciansStorage, NotificationService, AuthService, $timeout) {
 		$scope.inspectionId = $stateParams.inspection;
 		$scope.majorAssemblyId = $stateParams.majorAssembly;
 		$scope.subAssemblyId = $stateParams.subAssembly;
@@ -183,66 +182,71 @@ angular
 			};
 
 			$scope.addComment = function (testType) {
-				var comment = {};
+				$timeout(
+					function () {
+						var comment = {};
 
-				switch (testType) {
-					case 'machineGeneral': {
-						if ($scope.comments.machineGeneral == null || $scope.comments.machineGeneral == '') {
-							NotificationService.alert('Comment cannot be empty.', 'Error');
-						} else {
-							comment = {
-								timeCommented: moment().format(),
-								authorType: 'technician',
-								text: $scope.comments.machineGeneral,
-								author: AuthService.getUser().technician
-							};
+						switch (testType) {
+							case 'machineGeneral': {
+								if ($scope.comments.machineGeneral == null || $scope.comments.machineGeneral == '') {
+									NotificationService.alert('Comment cannot be empty.', 'Error');
+								} else {
+									comment = {
+										timeCommented: moment().format(),
+										authorType: 'technician',
+										text: $scope.comments.machineGeneral,
+										author: AuthService.getUser().technician
+									};
 
-							$scope.subAssembly.machineGeneralTest.comments.push(comment);
+									$scope.subAssembly.machineGeneralTest.comments.push(comment);
 
-							$scope.comments.machineGeneral = null;
+									$scope.comments.machineGeneral = null;
+								}
+
+								break;
+							}
+
+							case 'oil': {
+								if ($scope.comments.oil == null || $scope.comments.oil == '') {
+									NotificationService.alert('Comment cannot be empty.', 'Error');
+								} else {
+									comment = {
+										timeCommented: moment().format(),
+										authorType: 'technician',
+										text: $scope.comments.oil,
+										author: AuthService.getUser().technician
+									};
+
+									$scope.subAssembly.oilTest.comments.push(comment);
+
+									$scope.comments.oil = null;
+								}
+
+								break;
+							}
+
+							case 'wear': {
+								if ($scope.comments.wear == null || $scope.comments.wear == '') {
+									NotificationService.alert('Comment cannot be empty.', 'Error');
+								} else {
+									comment = {
+										timeCommented: moment().format(),
+										authorType: 'technician',
+										text: $scope.comments.wear,
+										author: AuthService.getUser().technician
+									};
+
+									$scope.subAssembly.wearTest.comments.push(comment);
+
+									$scope.comments.wear = null;
+								}
+
+								break;
+							}
 						}
-
-						break;
-					}
-
-					case 'oil': {
-						if ($scope.comments.oil == null || $scope.comments.oil == '') {
-							NotificationService.alert('Comment cannot be empty.', 'Error');
-						} else {
-							comment = {
-								timeCommented: moment().format(),
-								authorType: 'technician',
-								text: $scope.comments.oil,
-								author: AuthService.getUser().technician
-							};
-
-							$scope.subAssembly.oilTest.comments.push(comment);
-
-							$scope.comments.oil = null;
-						}
-
-						break;
-					}
-
-					case 'wear': {
-						if ($scope.comments.wear == null || $scope.comments.wear == '') {
-							NotificationService.alert('Comment cannot be empty.', 'Error');
-						} else {
-							comment = {
-								timeCommented: moment().format(),
-								authorType: 'technician',
-								text: $scope.comments.wear,
-								author: AuthService.getUser().technician
-							};
-
-							$scope.subAssembly.wearTest.comments.push(comment);
-
-							$scope.comments.wear = null;
-						}
-
-						break;
-					}
-				}
+					},
+					250
+				);
 			};
 
 			$scope.takePhoto = function (testType) {

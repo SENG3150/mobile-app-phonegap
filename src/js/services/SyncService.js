@@ -217,7 +217,7 @@ angular
 				return $q.all(promises);
 			},
 			reset: function (name) {
-				angular.forEach(self.getItems(), function (item) {
+				angular.forEach(this.getItems(), function (item) {
 					if (item.name == name) {
 						item.storage.reset(true);
 					}
