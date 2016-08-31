@@ -342,7 +342,11 @@ angular
 					}
 				});
 
-				//Set the Inspection to be synced
+				//Set inspection as started
+                if ($scope.inspection.timeStarted == null){
+                    $scope.inspection.timeStarted = moment().format();
+                }
+                //Set the Inspection to be synced
 				InspectionsStorage.set($scope.inspection);
 			};
 		} else {
