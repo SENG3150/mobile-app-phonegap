@@ -1,7 +1,43 @@
+<h4 class="text-center m-t">Tests Legend</h4>
+
 <div class="card">
     <ul class="table-view">
-        <li class="table-view-cell" ng-repeat="subAssembly in majorAssembly.subAssemblies">
+        <li class="table-view-cell p-r">
+            Machine General Test
+            <span class="pull-right text-right">
+                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                </span>
+        </li>
+
+        <li class="table-view-cell p-r">
+            Oil Test
+            <span class="pull-right text-right">
+                    <i class="fa fa-eyedropper" aria-hidden="true"></i>
+                </span>
+        </li>
+
+        <li class="table-view-cell p-r">
+            Wear Test
+            <span class="pull-right text-right">
+                    <i class="fa fa-chain-broken" aria-hidden="true"></i>
+                </span>
+        </li>
+    </ul>
+</div>
+
+<div class="card">
+    <ul class="table-view">
+        <li class="table-view-cell p-r" ng-repeat="subAssembly in majorAssembly.subAssemblies">
             {{ subAssembly.name }}
+            <span ng-if="subAssembly.oil == true" class="pull-right text-right">
+                <i class="fa fa-eyedropper" aria-hidden="true"></i>
+            </span>
+            <span ng-if="subAssembly.wear == true" class="pull-right text-right">
+                <i class="fa fa-chain-broken" aria-hidden="true"></i>
+            </span>
+            <span ng-if="subAssembly.machineGeneral == true" class="pull-right text-right">
+                <i class="fa fa-cogs" aria-hidden="true"></i>
+            </span>
         </li>
     </ul>
 </div>
