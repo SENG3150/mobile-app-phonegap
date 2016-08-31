@@ -2,7 +2,7 @@
     <ul class="table-view">
         <li class="table-view-cell" ng-repeat="machine in machines">
             <a ui-sref="technician-machines-view-index({ machine: {{ machine.id }}})" class="navigate-right">
-                Machine {{ machine.id }}
+                {{ machine.name }}
             </a>
         </li>
     </ul>
