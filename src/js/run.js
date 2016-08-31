@@ -67,6 +67,7 @@ angular
 		PGDeviceReady.onReady(function () {
 			if (window.device && window.device.platform == 'iOS') {
 				window.StatusBar.overlaysWebView(false);
+				window.StatusBar.styleDefault();
 			}
 
 			if (window.navigator.connection) {
