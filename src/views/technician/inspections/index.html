@@ -1,17 +1,17 @@
 <div class="segmented-control">
-    <a class="control-item active" data-target="#upcoming">
+    <a class="control-item active" data-target="#upcoming" data-group="header">
         Upcoming
     </a>
-    <a class="control-item" data-target="#complete">
+    <a class="control-item" data-target="#complete" data-group="header">
         Complete
     </a>
-    <a class="control-item" data-target="#all">
+    <a class="control-item" data-target="#all" data-group="header">
         All
     </a>
 </div>
 
 <div class="card">
-    <div id="upcoming" class="control-content active">
+    <div id="upcoming" class="control-content active" data-group="header">
         <ul class="table-view" ng-if="upcomingInspections.length > 0">
             <li class="table-view-cell" ng-repeat="inspection in upcomingInspections">
                 <a ui-sref="technician-inspections-view-index({ inspection: {{ inspection.id }}})"
@@ -27,10 +27,11 @@
                 </a>
             </li>
         </ul>
-        <p class="text-center p-xs" ng-if="upcomingInspections.length == 0">Currently there are no upcoming inspections,
+
+        <p class="text-center content-padded" ng-if="upcomingInspections.length == 0">Currently there are no upcoming inspections,
             try syncing some on the Sync tab.</p>
     </div>
-    <div id="complete" class="control-content">
+    <div id="complete" class="control-content" data-group="header">
         <ul class="table-view" ng-if="completeInspections.length > 0">
             <li class="table-view-cell" ng-repeat="inspection in completeInspections">
                 <a ui-sref="technician-inspections-view-index({ inspection: {{ inspection.id }}})"
@@ -47,10 +48,11 @@
                 </a>
             </li>
         </ul>
-        <p class="text-center p-xs" ng-if="completeInspections.length == 0">Currently there are no complete inspections,
+
+        <p class="text-center content-padded" ng-if="completeInspections.length == 0">Currently there are no complete inspections,
             try syncing some on the Sync tab.</p>
     </div>
-    <div id="all" class="control-content">
+    <div id="all" class="control-content" data-group="header">
         <ul class="table-view" ng-if="inspections.length > 0">
             <li class="table-view-cell" ng-repeat="inspection in inspections">
                 <a ui-sref="technician-inspections-view-index({ inspection: {{ inspection.id }}})"
@@ -67,7 +69,8 @@
                 </a>
             </li>
         </ul>
-        <p class="text-center p-xs" ng-if="inspections.length == 0">Currently there are no inspections, try syncing some on
+
+        <p class="text-center content-padded" ng-if="inspections.length == 0">Currently there are no inspections, try syncing some on
             the Sync tab.</p>
     </div>
 </div>

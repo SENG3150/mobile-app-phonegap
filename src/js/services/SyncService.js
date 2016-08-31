@@ -32,7 +32,7 @@ angular
 				name: 'Inspections',
 				service: Inspections,
 				storage: InspectionsStorage,
-				include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly,photos.raw,majorAssemblies.photos.raw,majorAssemblies.subAssemblies.photos.raw,majorAssemblies.subAssemblies.machineGeneralTest.photos.raw,majorAssemblies.subAssemblies.oilTest.photos.raw,majorAssemblies.subAssemblies.wearTest.photos.raw',
+				include: 'technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly',
 				upload: function (item) {
 					var clone = _.clone(item);
 
@@ -51,7 +51,7 @@ angular
 				name: 'Technicians',
 				service: Technicians,
 				storage: TechniciansStorage,
-				include: '',
+				include: 'photo',
 				upload: function (item) {
 					if (item.fromServer) {
 						return item.post();
@@ -64,7 +64,7 @@ angular
 				name: 'Domain Experts',
 				service: DomainExperts,
 				storage: DomainExpertsStorage,
-				include: '',
+				include: 'photo',
 				upload: function (item) {
 					if (item.fromServer) {
 						return item.post();
@@ -215,6 +215,24 @@ angular
 				});
 
 				return $q.all(promises);
+			},
+			reset: function (name) {
+				angular.forEach(this.getItems(), function (item) {
+					if (item.name == name) {
+						item.storage.reset(true);
+					}
+				});
+
+				return this;
+			},
+			resetAll: function () {
+				var self = this;
+
+				angular.forEach(this.getItems(), function (item) {
+					self.reset(item.name);
+				});
+
+				return this;
 			},
 			fireDownloadFinishedEvent: function (name) {
 				$rootScope.$broadcast('syncService.downloadFinished', {

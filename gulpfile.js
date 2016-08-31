@@ -103,10 +103,7 @@ gulp.task('concat-core', function () {
 
 	return gulp.src(config.source)
 		.pipe(concat(config.output))
-		.pipe(uglify({
-			mangle: false,
-			compress: false
-		}))
+		.pipe(uglify())
 		.pipe(gulp.dest(config.destination));
 });
 
@@ -160,7 +157,10 @@ gulp.task('concat-app', function () {
 
 	return gulp.src(config.source)
 		.pipe(concat(config.output))
-		.pipe(uglify())
+		.pipe(uglify({
+			mangle: false,
+			compress: false
+		}))
 		.pipe(gulp.dest(config.destination));
 });
 

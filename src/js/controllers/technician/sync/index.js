@@ -46,6 +46,8 @@ angular
 						angular.forEach($scope.uploads, function (upload) {
 							var promise = SyncService.upload(upload.name);
 
+							upload.status = 'uploading';
+
 							uploadPromises.push(promise);
 
 							promise
@@ -71,6 +73,8 @@ angular
 						$q
 							.all(uploadPromises)
 							.then(function () {
+								SyncService.resetAll();
+
 								var downloadPromises = [];
 
 								angular.forEach($scope.downloads, function (download) {
@@ -124,10 +128,6 @@ angular
 		};
 
 		LayoutService.getPageHeader().setHeroButton('fa fa-fw fa-download', 'Sync', $scope.restart);
-		LayoutService.getPageHeader().setLeftButton('fa fa-fw fa-download', 'Reset', function() {
-			InspectionsStorage.reset(true);
-			$scope.reset();
-		});
 
 		$scope.reset();
 	}]);

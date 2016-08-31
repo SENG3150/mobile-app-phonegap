@@ -1,45 +1,103 @@
 angular
 	.module('joy-global')
-	.controller('TechnicianInspectionsViewControllerIndex', ['$scope', 'InspectionsStorage', 'moment', '$stateParams', 'LayoutService', function ($scope, InspectionsStorage, moment, $stateParams, LayoutService) {
+	.controller('TechnicianInspectionsViewControllerIndex', ['$scope', 'InspectionsStorage', 'moment', '$stateParams', 'LayoutService', '_', 'NotificationService', function ($scope, InspectionsStorage, moment, $stateParams, LayoutService, _, NotificationService) {
 		$scope.inspectionId = $stateParams.inspection;
-		$scope.showMajorAssemblies = true;
-
-		LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
-		LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
-
 		$scope.moment = moment;
-		$scope.inspection = InspectionsStorage.one($scope.inspectionId);
 
+		$scope.inspection = InspectionsStorage.one($scope.inspectionId);
 		$scope.actionItems = [];
 
-		angular.forEach($scope.inspection.majorAssemblies, function (majorAssembly) {
-			angular.forEach(majorAssembly.subAssemblies, function (subAssembly) {
-				if (subAssembly.machineGeneralTest && subAssembly.machineGeneralTest.actionItem) {
-					var actionItem = subAssembly.machineGeneralTest.actionItem;
+		if ($scope.inspection) {
+			angular.forEach($scope.inspection.majorAssemblies, function (majorAssembly) {
+				angular.forEach(majorAssembly.subAssemblies, function (subAssembly) {
+					var actionItem = {};
 
-					actionItem.majorAssembly = majorAssembly;
-					actionItem.subAssembly = subAssembly;
+					if (subAssembly.machineGeneralTest && subAssembly.machineGeneralTest.actionItem && subAssembly.machineGeneralTest.actionItem.status != 'OK') {
+						actionItem = subAssembly.machineGeneralTest.actionItem;
 
-					$scope.actionItems.push(actionItem);
-				}
+						actionItem.majorAssembly = {
+							majorAssembly: {
+								id: majorAssembly.majorAssembly.id
+							}
+						};
 
-				if (subAssembly.oilTest && subAssembly.oilTest.actionItem) {
-					var actionItem = subAssembly.oilTest.actionItem;
+						actionItem.subAssembly = {
+							subAssembly: {
+								id: subAssembly.subAssembly.id
+							}
+						};
 
-					actionItem.majorAssembly = majorAssembly;
-					actionItem.subAssembly = subAssembly;
 
-					$scope.actionItems.push(actionItem);
-				}
+						$scope.actionItems.push(actionItem);
+					}
 
-				if (subAssembly.wearTest && subAssembly.wearTest.actionItem) {
-					var actionItem = subAssembly.wearTest.actionItem;
+					if (subAssembly.oilTest && subAssembly.oilTest.actionItem && subAssembly.oilTest.actionItem.status != 'OK') {
+						actionItem = subAssembly.oilTest.actionItem;
 
-					actionItem.majorAssembly = majorAssembly;
-					actionItem.subAssembly = subAssembly;
+						actionItem.majorAssembly = {
+							majorAssembly: {
+								id: majorAssembly.majorAssembly.id
+							}
+						};
 
-					$scope.actionItems.push(actionItem);
-				}
+						actionItem.subAssembly = {
+							subAssembly: {
+								id: subAssembly.subAssembly.id
+							}
+						};
+
+
+						$scope.actionItems.push(actionItem);
+					}
+
+					if (subAssembly.wearTest && subAssembly.wearTest.actionItem && subAssembly.wearTest.actionItem.status != 'OK') {
+						actionItem = subAssembly.wearTest.actionItem;
+
+						actionItem.majorAssembly = {
+							majorAssembly: {
+								id: majorAssembly.majorAssembly.id
+							}
+						};
+
+						actionItem.subAssembly = {
+							subAssembly: {
+								id: subAssembly.subAssembly.id
+							}
+						};
+
+						$scope.actionItems.push(actionItem);
+					}
+				});
 			});
-		});
+		} else {
+			LayoutService.redirect('technician-inspections-index', null, true);
+		}
+
+		$scope.setupForComplete = function () {
+			LayoutService.reset();
+			LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
+			LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
+			LayoutService.getPageHeader().setHeroButton('icon icon-check', 'Complete', function () {
+				$scope.inspection.timeCompleted = moment().format();
+
+				InspectionsStorage.set($scope.inspection);
+
+				NotificationService.alert('The inspection was marked as complete.');
+
+				$scope.resetTitle();
+			});
+		};
+
+		$scope.resetTitle = function () {
+			LayoutService.reset();
+			LayoutService.setTitle(['Inspection ' + $scope.inspectionId, 'Inspections']);
+			LayoutService.getPageHeader().setBackButton(LayoutService.redirect('technician-inspections-index'));
+		};
+
+		if ($scope.inspection.timeCompleted == null && $scope.inspection.timeStarted != null) {
+			$scope.resetTitle();
+			$scope.setupForComplete();
+		} else {
+			$scope.resetTitle();
+		}
 	}]);

@@ -57,9 +57,13 @@ angular
 			return this;
 		};
 
-		this.redirect = function (state, parameters) {
-			return function () {
+		this.redirect = function (state, parameters, redirect) {
+			if (typeof redirect == 'undefined' || redirect == false) {
+				return function () {
+					$state.go(state, parameters);
+				};
+			} else {
 				$state.go(state, parameters);
-			};
+			}
 		};
 	}]);

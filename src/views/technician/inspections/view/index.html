@@ -1,21 +1,22 @@
 <div class="segmented-control">
-    <a class="control-item active" data-target="#details">
+    <a class="control-item active" data-target="#details" data-group="header">
         Details
     </a>
-    <a class="control-item" data-target="#major-assemblies">
+    <a class="control-item" data-target="#major-assemblies" data-group="header">
         Major Assemblies
     </a>
-    <a class="control-item" data-target="#action-items">
+    <a class="control-item" data-target="#action-items" data-group="header">
         Action Items
     </a>
 </div>
 
 <div class="card">
-    <div id="details" class="control-content active">
+    <div id="details" class="control-content active" data-group="header">
         <ul class="table-view">
             <li class="table-view-cell p-r">
                 Date
-                <span class="pull-right text-right">{{ moment(inspection.timeScheduled).format('ddd Do MMM YYYY') }}</span>
+                <span class="pull-right text-right">{{ moment(inspection.timeScheduled).format('ddd Do MMM YYYY')
+                    }}</span>
             </li>
             <li class="table-view-cell p-r">
                 Time
@@ -37,7 +38,7 @@
             </li>
         </ul>
     </div>
-    <div id="major-assemblies" class="control-content">
+    <div id="major-assemblies" class="control-content" data-group="header">
         <ul class="table-view" ng-if="inspection.majorAssemblies.length > 0">
             <li class="table-view-cell" ng-repeat="majorAssembly in inspection.majorAssemblies">
                 <a ui-sref="technician-inspections-view-majorAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{ majorAssembly.majorAssembly.id }} })"
@@ -46,19 +47,22 @@
                 </a>
             </li>
         </ul>
-        <p class="text-center p-xs" ng-if="inspection.majorAssemblies.length == 0">Currently there are no major
+
+        <p class="text-center content-padded" ng-if="inspection.majorAssemblies.length == 0">Currently there are no
+            major
             assemblies for this inspection, try syncing some on the Sync tab.</p>
     </div>
-    <div id="action-items" class="control-content">
+    <div id="action-items" class="control-content" data-group="header">
         <ul class="table-view" ng-if="actionItems.length > 0">
-            <li class="table-view-cell" ng-repeat="actionItem in actionItems" ng-if="actionItem.status !='OK'">
+            <li class="table-view-cell" ng-repeat="actionItem in actionItems">
                 <a ui-sref="technician-inspections-view-subAssembly({ inspection: {{ inspectionId }}, majorAssembly: {{ actionItem.majorAssembly.majorAssembly.id }}, subAssembly: {{ actionItem.subAssembly.subAssembly.id }} })"
                    class="navigate-right">
                     {{ actionItem.status }}: {{ actionItem.issue }}
                 </a>
             </li>
         </ul>
-        <p class="text-center p-xs" ng-if="actionItems.length == 0">Currently there are no action items for
-            this inspection, try syncing some on the Sync tab.</p>
+
+        <p class="text-center content-padded" ng-if="actionItems.length == 0">Currently there are no non-OK action items
+            for this inspection, try syncing some on the Sync tab.</p>
     </div>
 </div>
