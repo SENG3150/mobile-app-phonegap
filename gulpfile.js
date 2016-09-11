@@ -1,4 +1,5 @@
 var Promise = require('es6-promise').Promise;
+var Server = require('karma').Server;
 var gulp = require('gulp');
 var templateCache = require('gulp-angular-templatecache');
 var concat = require('gulp-concat');
@@ -79,6 +80,7 @@ gulp.task('template-cache', function () {
 var concatCoreConfig = {
 	source: [
 		'bower_components/angular/angular.js',
+		'bower_components/angular-mocks/angular-mocks.js',
 		'bower_components/jquery/dist/jquery.min.js',
 		'bower_components/angular-ui-router/release/angular-ui-router.js',
 		'bower_components/moment/moment.js',
@@ -141,8 +143,6 @@ var concatAppConfig = {
 		'src/js/factories/*.js',
 		'src/js/filters/**/*.js',
 		'src/js/filters/*.js',
-		'src/js/providers/**/*.js',
-		'src/js/providers/*.js',
 		'src/js/routes/**/*.js',
 		'src/js/routes/*.js',
 		'src/js/services/**/*.js',
@@ -256,6 +256,43 @@ gulp.task('env-production', function () {
 		.pipe(gulp.dest(config.destination));
 });
 
+var testConfig = {
+	source: [
+		'www/js/core.js',
+		'www/js/app.js',
+		'www/js/templates.js',
+		'www/js/plugins.js',
+		'src/tests/unit/controllers/**/*.js',
+		'src/tests/unit/directives/**/*.js',
+		'src/tests/unit/directives/*.js',
+		'src/tests/unit/factories/**/*.js',
+		'src/tests/unit/factories/*.js',
+		'src/tests/unit/filters/**/*.js',
+		'src/tests/unit/filters/*.js',
+		'src/tests/unit/routes/**/*.js',
+		'src/tests/unit/routes/*.js',
+		'src/tests/unit/services/**/*.js',
+		'src/tests/unit/services/*.js'
+	],
+	browsers: ['Chrome', 'Firefox']
+};
+
+gulp.task('test', ['concat-core', 'concat-app', 'concat-plugins', 'template-cache'], function (done) {
+	var browsers = testConfig.browsers;
+
+	if (/^win/.test(process.platform)) {
+		browsers.push('IE');
+	} else if (/^darwin/.test(process.platform)) {
+		browsers.push('Safari');
+	}
+
+	new Server({
+		configFile: __dirname + '/karma.conf.js',
+		files: testConfig.source,
+		browsers: browsers
+	}, done).start();
+});
+
 gulp.task('phonegap-build', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-production', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme'], function () {
 	var config = JSON.parse(fs.readFileSync('./phonegap-config.json'));
 
@@ -338,6 +375,6 @@ function onError(err) {
 	this.emit('end');
 }
 
-gulp.task('default', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-production', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme', 'watcher']);
-gulp.task('development', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-development', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme', 'watcher']);
+gulp.task('default', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-production', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme', 'test', 'watcher']);
+gulp.task('development', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-development', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme', 'test', 'watcher']);
 gulp.task('deployment', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-production', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme', 'phonegap-build', 'watch-apps']);

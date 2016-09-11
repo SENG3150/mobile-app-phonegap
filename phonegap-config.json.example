@@ -1,0 +1,21 @@
+{
+  "appId": "",
+  "user": {
+    "token": ""
+  },
+  "keys": {
+    "ios": {
+      "password": ""
+    }
+  },
+  "download": {
+    "ios": "ios.ipa",
+    "android": "android.apk"
+  },
+  "apps": {
+    "path": "",
+    "versions": "versions.json",
+    "manifest": "manifest.plist",
+    "url": ""
+  }
+}

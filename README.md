@@ -10,6 +10,7 @@ To clone the app, run this command in the terminal:
 		npm install -g bower
 		npm install -g gulp-cli
 		npm install -g phonegap
+		npm install -g karma-cli
 
 * Install a web server and setup a virtual host for the website to run in. An example httpd-vhosts.conf entry is below for Apache, which assumes you have mod_rewrite and mod_deflate running:
 
@@ -121,6 +122,18 @@ To compile the application for development with a local [API server](https://git
 To compile the application for deployment run the following command in the terminal:
 
 	gulp deployment
+	
+## Testing
+The application includes [Karma](https://karma-runner.github.io/1.0/index.html), [Jasmine](https://jasmine.github.io/) and a gulp task which will run tests in Chrome, Firefox, Safari and Internet Explorer to ensure that the application works in all popular modern browsers.
+
+To test the application run the following command in the terminal, and keep the terminal open and running while you develop the mobile-app:
+
+	gulp test
+	
+This is automatically run when you use either of the following commands:
+
+	gulp
+	gulp development
 	
 ## Running The Application
 The application can be run on any iOS or Android device through [PhoneGap](http://www.phonegap.com/). PhoneGap has an application which allows developers to test their code on a device without specifically installing it.
