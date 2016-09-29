@@ -54,6 +54,7 @@ describe('AuthControllerLogin', function () {
             controller = AuthControllerLogin('AuthControllerLogin', {$scope: scope});
         });
 
+        //Test fails because login details have been changed
         it('should be successfully logged in as an technician', inject(function($q) {
             var deferred = $q.defer();
             spyOn(AuthService, 'authenticate').and.returnValue(deferred.promise);
