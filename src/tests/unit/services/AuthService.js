@@ -114,38 +114,4 @@ describe('AuthService', function () {
             expect($auth.getToken).not.toHaveBeenCalled();
         });
     });
-
-    this.checkPermissions = function (requiredLogin) {
-        var self = this;
-        var deferred = $q.defer();
-
-        if (requiredLogin == true && $auth.isAuthenticated() == false) {
-            if ($auth.getToken()) {
-                $http
-                    .get(ENV.apiEndpoint + 'auth/refresh', {
-                        params: {
-                            'token': $auth.getToken()
-                        }
-                    })
-                    .success(function (data) {
-                        $auth.setToken(data.token);
-
-                        deferred.resolve();
-                    })
-                    .error(function () {
-                        self.setUser(null);
-                        deferred.reject();
-                    });
-            } else {
-                self.setUser(null);
-                deferred.reject();
-            }
-        } else {
-            deferred.resolve();
-        }
-
-        return deferred.promise;
-    };
-
-
 });
