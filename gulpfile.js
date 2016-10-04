@@ -228,7 +228,7 @@ gulp.task('env-development', function () {
 		constants: {
 			ENV: {
 				name: 'development',
-				apiEndpoint: 'http://seng3150.api.local/'
+				apiEndpoint: 'http://joy-global-amt.api.local/'
 			}
 		},
 		destination: 'src/js/'
@@ -246,7 +246,7 @@ gulp.task('env-production', function () {
 		constants: {
 			ENV: {
 				name: 'production',
-				apiEndpoint: 'https://seng3150-api.wingmanwebdesign.com.au/'
+				apiEndpoint: 'https://joy-global-amt-api.wingmanwebdesign.com.au/'
 			}
 		},
 		destination: 'src/js/'
