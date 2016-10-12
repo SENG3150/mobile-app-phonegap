@@ -269,7 +269,6 @@ var testConfig = {
 		'src/tests/unit/directives/**/*.js',
 		'src/tests/unit/directives/*.js',
 		'src/tests/unit/factories/**/*.js',
-		'src/tests/unit/factories/*.js',
 		'src/tests/unit/filters/**/*.js',
 		'src/tests/unit/filters/*.js',
 		'src/tests/unit/routes/**/*.js',
