@@ -262,6 +262,9 @@ var testConfig = {
 		'www/js/app.js',
 		'www/js/templates.js',
 		'www/js/plugins.js',
+		'src/tests/efficiency/*.js',
+		'src/tests/presentation/**/*.js',
+		'src/tests/security/*.js',
 		'src/tests/unit/controllers/**/*.js',
 		'src/tests/unit/directives/**/*.js',
 		'src/tests/unit/directives/*.js',
@@ -272,7 +275,8 @@ var testConfig = {
 		'src/tests/unit/routes/**/*.js',
 		'src/tests/unit/routes/*.js',
 		'src/tests/unit/services/**/*.js',
-		'src/tests/unit/services/*.js'
+		'src/tests/unit/services/*.js',
+		'src/tests/usability/*.js'
 	],
 	browsers: ['Chrome', 'Firefox']
 };

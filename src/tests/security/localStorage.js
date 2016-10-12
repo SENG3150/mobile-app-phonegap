@@ -1,0 +1,1 @@
+// TODO: Test whether any inspection data is still present in local storage after logging out
