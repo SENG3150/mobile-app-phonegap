@@ -13,6 +13,10 @@ var fs = require('fs');
 var filesize = require('filesize');
 var cheerio = require('cheerio');
 var replace = require('gulp-replace');
+var exec = require('gulp-exec');
+var foreach = require('gulp-foreach');
+var path = require('path');
+var runSequence = require('run-sequence');
 
 var configConfig = {
 	source: [
@@ -220,6 +224,47 @@ gulp.task('build-theme', function () {
 		.pipe(gulp.dest(config.destination));
 });
 
+var testConfig = {
+	karma: {
+		source: [
+			'www/js/core.js',
+			'www/js/app.js',
+			'www/js/templates.js',
+			'www/js/plugins.js',
+			'src/tests/presentation/**/*.js',
+			'src/tests/security/*.js',
+			'src/tests/unit/controllers/**/*.js',
+			'src/tests/unit/directives/**/*.js',
+			'src/tests/unit/directives/*.js',
+			'src/tests/unit/factories/**/*.js',
+			'src/tests/unit/filters/**/*.js',
+			'src/tests/unit/filters/*.js',
+			'src/tests/unit/routes/**/*.js',
+			'src/tests/unit/routes/*.js',
+			'src/tests/unit/services/**/*.js',
+			'src/tests/unit/services/*.js',
+			'src/tests/usability/*.js'
+		],
+		browsers: ['Chrome', 'Firefox']
+	},
+	artillery: {
+		source: [
+			'src/tests/efficiency/*.json'
+		],
+		prefix: 'src/tests/efficiency/output/',
+		config: './env.json',
+		options: {
+			continueOnError: false,
+			pipeStdout: false
+		},
+		reporting: {
+			err: true,
+			stderr: true,
+			stdout: true
+		}
+	}
+};
+
 gulp.task('env-development', function () {
 	var config = {
 		space: '  ',
@@ -233,6 +278,8 @@ gulp.task('env-development', function () {
 		},
 		destination: 'src/js/'
 	};
+
+	fs.writeFile(testConfig.artillery.config, JSON.stringify(config.constants));
 
 	return ngConstant(config)
 		.pipe(gulp.dest(config.destination));
@@ -252,36 +299,14 @@ gulp.task('env-production', function () {
 		destination: 'src/js/'
 	};
 
+	fs.writeFile(testConfig.artillery.config, JSON.stringify(config.constants));
+
 	return ngConstant(config)
 		.pipe(gulp.dest(config.destination));
 });
 
-var testConfig = {
-	source: [
-		'www/js/core.js',
-		'www/js/app.js',
-		'www/js/templates.js',
-		'www/js/plugins.js',
-		'src/tests/efficiency/*.js',
-		'src/tests/presentation/**/*.js',
-		'src/tests/security/*.js',
-		'src/tests/unit/controllers/**/*.js',
-		'src/tests/unit/directives/**/*.js',
-		'src/tests/unit/directives/*.js',
-		'src/tests/unit/factories/**/*.js',
-		'src/tests/unit/filters/**/*.js',
-		'src/tests/unit/filters/*.js',
-		'src/tests/unit/routes/**/*.js',
-		'src/tests/unit/routes/*.js',
-		'src/tests/unit/services/**/*.js',
-		'src/tests/unit/services/*.js',
-		'src/tests/usability/*.js'
-	],
-	browsers: ['Chrome', 'Firefox']
-};
-
 gulp.task('test', ['concat-core', 'concat-app', 'concat-plugins', 'template-cache'], function (done) {
-	var browsers = testConfig.browsers;
+	var browsers = testConfig.karma.browsers;
 
 	if (/^win/.test(process.platform)) {
 		browsers.push('IE');
@@ -289,11 +314,32 @@ gulp.task('test', ['concat-core', 'concat-app', 'concat-plugins', 'template-cach
 		browsers.push('Safari');
 	}
 
+	var config = require(testConfig.artillery.config);
+
+	if (config.ENV == null) {
+		runSequence('env-development', 'artillery');
+	} else {
+		gulp.start('artillery');
+	}
+
 	new Server({
 		configFile: __dirname + '/karma.conf.js',
-		files: testConfig.source,
+		files: testConfig.karma.source,
 		browsers: browsers
 	}, done).start();
+});
+
+gulp.task('artillery', function () {
+	var config = require(testConfig.artillery.config);
+
+	return gulp.src(testConfig.artillery.source)
+		.pipe(foreach(function (stream, file) {
+			var filename = path.basename(file.path);
+
+			return stream
+				.pipe(exec('node_modules\\.bin\\artillery run "' + file.path + '" -t "' + config.ENV.apiEndpoint + '" -o "' + testConfig.artillery.prefix + filename + '"', testConfig.artillery.options))
+				.pipe(exec.reporter(testConfig.artillery.reporting));
+		}));
 });
 
 gulp.task('phonegap-build', ['config', 'index', 'images', 'template-cache', 'concat-core', 'env-production', 'concat-app', 'concat-plugins', 'concat-css', 'copy-fonts', 'build-theme'], function () {

@@ -11,6 +11,8 @@
 !/www/splash.png
 !/www/res
 /src/js/ngConstants.js
+/src/tests/efficiency/output/*.json
 Thumbs.db
 npm-debug.log
 phonegap-config.json
+env.json
