@@ -4,6 +4,7 @@
     "node": "x.x.x"
   },
   "dependencies": {
+    "artillery": "^1.5.0-16",
     "bower": "^1.7.9",
     "cheerio": "^0.20.0",
     "es6-promise": "^3.1.2",
@@ -12,7 +13,9 @@
     "gulp-angular-templatecache": "~1.8.0",
     "gulp-concat": "~2.6.0",
     "gulp-cssnano": "~2.1.2",
+    "gulp-exec": "^2.1.2",
     "gulp-filesize": "0.0.6",
+    "gulp-foreach": "^0.1.0",
     "gulp-ng-constant": "^1.1.0",
     "gulp-phonegap-build": "^0.1.4",
     "gulp-rename": "^1.2.2",
@@ -26,6 +29,8 @@
     "karma-firefox-launcher": "^1.0.0",
     "karma-ie-launcher": "^1.0.0",
     "karma-jasmine": "^1.0.2",
-    "karma-safari-launcher": "^1.0.0"
+    "karma-safari-launcher": "^1.0.0",
+    "path": "^0.12.7",
+    "run-sequence": "^1.2.2"
   }
 }
