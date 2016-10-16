@@ -2,8 +2,8 @@
   "config": {
     "phases": [
       {
-        "duration": 60,
-        "arrivalCount": 60
+        "duration": 10,
+        "arrivalCount": 10
       }
     ]
   },
