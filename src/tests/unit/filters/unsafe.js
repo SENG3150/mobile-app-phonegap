@@ -6,12 +6,12 @@ describe('unsafe filter', function() {
     }));
 
     it('should be unsafe', function() {
-        var unsafeHtml = $filter('<div onclick="alert(1)">I am bad!</div>');
-        expect(unsafeHtml.toEqual('I am bad!'));
+        var unsafe = $filter('unsafe');
+        expect(unsafe('<span onmouseover=\"alert(1)\">unsafe</span>')).toBe('<span>unsafe</span>');
     });
 
     it('should be safe', function() {
-        var safeHtml = $filter('Hello, <i>World</i>!');
-        expect(unsafeHtml.toEqual('Hello, <i>World</i>!'));
+        var unsafe = $filter('unsafe');
+        expect(unsafe('<i>safe</i>')).toBe('<i>safe</i>');
     });
 });
