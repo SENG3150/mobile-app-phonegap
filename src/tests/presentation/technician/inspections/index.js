@@ -3,13 +3,9 @@
 // TODO: Test whether clicking on the New Inspection button will take the user to the create inspection page
 
 describe("inspection clicking", function() {
-    beforeEach(function() {
-        browser.get('/#/technician/inspections');
-    });
-
     describe('click inspection redirect', function() {
         var $httpBackend;
-        var AuthService;
+        var ENV;
 
         var inspectionRequest = 'inspections?include=technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly';
         var inspectionResponse = {
@@ -31,34 +27,28 @@ describe("inspection clicking", function() {
                             majorAssembly: {
                                 name: 'subAssembly1'
                             },
-                            comments: [],
-                            oilTest: {},
-                            wearTest: {} 
+                            comments: []
                         }
                     ]
                 }
             ]
         };
 
-        // tests require inspections in list for test to be valid
-        beforeEach(inject(function(_$httpBackend_, _AuthService_) {
+        beforeEach(module('joy-global'));
+
+        beforeEach(inject(function(_$httpBackend_, _ENV_) {
             $httpBackend = _$httpBackend_;
-            AuthService = _AuthService_
+            ENV = _ENV_;
 
-            spyOn(AuthService, 'getUser').and.returnValue({
-                primary: {
-                    id: 10
-                }
-            });
-
-            // mock response
             $httpBackend.when('GET', ENV.apiEndpoint + inspectionRequest).respond(inspectionData);
+            $httpBackend.flush();
         }));
 
         it('should redirect to inspection view', function() {
+            browser.get('/#/technician/inspections');
             // click first list item
             var link = element(by.class('navigate-right'));
-            var uri = element.attributes['href'].value;
+            var uri = element.attr('href');
             link.click();
             expect(browser.getLocationAbsUrl()).toMatch(uri);
         });
@@ -66,6 +56,7 @@ describe("inspection clicking", function() {
 
     describe('click new inspection redirect', function() {
         it('should redirect to inspection view', function() {
+            browser.get('/#/technician/inspections');
             element(by.class('btn-nav')).click();
             expect(browser.getLocationAbsUrl()).toMatch('/#/technician/inspections/create');
         });

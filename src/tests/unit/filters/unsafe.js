@@ -1,6 +1,8 @@
 describe('unsafe filter', function() {
     var $filter;
 
+    beforeEach(module('joy-global'));
+
     beforeEach(inject(function(_$filter_) {
         $filter = _$filter_;
     }));

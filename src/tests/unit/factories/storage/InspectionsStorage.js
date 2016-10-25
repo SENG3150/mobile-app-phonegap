@@ -4,6 +4,8 @@ describe('InspectionStorage', function() {
     var ItemStorageService;
     var controller;
 
+    beforeEach(module('joy-global'));
+
     beforEach(inject(function(_$controller$, _ItemStorageService_) {
         $controller = _$controller_;
         ItemStorageService = _ItemStorageService_;
@@ -27,9 +29,7 @@ describe('InspectionStorage', function() {
                             majorAssembly: {
                                 name: 'subAssembly1'
                             },
-                            comments: [],
-                            oilTest: {},
-                            wearTest: {} 
+                            comments: []
                         }
                     ]
                 }
