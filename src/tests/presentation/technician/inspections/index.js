@@ -1,10 +1,5 @@
 describe("inspection view redirects", function() {
-    var $httpBackend;
-    var ENV;
-    var AuthService;
-
-    var inspectionRequest = 'inspections?include=technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly';
-    var inspectionResponse = {
+    var inspectionData = {
         id: 0,
         comments: [],
         photos: [],
@@ -30,34 +25,38 @@ describe("inspection view redirects", function() {
         ]
     };
 
-    beforeEach(module('joy-global'));
+    beforeEach(angular.mock.module('joy-global'));
 
-    beforeEach(inject(function(_$httpBackend_, _ENV_, _AuthService_) {
-        $httpBackend = _$httpBackend_;
-        ENV = _ENV_;
-        AuthService = _AuthService_;
+    beforeEach(inject(function(ItemStorageService, $controller, $rootScope,  AuthService, $q) {
+        var service = ItemStorageService.service('inspections');
+        spyOn(service, 'one').and.returnValue(inspectionData);
+        
+        var scope = $rootScope.$new();
+        var controller = $controller;
+        controller = controller('AuthControllerLogin', {$scope: scope});
 
-        spyOn(AuthService, 'getUser').and.returnValue({
-            primary: {
-                id: 10
-            }
-        });
-
-        $httpBackend.when('GET', ENV.apiEndpoint + inspectionRequest).respond(inspectionResponse);
+        // login
+        var deferred = $q.defer();
+        spyOn(AuthService, 'authenticate').and.returnValue(deferred.promise);
+        scope.username = 'technician';
+        scope.password = 'technician';
+        scope.type = 'technician';
+        scope.login();
+        deferred.resolve();
     }));
 
     it('should redirect to inspection view', function() {
-        browser.get('/#/technician/inspections');
+        browser().get('/#/technician/inspections');
         // click first list item
         var link = element(by.class('navigate-right'));
         var uri = element.attr('href');
         link.click();
-        expect(browser.getLocationAbsUrl()).toMatch(uri);
+        expect(browser().getLocationAbsUrl()).toMatch(uri);
     });
 
     it('should redirect to inspection view', function() {
-        browser.get('/#/technician/inspections');
+        browser().get('/#/technician/inspections');
         element(by.class('btn-nav')).click();
-        expect(browser.getLocationAbsUrl()).toMatch('/#/technician/inspections/create');
+        expect(browsers().getLocationAbsUrl()).toMatch('/#/technician/inspections/create');
     });
 });

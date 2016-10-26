@@ -1,12 +1,6 @@
 // TODO: Test whether the comments and photos tabs are present on the page
 describe('test tabs present', function() {
-
-    var $httpBackend;
-    var ENV;
-    var AuthService;
-
-    var inspectionRequest = 'inspections?include=technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly';
-    var inspectionResponse = {
+    var inspectionData = {
         id: 0,
         comments: [],
         photos: [],
@@ -40,25 +34,28 @@ describe('test tabs present', function() {
         ]
     };
 
-    beforeEach(module('joy-global'));
+    beforeEach(angular.mock.module('joy-global'));
 
-    // tests require inspections in list for test to be valid
-    beforeEach(inject(function(_$httpBackend_, _ENV_, _AuthService_) {
-        $httpBackend = _$httpBackend_;
-        ENV = _ENV_;
-        AuthService = _AuthService_;
+    beforeEach(inject(function(ItemStorageService, $controller, $rootScope,  AuthService, $q) {
+        var service = ItemStorageService.service('inspections');
+        spyOn(service, 'one').and.returnValue(inspectionData);
+        
+        var scope = $rootScope.$new();
+        var controller = $controller;
+        controller = controller('AuthControllerLogin', {$scope: scope});
 
-        spyOn(AuthService, 'getUser').and.returnValue({
-            primary: {
-                id: 10
-            }
-        });
-
-        $httpBackend.when('GET', ENV.apiEndpoint + inspectionRequest).respond(inspectionResponse);
+        // login
+        var deferred = $q.defer();
+        spyOn(AuthService, 'authenticate').and.returnValue(deferred.promise);
+        scope.username = 'technician';
+        scope.password = 'technician';
+        scope.type = 'technician';
+        scope.login();
+        deferred.resolve();
     }));
 
     it('should have comment tab', function() {
-        browser.get('/#/technician/inspections/0/1/1');
+        browser().get('/#/technician/inspections/0/1/1');
         var commentsFounds = false;
         for (var tab in element(by.class('segmented-control')).children()) {
             if (tab.attr('data-target') == '#comments') {
@@ -70,12 +67,11 @@ describe('test tabs present', function() {
     });
 
     it('should have photos tab', function() {
-        browser.get('/#/technician/inspections/0/1/1');
+        browser().get('/#/technician/inspections/0/1/1');
         var photosFounds = false;
         for (var tab in element(by.class('segmented-control')).children()) {
             if (tab.attr('data-target') == '#photos') {
                 photosFounds = true;
-                expect(tab).toEuqual('hi');
                 break;
             }
         }

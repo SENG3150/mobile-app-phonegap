@@ -1,22 +1,22 @@
 describe('unsafe filter', function() {
 
-    var $sce;
     var $filter;
+    var $sanitize;
     var unsafe;
 
-    beforeEach(module('joy-global'));
+    beforeEach(angular.mock.module('joy-global'));
 
-    beforeEach(inject(function(_$sce_, _$filter_) {
-        $sce = _$sce_;
+    beforeEach(inject(function(_$filter_, _$sanitize_) {
         $filter = _$filter_;
+        $sanitize = _$sanitize_;
         unsafe = _$filter_('unsafe');
     }));
 
     it('should sanitise untrusted html', function() {
-        expect(unsafe('<span onmouseover=&quot;alert(1)&quot;>unsafe</span>')).toBe($sce.trustAsHtml('<span>unsafe</span>'));
+        expect($sanitize(unsafe('<span onmouseover"alert(1)">unsafe</span>')).toString()).toEqual('<span>unsafe</span>');
     });
 
-    it('should be regarded as safe', function() {
-        expect(unsafe('<i>safe</i>')).toBe($sce.trustAsHtml('<i>safe</i>'));
+    it('should not sanitise trusted html', function() {
+        expect($sanitize(unsafe('<i>safe</i>')).toString()).toEqual('<i>safe</i>');
     });
 });

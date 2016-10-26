@@ -1,10 +1,7 @@
 describe('InspectionStorage', function() {
-    var $httpBackend;
-    var ENV;
     var InspectionsStorage;
 
-    var inspectionRequest = 'inspections?include=technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly';
-    var inspectionResponse = {
+    var inspectionData = {
         id: 0,
         comments: [],
         photos: [],
@@ -30,25 +27,24 @@ describe('InspectionStorage', function() {
         ]
     };
 
-    beforeEach(module('joy-global'));
+    beforeEach(angular.mock.module('joy-global'));
 
-    beforeEach(inject(function(_$httpBackend_, _ENV_, _InspectionsStorage_) {
-        $httpBackend = _$httpBackend_;
-        ENV = _ENV_;
+    beforeEach(inject(function(_InspectionsStorage_, ItemStorageService) {
         InspectionsStorage = _InspectionsStorage_;
 
-        $httpBackend.when('GET', ENV.apiEndpoint + inspectionRequest).respond(inspectionResponse);
+        var service = ItemStorageService.service('inspections');
+        spyOn(service, 'one').and.returnValue(inspectionData);
     }));
 
     it('should return inspection', function() {
-        expect(InspectionsStorage.getInspection(0)).toEqual(inspectionResponse);
+        expect(InspectionsStorage.getInspection(0)).toEqual(inspectionData);
     });
 
     it('should return major assembly', function() {
-        expect(InspectionsStorage.getMajorAssembly(0, 1)).toEqual(inspectionResponse);
+        expect(InspectionsStorage.getMajorAssembly(0, 1)).toEqual(inspectionData);
     });
 
     it('should return sub assembly', function() {
-        expect(InspectionsStorage.getSubAssembly(0, 1, 1)).toEqual(inspectionResponse);
+        expect(InspectionsStorage.getSubAssembly(0, 1, 1)).toEqual(inspectionData);
     });
 });
