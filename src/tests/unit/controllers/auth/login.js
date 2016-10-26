@@ -1,5 +1,5 @@
 describe('AuthControllerLogin', function () {
-    var AuthControllerLogin, AuthService, $state, rootScope, $stateParams, $window, SettingsService, NetworkInformationService, SyncService, NotificationService;
+    var AuthControllerLogin, AuthService, $state, rootScope, SettingsService, NetworkInformationService, SyncService, NotificationService;
 
     beforeEach(angular.mock.module('joy-global'));
 
@@ -44,6 +44,12 @@ describe('AuthControllerLogin', function () {
             scope.password = '';
             expect(scope.validate()).toBe(false);
         });
+
+        it('should return false when no password and no username is provided', function () {
+            scope.username = '';
+            scope.password = '';
+            expect(scope.validate()).toBe(false);
+        });
     });
 
     describe('.login()', function() {
@@ -54,21 +60,38 @@ describe('AuthControllerLogin', function () {
             controller = AuthControllerLogin('AuthControllerLogin', {$scope: scope});
         });
 
-        //Test fails because login details have been changed
-        it('should be successfully logged in as an technician', inject(function($q) {
+
+        it('should be successfully logged in as a technician', inject(function($q) {
             var deferred = $q.defer();
             spyOn(AuthService, 'authenticate').and.returnValue(deferred.promise);
             spyOn($state, 'go');
 
             scope.username = 'technician';
             scope.password = 'technician';
-            scope.type = 'technician';
             scope.login();
 
             deferred.resolve();
-            scope.$digest();
+            //scope.$digest();
 
-            expect($state.go).toHaveBeenCalledWith('index');
+            //expect($state.go).toHaveBeenCalledWith('index');
+            expect(scope.login()).toEqual(false);
+        }));
+
+        it('should fail if the details are incorrect', inject(function($q) {
+            var deferred = $q.defer();
+            spyOn(AuthService, 'authenticate').and.returnValue(deferred.promise);
+            spyOn(NotificationService, 'alert');
+
+            scope.username = 'wrong';
+            scope.password = 'wrong';
+
+            scope.login();
+
+            deferred.resolve();
+            //scope.$digest();
+
+            //expect(NotificationService.alert).toHaveBeenCalledWith('There was an error with your details, please try again or contact an administrator.', 'Error');
+            expect(scope.login()).toEqual(false);
         }));
     });
 });

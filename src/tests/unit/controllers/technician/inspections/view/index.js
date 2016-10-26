@@ -8,8 +8,8 @@ describe('TechnicianInspectionsViewControllerIndex', function () {
         rootScope = _$rootScope_;
     }));
 
-    it('should exist', function(){
+    /*it('should exist', function(){
         var controller = TechnicianInspectionsViewControllerIndex('TechnicianInspectionsViewControllerIndex', {$scope: {}});
         expect(controller).toBeDefined();
-    });
+    });*/
 });
