@@ -1,71 +1,54 @@
 describe('InspectionStorage', function() {
-    var $controller;
-    var $scope;
-    var ItemStorageService;
-    var controller;
+    var $httpBackend;
+    var ENV;
+    var InspectionsStorage;
+
+    var inspectionRequest = 'inspections?include=technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly';
+    var inspectionResponse = {
+        id: 0,
+        comments: [],
+        photos: [],
+        majorAssemblies: [
+            {
+                id: 1,
+                photos: [],
+                majorAssembly: {
+                    name: 'majorAssembly1'
+                },
+                comments: [],
+                subAssemblies: [
+                    {
+                        id: 1,
+                        photos: [],
+                        majorAssembly: {
+                            name: 'subAssembly1'
+                        },
+                        comments: []
+                    }
+                ]
+            }
+        ]
+    };
 
     beforeEach(module('joy-global'));
 
-    beforEach(inject(function(_$controller$, _ItemStorageService_) {
-        $controller = _$controller_;
-        ItemStorageService = _ItemStorageService_;
+    beforeEach(inject(function(_$httpBackend_, _ENV_, _InspectionsStorage_) {
+        $httpBackend = _$httpBackend_;
+        ENV = _ENV_;
+        InspectionsStorage = _InspectionsStorage_;
 
-        spyOn(ItemStorageService, 'one').and.returnValue({
-            id: 0,
-            comments: [],
-            photos: [],
-            majorAssemblies: [
-                {
-                    id: 1,
-                    photos: [],
-                    majorAssembly: {
-                        name: 'majorAssembly1'
-                    },
-                    comments: [],
-                    subAssemblies: [
-                        {
-                            id: 1,
-                            photos: [],
-                            majorAssembly: {
-                                name: 'subAssembly1'
-                            },
-                            comments: []
-                        }
-                    ]
-                }
-            ]
-        });
-
-        $scope = {};
-        controller = $controller('ItemStorageService', {
-            $scope: $scope
-        });
+        $httpBackend.when('GET', ENV.apiEndpoint + inspectionRequest).respond(inspectionResponse);
     }));
 
     it('should return inspection', function() {
-        var $scope = {};
-        var controller = $controller('ItemStorageService', {
-            $scope: $scope
-        });
-
-        expect($scope.getInspection(0)).not.toBe(null);
+        expect(InspectionsStorage.getInspection(0)).toEqual(inspectionResponse);
     });
 
     it('should return major assembly', function() {
-        var $scope = {};
-        var controller = $controller('ItemStorageService', {
-            $scope: $scope
-        });
-
-        expect($scope.getMajorAssembly(0, 1)).not.toBe(null);
+        expect(InspectionsStorage.getMajorAssembly(0, 1)).toEqual(inspectionResponse);
     });
 
     it('should return sub assembly', function() {
-        var $scope = {};
-        var controller = $controller('ItemStorageService', {
-            $scope: $scope
-        });
-
-        expect($scope.getSubAssembly(0, 1, 1)).not.toBe(null);
+        expect(InspectionsStorage.getSubAssembly(0, 1, 1)).toEqual(inspectionResponse);
     });
 });

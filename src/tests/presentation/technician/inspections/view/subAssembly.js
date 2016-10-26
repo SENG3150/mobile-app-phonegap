@@ -3,6 +3,7 @@ describe('test tabs present', function() {
 
     var $httpBackend;
     var ENV;
+    var AuthService;
 
     var inspectionRequest = 'inspections?include=technician,scheduler,machine.model,majorAssemblies.majorAssembly,majorAssemblies.subAssemblies.subAssembly';
     var inspectionResponse = {
@@ -42,18 +43,24 @@ describe('test tabs present', function() {
     beforeEach(module('joy-global'));
 
     // tests require inspections in list for test to be valid
-    beforeEach(inject(function(_$httpBackend_, _ENV_) {
+    beforeEach(inject(function(_$httpBackend_, _ENV_, _AuthService_) {
         $httpBackend = _$httpBackend_;
         ENV = _ENV_;
+        AuthService = _AuthService_;
 
-        $httpBackend.when('GET', $ENV.apiEndpoint + inspectionRequest).respond(inspectionData);
-        $httpBackend.flush();
+        spyOn(AuthService, 'getUser').and.returnValue({
+            primary: {
+                id: 10
+            }
+        });
+
+        $httpBackend.when('GET', ENV.apiEndpoint + inspectionRequest).respond(inspectionResponse);
     }));
 
     it('should have comment tab', function() {
         browser.get('/#/technician/inspections/0/1/1');
         var commentsFounds = false;
-        for (var tab in element(by.class('segmented-control')).first().children()) {
+        for (var tab in element(by.class('segmented-control')).children()) {
             if (tab.attr('data-target') == '#comments') {
                 commentsFounds = true;
                 break;
@@ -65,9 +72,10 @@ describe('test tabs present', function() {
     it('should have photos tab', function() {
         browser.get('/#/technician/inspections/0/1/1');
         var photosFounds = false;
-        for (var tab in element(by.class('segmented-control')).first().children()) {
+        for (var tab in element(by.class('segmented-control')).children()) {
             if (tab.attr('data-target') == '#photos') {
                 photosFounds = true;
+                expect(tab).toEuqual('hi');
                 break;
             }
         }
