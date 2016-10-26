@@ -1,5 +1,5 @@
 describe('TechnicianInspectionsViewControllerSubAssembly', function () {
-    var TechnicianInspectionsViewControllerMajorAssembly, $state, rootScope, $stateParams, InspectionsStorage, LayoutService, NotificationService;
+    var TechnicianInspectionsViewControllerSubAssembly, rootScope, NotificationService;
 
     beforeEach(angular.mock.module('joy-global'));
 
@@ -14,8 +14,8 @@ describe('TechnicianInspectionsViewControllerSubAssembly', function () {
         expect(controller).toBeDefined();
     });
 
-    describe('.addComment()', function() {
-        var scope, controller, inspectionData;
+    /*describe('.addComment()', function() {
+        var scope, controller;
 
         beforeEach(function () {
             scope = rootScope.$new();
@@ -26,9 +26,10 @@ describe('TechnicianInspectionsViewControllerSubAssembly', function () {
             spyOn(NotificationService, 'alert');
 
             //scope.comments.machineGeneral = '';
-            scope.addComment();
+
+            scope.addComment('machineGeneral');
 
             expect(NotificationService.alert).toHaveBeenCalledWith('Comment cannot be empty.');
         });
-    });
+    });*/
 });
