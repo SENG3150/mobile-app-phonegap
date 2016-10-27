@@ -3,27 +3,6 @@ describe('NotificationService', function () {
 
     beforeEach(angular.mock.module('joy-global'));
 
-
-    /*beforeEach(function() {
-        module(function ($provide) {
-            $provide.service('window', function () {
-                this.alert = jasmine.createSpy('alert');
-            });
-
-            $provide.service('window', function(){
-                this.prompt= jasmine.createSpy('prompt');
-            });
-
-            $provide.service('window', function(){
-                this.beep= jasmine.createSpy('beep');
-            });
-
-            $provide.service('window', function(){
-                this.confirm= jasmine.createSpy('confirm');
-            });
-        });
-    });*/
-
     beforeEach(inject(function (_NotificationService_, _PGDeviceReady_) {
         NotificationService = _NotificationService_;
         PGDeviceReady = _PGDeviceReady_;
@@ -60,14 +39,6 @@ describe('NotificationService', function () {
 
         it ('should exist', function() {
             expect(NotificationService.beep).toBeDefined();
-        });
-
-        it ('should NOT run window.beep if navigator.notification is true', function() {
-            spyOn(window, 'beep');
-            navigator.notification = true;
-            var message, title, alertCallback, buttonName = undefined;
-            NotificationService.beep(message, title, alertCallback, buttonName);
-            expect(window.beep).not.toHaveBeenCalled();
         });
     });
 
