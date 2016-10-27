@@ -55,7 +55,7 @@ describe('test tabs present', function() {
     }));
 
     it('should have comment tab', function() {
-        browser().get('/#/technician/inspections/0/1/1');
+        browser.get('/#/technician/inspections/0/1/1');
         var commentsFounds = false;
         for (var tab in element(by.class('segmented-control')).children()) {
             if (tab.attr('data-target') == '#comments') {
@@ -67,7 +67,7 @@ describe('test tabs present', function() {
     });
 
     it('should have photos tab', function() {
-        browser().get('/#/technician/inspections/0/1/1');
+        browser.get('/#/technician/inspections/0/1/1');
         var photosFounds = false;
         for (var tab in element(by.class('segmented-control')).children()) {
             if (tab.attr('data-target') == '#photos') {

@@ -46,17 +46,17 @@ describe("inspection view redirects", function() {
     }));
 
     it('should redirect to inspection view', function() {
-        browser().get('/#/technician/inspections');
+        browser.get('/#/technician/inspections');
         // click first list item
         var link = element(by.class('navigate-right'));
         var uri = element.attr('href');
         link.click();
-        expect(browser().getLocationAbsUrl()).toMatch(uri);
+        expect(browser.getLocationAbsUrl()).toMatch(uri);
     });
 
     it('should redirect to inspection view', function() {
-        browser().get('/#/technician/inspections');
+        browser.get('/#/technician/inspections');
         element(by.class('btn-nav')).click();
-        expect(browsers().getLocationAbsUrl()).toMatch('/#/technician/inspections/create');
+        expect(browser.getLocationAbsUrl()).toMatch('/#/technician/inspections/create');
     });
 });
