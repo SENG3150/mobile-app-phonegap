@@ -25,14 +25,6 @@ describe('NotificationService', function () {
             NotificationService.alert(message, title, alertCallback, buttonName);
             expect(window.alert).toHaveBeenCalled();
         });
-
-        it ('should NOT run window.alert if navigator.notification is true', function() {
-            spyOn(window, 'alert');
-            navigator.notification = true;
-            var message, title, alertCallback, buttonName = undefined;
-            NotificationService.alert(message, title, alertCallback, buttonName);
-            expect(window.alert).not.toHaveBeenCalled();
-        });
     });
 
     describe('.beep()', function() {
@@ -55,14 +47,6 @@ describe('NotificationService', function () {
             NotificationService.confirm(message, title, alertCallback, buttonName);
             expect(window.confirm).toHaveBeenCalled();
         });
-
-        it ('should NOT run window.confirm if navigator.notification is true', function() {
-            spyOn(window, 'confirm');
-            navigator.notification = true;
-            var message, title, alertCallback, buttonName = undefined;
-            NotificationService.confirm(message, title, alertCallback, buttonName);
-            expect(window.confirm).not.toHaveBeenCalled();
-        });
     });
 
     describe('.prompt()', function() {
@@ -77,14 +61,6 @@ describe('NotificationService', function () {
             var message, title, alertCallback, buttonName = undefined;
             NotificationService.prompt(message, title, alertCallback, buttonName);
             expect(window.prompt).toHaveBeenCalled();
-        });
-
-        it ('should NOT run window.prompt if navigator.notification is true', function() {
-            spyOn(window, 'prompt');
-            navigator.notification = true;
-            var message, title, alertCallback, buttonName = undefined;
-            NotificationService.prompt(message, title, alertCallback, buttonName);
-            expect(window.prompt).not.toHaveBeenCalled();
         });
     });
 });

@@ -1,3 +1,10 @@
+/*
+ *   ItemStorageService - UnitTest
+ *   The Item Storage service test was not fully completed due to the pressure of other assignments and courses.
+ *   The unit needed for this service are similar and the same to other unit tests completed in the services
+ *   Brendan Baxter - c3189809
+ */
+
 describe('ItemStorageService', function () {
     var ItemStorageService, $localStorage, _;
 
